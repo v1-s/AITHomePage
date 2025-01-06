@@ -1,0 +1,177 @@
+/* Custom CSS for diagonal transition effect */
+.diagonal-transition {
+    position: relative;
+    overflow: hidden;
+    background: #fff; /* Replace with maincolor_2 */
+    transition: transform 0.3s ease; /* Smooth scale transition */
+  }
+  
+  .diagonal-transition::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FF4500; /* Replace with maincolor_1 */
+    transition: transform 0.5s ease; /* Smooth diagonal background transition */
+    transform: translate(-100%, -100%);
+    z-index: 0;
+    border-radius: 0.5rem; /* Matches the card's border radius */
+  }
+  
+  .diagonal-transition:hover::before {
+    transform: translate(0, 0); /* Moves the background to cover diagonally */
+  }
+  
+  .diagonal-transition:hover {
+    transform: scale(1.05); /* Scales up on hover */
+  }
+  
+  .diagonal-transition span {
+    position: relative;
+    z-index: 1;
+    color: inherit;
+  }
+  
+
+  /* Types of Training CSS */
+
+/* Custom CSS for overlay hover effect */
+.hover-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Overlay starting from the bottom */
+.hover-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Black overlay */
+  transform: translateY(100%); /* Start from the bottom */
+  transition: transform 0.5s ease, opacity 0.3s ease;
+  z-index: 1;
+  opacity: 0;
+}
+
+/* On hover, the overlay slides up from the bottom */
+.hover-overlay:hover::before {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Content inside the overlay */
+.hover-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.hover-overlay:hover .hover-content {
+  opacity: 1;
+}
+/* Hide title and arrow on hover */
+.hover-overlay .title-arrow-section {
+  visibility: visible; /* Title and arrow visible by default */
+  transition: opacity 0.3s ease;
+}
+
+.hover-overlay:hover .title-arrow-section {
+  visibility:hidden; /* Title and arrow hidden on hover */
+}
+
+  /* Key Highlights */
+  .icon-color {
+    /* Initial color - #1496FA */
+    filter: opacity(0.4) drop-shadow(0 0 0 #1496FA);
+    transition: filter 0.3s ease;
+  }
+  
+  .icon-color:hover {
+    /* Hover color - #FF4500 */
+    filter: opacity(0.9) drop-shadow(0 0 0 #FF4500);
+  }
+  
+
+  /* Benefits Section */
+  .chart-container {
+    max-height: 100%; /* Matches the height of Designation */
+    display: flex;
+    align-items: flex-end;
+  }
+  .bar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
+
+  /* Hirng partners */
+  /* Container holding the logos */
+.logo-scroll {
+  display: flex;
+  gap: 20px; /* Adjust the spacing between logos */
+  animation: scroll-left 10s linear infinite; /* Infinite scroll animation */
+}
+
+/* Keyframes for seamless scrolling */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0); /* Start position */
+  }
+  100% {
+    transform: translateX(-50%); /* Move left by half the width */
+  }
+}
+
+/* Ensure logo items are visually aligned */
+.logo-item {
+  flex-shrink: 0;
+}
+
+/* Set the width of the container to fit the content */
+.overflow-hidden {
+  white-space: nowrap; /* Prevent wrapping of logos */
+}
+
+
+
+/* faq */
+.faq-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.faq-item {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.faq-question {
+  padding: 15px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-answer {
+  padding: 15px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+}
+
+
+.overflow-x-only {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+
+
+

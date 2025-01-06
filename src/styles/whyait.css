@@ -1,0 +1,23 @@
+/* Animation for Left Column (Top to Bottom) */
+.animate-fade-in-left {
+  transform: translateX(-100px);
+  opacity: 0;
+  transition: transform 1.5s ease, opacity 1.5s ease;
+}
+
+.animate-fade-in-left.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Animation for Right Column (Bottom to Top) */
+.animate-fade-in-right {
+  transform: translateX(100px);
+  opacity: 0;
+  transition: transform 1.5s ease, opacity 1.5s ease;
+}
+
+.animate-fade-in-right.visible {
+  transform: translateX(0);
+  opacity: 1;
+}

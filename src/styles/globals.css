@@ -1,0 +1,563 @@
+/* Importing Poppins font */
+@import "@fontsource/poppins";
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800;900&display=swap'); */
+
+/* Tailwind's directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Spinner Background Overlay */
+body.loading {
+  overflow: hidden;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  @apply font-sans;
+}
+
+.animate-opacity {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-opacity.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 
+*, :before, :after  {
+  border: none !important;
+  outline: none !important;
+  border-width: 0 !important;
+  border-style: none !important;
+} */
+input {
+  color: #9ca3af;
+}
+/* Sahdow Inside */
+.inside{
+  --tw-shadow: inset 0px 5px 15px #00000059;
+  --tw-shadow-colored: inset 0px 5px 15px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  /* background: #f9f9f9; */
+}
+/* text Glitter Effect */
+.glitter_text,
+.glitter_text2 , .glitter_text3{
+  background: linear-gradient(to left,
+      #ef4646 20%,
+      rgba(255, 223, 0, 0.8) 40%,
+      rgba(156, 140, 251, 0.6) 60%,
+      #fb3059 80%);
+  background-size: 200% auto;
+  color: #ef4646;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shine 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.glitter_text2 {
+  color: #000000 !important;
+}
+
+.glitter-text {
+  background: linear-gradient(
+    to right,
+    #ffd700 20%, /* Gold */
+    #ff4500 40%, /* Orangered */
+    #00aaff 60%, /* Blue */
+    #ffffff 80% /* White */
+  );
+  background-size: 300% auto; /* Bigger for smooth scrolling effect */
+  color: transparent; /* Ensures only the gradient is visible */
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: glitterMove 3s linear infinite;
+}
+
+@keyframes glitterMove {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 100% center;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .search-container input {
+    display: none;
+  }
+
+  .search-container.show-input input {
+    display: block;
+    min-width: 200px;
+  }
+}
+/* mini border bottom */
+.element::after , .elements::after{
+  content: '';
+  /* Creates the pseudo-element */
+  position: absolute;
+  /* Required for precise placement */
+  bottom: -10px;
+  /* Aligns it to the bottom of the element */
+  left: 50%;
+  /* Centers the pseudo-element horizontally */
+  transform: translateX(-50%);
+  /* Ensures the border is truly centered */
+  width: 80px;
+  /* Sets the border's width to 35% of the parent */
+  height: 5px;
+  /* Thickness of the border */
+  background-color: #FF4500;
+  /* Border color */
+}
+
+.elements::after{
+  left: 0;
+  transform: translateX(0%);
+}
+
+/* mini border bottom */
+.elementl::after{
+  content: '';
+  /* Creates the pseudo-element */
+  position: absolute;
+  /* Required for precise placement */
+  bottom: -5px;
+  /* Aligns it to the bottom of the element */
+  left: 50%;
+  /* Centers the pseudo-element horizontally */
+  transform: translateX(-50%);
+  /* Ensures the border is truly centered */
+  width: 80px;
+  /* Sets the border's width to 35% of the parent */
+  height: 5px;
+  /* Thickness of the border */
+  background-color: #000000;
+  /* Border color */
+}
+
+/* Keyframes for the shimmer effect */
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  50%{
+    background-position: 100% center ;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.sIcon:hover .socialIcon {
+  transform: rotate(360deg) !important;
+  color: white !important;
+}
+
+.fIocn:hover {
+  transform: rotate(360deg) !important;
+}
+
+.sIcon:hover {
+  background-color: #fb3059;
+}
+
+/* Course Details Page */
+
+/* hero Banner */
+.gradient-bg-section {
+  position: relative;
+  /* padding: 20px 0 26px; */
+  /* background-color: #FFFFFF; */
+  overflow: hidden;
+}
+
+.gradient-bg-section::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: linear-gradient(180deg, #877bd1 19.4%, #41479B 97.01%);
+  width: 100%;
+  height: 100%;
+  left: 70%;
+  transform: skew(-40deg);
+  z-index: 0;
+}
+
+@media (max-width: 640px) {
+  .gradient-bg-section::before {
+    transform: skew(-118deg);
+  }
+}
+
+/* Custom hover effect for left-to-right background transition */
+.hover-bg-transition {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-bg-transition::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  /* Tailwind's blue-600 */
+  transition: left 0.4s ease;
+  /* Adjust the duration as needed */
+  z-index: 0;
+}
+
+.hover-bg-transition:hover::before {
+  left: 0;
+  background-color: #000000;
+}
+
+.hover-bg-transition span {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------header.css-------------------------------------- */
+
+/* Mega Menu Styles */
+#dynamicMegaMenu {
+  border-top: 2px solid #dc3545;
+}
+
+.mega-menu {
+  z-index: 50 !important;
+  /* padding: 16px; */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.show-menu {
+  display: flex;
+}
+
+.category-column {
+  /* width: 25%; */
+  padding: 1rem;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+  /* max-height: 65vh; */
+}
+
+.course-column {
+  /* width: 50%; */
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.image-column {
+  width: 25%;
+  padding: 1rem;
+}
+
+.active-category {
+  background-color: orangered;
+  color: white;
+}
+
+.navbar-toggle-links {
+  display: none;
+  padding: 1rem;
+  top: 64px;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+.show-navbar-links {
+  display: block;
+}
+
+@media (max-width: 1220px) {
+  .image-column {
+    display: none;
+  }
+
+  .mega-menu {
+    left: auto !important;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .category-column,
+  .course-column {
+    width: 100%;
+  }
+
+  .navbar-toggle {
+    display: inline-block;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+}
+
+@media (min-width: 1220px) {
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-toggle-links {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .mega-menu {
+    top: 60px;
+  }
+}
+
+/* Custom CSS for lz-animation */
+.lz-animation,
+.text_glow1,
+.text_cert {
+  position: relative;
+  font-weight: bold;
+  /* z-index:-1; */
+  color: #ED3C3F;
+}
+
+.lz-animation::before,
+.text_glow1::before,
+.text_cert::before {
+  content: "Assured Outcomes";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2s infinite;
+  pointer-events: none;
+}
+
+.text_glow1::before {
+  /* top: 3px; */
+  content: "MNC's";
+}
+
+.text_cert::before {
+  /* top: 3px; */
+  content: "Click to Zoom";
+}
+
+.text-stroke-black-light {
+  text-shadow: 1px 1px 0px rgba(139, 69, 19, 0.5);
+  -webkit-text-stroke: 0.5px rgba(139, 69, 19, 0.5);
+}
+
+/* Stats Section CSS */
+
+/* Keyframes for the shimmer effect */
+.stat-card:hover {
+  transform: scale(1.05) !important;
+}
+
+.stat-heading {
+  text-align: center;
+  background: linear-gradient(to left,
+      #ef4646 20%,
+      rgba(255, 223, 0, 0.8) 40%,
+      rgba(156, 140, 251, 0.6) 60%,
+      #fb3059 80%);
+  background-size: 200% auto;
+  color: #ef4646;
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* text-fill-color: transparent; */
+  -webkit-text-fill-color: transparent;
+  animation: shine 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Keyframes for the shimmer effect */
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.text-stroke-black-light {
+  text-shadow: 1px 1px 0px rgba(139, 69, 19, 0.5);
+  -webkit-text-stroke: 0.5px rgba(139, 69, 19, 0.5);
+}
+
+.slideshow {
+  counter-reset: slide;
+}
+
+.slideshow>.input {
+  counter-increment: slide;
+}
+
+.input:checked+#slide .slideContentText {
+  width: 100%;
+  display: block;
+}
+
+.label-nav {
+  padding: 5px;
+  transition: all 2s ease-in-out;
+}
+
+.label-nav.active {
+  color: white !important;
+  border-bottom-color: orangered;
+  width: 50%;
+  transition: all 2s ease-in-out;
+}
+
+/* Media Queries */
+@media (max-width: 650px) {
+  .slideContentText {
+    max-width: 100%;
+    position: relative;
+    left: 0;
+    padding-top: 120%;
+    padding-left: 20px;
+  }
+
+  .slide {
+    padding-top: 100%;
+  }
+
+  .slideshow #slide {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .speaking-nav {
+    bottom: 10px;
+    max-width: 100% !important;
+    width: 100% !important;
+    position: relative;
+    left: 0 !important;
+    top: 0;
+  }
+
+  .label-nav {
+    padding: 5px;
+    /* transition: all 2s ease-in-out;  */
+  }
+}
+
+@media (min-width: 650px) and (max-width: 1024px) {
+  .slideContentText {
+    padding: 45px;
+  }
+
+  .label-nav {
+    padding: 8px;
+  }
+}
+
+/* Fade-in animation for content with a delay */
+.animate-fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+  /* 1s duration for fade-in */
+}
+
+.content-delay {
+  animation-delay: 2s;
+  /* Delay the content appearance by 2 seconds */
+}
+
+/* Keyframes for fade-in effect */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ---- */
+/* Add this to your global CSS */
+.group-hover\:animate-pause:hover {
+  animation-play-state: paused;
+}
+
+/* Hirng partners */
+/* Container holding the logos */
+.logo-scroll {
+  display: flex;
+  gap: 20px;
+  /* Adjust the spacing between logos */
+  animation: scroll-left 20s linear infinite;
+  /* Infinite scroll animation */
+}
+
+/* Keyframes for seamless scrolling */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+    /* Start position */
+  }
+  100% {
+    transform: translateX(-50%);
+    /* Move left by half the width */
+  }
+}
+
+/* Ensure logo items are visually aligned */
+.logo-item {
+  flex-shrink: 0;
+}
+
+/* Clip paths for alternating circle segments */
+.clip-top-right {
+  clip-path: polygon(50% 0%, 100% 0%, 100% 50%, 50% 50%);
+}
+.clip-bottom-right {
+  clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);
+}
+.clip-bottom-left {
+  clip-path: polygon(50% 50%, 0% 50%, 0% 100%, 50% 100%);
+}
+.clip-top-left {
+  clip-path: polygon(0% 0%, 50% 0%, 50% 50%, 0% 50%);
+}
+
