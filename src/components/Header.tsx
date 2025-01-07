@@ -166,7 +166,7 @@ function Header() {
             {/* More Dropdown */}
             <div className="relative group" ref={menuRef}>
               <button
-                className="text-gray-700 flex items-center space-x-1 font-semibold"
+                className="text-gray-700 flex items-center space-x-1 font-bold"
                 aria-label="More Links"
                 onClick={handleMoreDropdownToggle}
               >

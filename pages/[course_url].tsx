@@ -21,6 +21,7 @@ import { imageBasePath } from "@/utils/img.config";
 import CourseTools from "@/components/CourseTools";
 import Image from "next/image";
 import BatchDetails from "@/components/CourseCardSchedule";
+import ProjectCards from "@/components/CourseProjects";
 
 type BatchDetail = {
   batchStartDate: string;
@@ -331,6 +332,7 @@ const CourseDetails: React.FC = () => {
       }/>
       <CourseTools courseUrl={course_url as string} />
       <TrendingCoursesInIT text="Popular Trending Courses in IT Companies" />
+      <ProjectCards/>
       <FAQComponent faqData={faqData}/>
       <Reviews />
     </div>
