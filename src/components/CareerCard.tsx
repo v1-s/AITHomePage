@@ -44,7 +44,7 @@ const CareerCard: React.FC<CareerCardProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center bg-flowGradientTop bg-cover rounded-2xl w-[320px] p-6">
+    <div className="flex flex-col items-center bg-flowGradientTop bg-cover rounded-2xl  p-6">
       {/* Profile Image */}
       <div className="relative w-24 h-24 rounded-full overflow-hidden border-1 border-white -mt-12 shadow-inside">
         <Image
@@ -59,7 +59,8 @@ const CareerCard: React.FC<CareerCardProps> = ({
       {/* Name */}
       <h2 className="mt-4 text-lg font-semibold text-gray-900">{name}</h2>
       {/* Roles */}
-      <div className="mt-4 w-full space-y-4">
+   <div className="flex  justify-center">
+   <div className="mt-4 w-full space-y-4">
         {/* Previous Role */}
         <div className="flex items-center">
           <div className="flex-shrink-0 bg-flowGradientTop bg-cover shadow-glassShadow rounded-full p-2">
@@ -101,6 +102,7 @@ const CareerCard: React.FC<CareerCardProps> = ({
           </div>
         </div>
       </div>
+   </div>
       {/* Footer */}
       <div className="flex justify-center mt-8">
         <button

@@ -35,12 +35,12 @@ const teamMembers = [
   {
     name: 'Alice Brown',
     role: 'Sales Director',
-    image: '/path-to-image/alice.jpg',
+    image: '/assets/images/alice.jpg',
   },
   {
     name: 'Bob White',
     role: 'Operations Manager',
-    image: '/path-to-image/bob.jpg',
+    image: '/assets/images/bob.jpg',
   },
   // Add more members as needed
 ];
@@ -51,10 +51,12 @@ const DynamicTeam = () => {
 
   const loadMoreMembers = () => {
     setLoading(true);
-    setTimeout(() => {
+    new Promise((resolve) => {
+      setTimeout(resolve, 500); // Simulate network delay
+    }).then(() => {
       setVisibleMembers((prev) => prev + 4); // Load 4 more members at a time
       setLoading(false);
-    }, 500); // Simulate loading time
+    });
   };
 
   const displayedMembers = teamMembers.slice(0, visibleMembers);
@@ -62,7 +64,7 @@ const DynamicTeam = () => {
   return (
     <section className="bg-gray-100 py-12" id="alumini">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 glitter_text">Our Dynamic Team</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 glitter_text elementl relative pb-2">Our Dynamic Team</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {displayedMembers.map((member, index) => (
             <div

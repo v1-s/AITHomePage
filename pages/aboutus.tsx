@@ -9,7 +9,7 @@ import Link from "next/link";
 const CEOSection = dynamic(() => import('@/components/CeoSection'), { ssr: false });
 const DynamicTeam = dynamic(() => import('@/components/AchvrTeam'), { ssr: false });
 const HowItStarted = dynamic(() => import('@/components/HowItStarted'), { ssr: false });
-const AboutAchieversIT = dynamic(() => import('@/components/AbtAchvrAIT'), { ssr: false });
+const AboutAchieversIT = dynamic(() => import('@/components/AboutAchieversIT'), { ssr: false });
 const GlblBanner = dynamic(() => import('@/components/GlobalBanner'), { ssr: false });
 const TrainingAdvisorForm = dynamic(() => import('@/components/MentorForm'), { ssr: false });
 const PieChartSection = dynamic(() => import('@/components/HirePiechart'), { ssr: false });
@@ -73,13 +73,13 @@ const AboutUsSection = () => {
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-6">
         {/* Left Content */}
         <div>
-          <span className="text-mainblue font-semibold  text-xs md:text-sm uppercase mb-2">
+          <span className="text-mainblue font-semibold text-sm uppercase mb-2">
             LET&apos;S CONNECT
           </span>
-          <h1 className="text-xl md:text-4xl font-extrabold text-gray-900 mb-4">
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
             AchieversIT
           </h1>
-          <p className="text-xs md:text-lg text-gray-700 mb-6">
+          <p className="text-lg text-gray-700 mb-6">
             AchieversIT stands as India&apos;s Foremost and Most Esteemed Software Training Institution. We offer unparalleled and globally esteemed software education and professional development programs tailored for aspiring learners.
           </p>
           <div className="flex items-center mb-6">
@@ -140,7 +140,7 @@ const AboutUsSection = () => {
           <h2 className="text-3xl font-bold text-gray-800">
             Why <span className="text-mainblue glitter_text">AchieversIT</span> is the Leading Choice?
           </h2>
-          <p className="text-xs md:text-md text-gray-600 mt-4">
+          <p className="text-gray-600 mt-4">
             AchieversIT is the premier destination in India for outstanding training and career enhancement.
           </p>
           <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mx-auto mt-8">
@@ -173,7 +173,7 @@ const AboutUsSection = () => {
                 <div className="mb-2 w-14" style={{ lineHeight: "1" }}>
                   <Image src={item.icon} alt={item.title} width={48} height={48} />
                 </div>
-                <h3 className="text-sm md:text-md font-semibold text-gray-600">
+                <h3 className="text-md font-semibold text-gray-600">
                   {item.title}
                 </h3>
               </div>
@@ -188,9 +188,9 @@ const AboutUsSection = () => {
       <HowItStarted />
       <PieChartSection />
 
-      <h2 className="text-sm md:text-xl font-bold text-mainblue text-center">
+      <h2 className="text-xl font-bold text-mainblue text-center">
         Discover AchieversIT<br />
-        <span className="text-mainblue glitter_text text-lg md:text-3xl">
+        <span className="text-mainblue glitter_text text-3xl">
           Empowering Careers with Industry-Ready Skills
         </span>
       </h2>
@@ -201,7 +201,7 @@ const AboutUsSection = () => {
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="w-full w-4/5 mx-auto bg-white p-8">
-            <h2 className="text-xl md:text-3xl font-bold text-center text-white element relative pb-2 mb-8">
+            <h2 className="text-3xl font-bold text-center text-white element relative pb-2 mb-8">
               <span className="text-black">Reach Out to Us – We&apos;re Ready to Assist!</span>
             </h2>
             <TrainingAdvisorForm />

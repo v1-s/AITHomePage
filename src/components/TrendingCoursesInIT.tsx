@@ -60,9 +60,9 @@ const TrendingCoursesInIT: React.FC<TitleProps> = ({ text, className }) => {
   }
 
   return (
-    <div className="py-12">
+    <div className="py-12 m-2">
       <h2
-        className={`text-3xl font-bold text-center mb-10 relative elementl pb-3 mb-14 glitter_text ${className || ""}`}
+        className={`text-xl md:text-3xl font-bold text-center mb-10 relative elementl pb-3 mb-14 glitter_text ${className || ""}`}
       >
         {text}
       </h2>

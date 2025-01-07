@@ -155,7 +155,7 @@ const Services: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
-      <StaticHeroComponent 
+      <StaticHeroComponent
         titleContext={"Empowering Careers with Industry-Leading Training"}
         titleSubContext={
           <>
@@ -167,7 +167,7 @@ const Services: React.FC = () => {
         modalText="Our experts are available to guide you every step of the way. Let’s start the conversation now!"
         modalform="services/enroll"
       />
-      <h2 className="text-3xl font-semibold text-center text-maincolor_1 uppercase glitter-text pb-1 my-10 element relative">
+      <h2 className="text-3xl font-semibold text-center text-maincolor_1 uppercase glitter-text pb-1 my-10 mb-14 element relative">
         Our Services
       </h2>
       <div className="w-full md:w-4/5 lg:w-3/4 grid grid-cols-1 gap-12 mx-auto md:grid-cols-2 lg:grid-cols-2">
@@ -176,11 +176,11 @@ const Services: React.FC = () => {
             key={service.id}
             className="flex flex-col items-center gap-4 bg-white rounded-lg shadow-card hover:shadow-card hover:scale-105 transition-transform duration-300 p-4"
           >
-            <Image 
-              src={service.image} 
-              alt={service.title} 
-              className="w-16 h-auto mb-4 md:mb-0 md:w-16 md:h-auto lg:w-16 lg:h-auto" 
-              width={200} 
+            <Image
+              src={service.image}
+              alt={service.title}
+              className="w-16 h-auto mb-4 md:mb-0 md:w-16 md:h-auto lg:w-16 lg:h-auto"
+              width={200}
               height={300}
               priority
             />
@@ -193,14 +193,15 @@ const Services: React.FC = () => {
               </p>
               <ul className="text-gray-700 text-sm list-disc pl-5">
                 {service.description.map((point, index) => (
-                  <li key={index} style={{ listStyleType: "none" }}>
-                    <FontAwesomeIcon 
-                      icon={faHandPointRight} 
-                      style={{ color: service.color }} 
-                      className="mt-1 mr-2" 
-                    />
-                    <span>{point}</span>
-                  </li>
+                <li key={index} className="flex items-start space-x-2" style={{ listStyleType: "none" }}>
+                <FontAwesomeIcon
+                  icon={faHandPointRight}
+                  style={{ color: service.color }}
+                  className="mt-1"
+                />
+                <span>{point}</span>
+              </li>
+              
                 ))}
               </ul>
             </div>

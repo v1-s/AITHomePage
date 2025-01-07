@@ -125,7 +125,7 @@ const CarouselContainer: React.FC = () => {
 
   return (
     <div className="carousel-container pt-5 rounded pb-3 text-center">
-      <h3 className="text-center pt-3 p-3 text-2xl lg:text-3xl font-bold inline-block element relative after:bottom-N20 glitter_text">
+      <h3 className="text-center pt-3 p-3 pb-2 text-2xl lg:text-3xl font-bold inline-block element relative after:bottom-N10 glitter_text">
         Empowering Students to Secure Placements in Top Companies
       </h3>
 

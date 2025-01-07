@@ -6,18 +6,22 @@ import { useRouter } from "next/navigation";
 const LimitedSeatsCTA: React.FC = () => {
   const router = useRouter();
 
-  // Prefetch the schedule page on component mount
+  // Prefetch the schedule page once on component mount
   useEffect(() => {
-    router.prefetch("/schedulePage"); // Prefetch the route for faster navigation
-  }, [router]);
+    router.prefetch("/schedulePage");
+  }, []);
 
-  // Callback to navigate to schedule page
-  const handleToSchedulePage = useCallback(() => {
-    router.push("/schedulePage"); // Directly navigate to the route
-  }, [router]);
+  // Memoized callback for button click handler
+  const handleToSchedulePage = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      router.push("/schedulePage");
+    },
+    [router]
+  );
 
   return (
-    <div className="text-center relative bg-flowGradientTop rounded-t-5xl py-6 px-4">
+    <div className="text-center relative bg-flowGradientTop  rounded-t-5xl py-6 px-4">
       <p className="text-darkBlue font-bold text-lg leading-relaxed">
         Discover <span className="glitter_text">Your Pathway</span> to a Brilliant Future with{" "}
         <span className="glitter_text">Our Diverse Course Selection!</span>
@@ -25,9 +29,10 @@ const LimitedSeatsCTA: React.FC = () => {
       <button
         className="btn-solid-bg-transition btn-solid-bg-transition-orange py-2 px-8 mt-4"
         onClick={handleToSchedulePage}
-        aria-label="Enroll Now Limited Seats"
       >
-        <span>LIMITED SEATS, ENROLL NOW!</span>
+        <span>
+        LIMITED SEATS, ENROLL NOW!
+        </span>
       </button>
     </div>
   );

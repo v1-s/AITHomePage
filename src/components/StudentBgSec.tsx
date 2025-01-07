@@ -78,7 +78,7 @@ const StudentBackgrounds = () => {
             return (
               <div
                 key={index}
-                className="absolute text-gray-700 text-xs md:text-md lg:text-nowrap text-wrap "
+                className="absolute text-gray-700 text-xs md:text-sm lg:text-nowrap text-wrap "
                 style={{
                   top,
                   left,

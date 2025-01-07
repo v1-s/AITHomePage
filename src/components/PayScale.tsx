@@ -171,14 +171,14 @@ const PayScale = ({ courseUrl }: { courseUrl: string }) => {
 
   return (
     <div className="w-full lg:max-w-6xl mx-auto my-20 mt-10 p-6 lg:p-0">
-      <h2 className="text-2xl font-bold mb-5 text-center relative element after:bottom-N10">
+      <h2 className="text-2xl font-bold text-center ">
         In-Demand Roles - Salaries - Top Employers
       </h2>
-      <p className="text-gray-600 mb-8 text-center">
+      <p className="text-gray-600 mb-10 text-center relative element after:bottom-N15 glitter_text">
         Explore the most popular courses, their salaries, and top employers.
       </p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start shadow-soft p-4 rounded-lg bg-white">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start shadow-card p-4 rounded-lg bg-white">
         <div className="col-span-1 lg:border-r border-gray-200 pr-4">
           <h3 className="text-xl font-semibold mb-4">Designation</h3>
           <div className="flex flex-col h-full">
@@ -213,7 +213,7 @@ const PayScale = ({ courseUrl }: { courseUrl: string }) => {
 
         <div className="col-span-1">
           <h3 className="text-xl font-semibold mb-4">Hiring Companies</h3>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 md:gap-6">
             {popularCourses
               .find((course) => course.course === selectedDesignation)
               ?.image.map((img, idx) => (

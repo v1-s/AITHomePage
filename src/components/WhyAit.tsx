@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import phases from "@/utils/phases";
 import Image from "next/image";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ScrollSections: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -54,7 +56,7 @@ const ScrollSections: React.FC = () => {
   return (
     <div className="w-full md:w-4/5 mx-auto ">
       <div className="z-10 p-4 text-center relative">
-        <h1 className="text-lg md:text-2xl md:text-3xl text-maincolor_1 font-bold glitter_text inline-block element relative after:bottom-N20">
+        <h1 className="text-2xl md:text-3xl text-maincolor_1 font-bold glitter_text inline-block elementl relative after:bottom-N20">
           Experience the AchieversIT Advantage
         </h1>
 
@@ -76,16 +78,16 @@ const ScrollSections: React.FC = () => {
                 <p className="text-justify text-wrap text-sm md:text-base">{phase.description}</p>
                 <div className="mt-5 justify-end hidden md:flex space-x-2">
                   <button
-                    className="border-2 border-maincolor_1 text-maincolor_1 font-bold px-5 text-3xl"
+                    className="border-2 border-maincolor_1 text-maincolor_1 font-bold px-5 text-2xl"
                     onClick={handlePrev}
                   >
-                    &lt;
+                    <FontAwesomeIcon icon={faChevronLeft} />
                   </button>
                   <button
-                    className="border-2 border-maincolor_1  text-maincolor_1 font-bold px-5 text-3xl"
+                    className="border-2 border-maincolor_1  text-maincolor_1 font-bold px-5 text-2xl"
                     onClick={handleNext}
                   >
-                    &gt;
+                    <FontAwesomeIcon icon={faChevronRight} />
                   </button>
                 </div>
               </div>

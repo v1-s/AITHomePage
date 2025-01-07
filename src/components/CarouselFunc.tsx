@@ -109,17 +109,17 @@ const Carousel: React.FC<CarouselProps> = ({
   };
 
   return (
-    <div className="relative h-full w-full md:w-full lg:overflow-hidden">
+    <div className="relative h-full w-full lg:overflow-hidden">
       {/* Image for main carousel */}
       {showImage && safeBlogs[currentSlide]?.baseurl && (
-        <div className="h-64">
+        <div className="w-full h-64">
           <ImageComponent imagePath={`${safeBlogs[currentSlide]?.image}` || "assets/images/ai.jpg"} />
         </div>
       )}
 
       {/* Overlay Text for main carousel */}
       {showOverlayText && safeBlogs[currentSlide] && (
-        <div className="absolute w-full h-full left-2 bg-white bg-opacity-80 p-4 rounded-md">
+        <div className=" w-full bg-white bg-opacity-80 p-4 rounded-md">
           <h1 className="text-3xl font-bold text-gray-800 pt-2">
             {safeBlogs[currentSlide]?.blog_name}
           </h1>
@@ -127,7 +127,7 @@ const Carousel: React.FC<CarouselProps> = ({
             by<span className="capitalize font-bold"> {safeBlogs[currentSlide]?.blog_writter}</span> on  {new Date(safeBlogs[currentSlide]?.created_at).toISOString().split('T')[0]}
           </p>
           <p className="text-gray-700 mt-3" dangerouslySetInnerHTML={{ __html: safeBlogs[currentSlide]?.blog_content.slice(0, 800) }} />
-          <div className="flex justify-end mt-0">
+          <div className="flex justify-end mt-2">
             <a
               onClick={() => handleReadMoreClick(safeBlogs[currentSlide])}
               className="btn-hover-bg-transition btn-hover-bg-transition-og px-14 text-black py-1 px-5 border border-gray-500 px-10 cursor-pointer"

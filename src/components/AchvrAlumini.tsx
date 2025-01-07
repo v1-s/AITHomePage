@@ -161,7 +161,7 @@ const alumni = [
 ];
 
 
-export const colorClasses = [
+export const borderColorClasses = [
   "border-maincolor_1",
   "border-blue-500",
   "border-green-500",
@@ -174,6 +174,10 @@ export const colorClasses = [
   "border-gray-500",
 ];
 const fallbackImage = "/assets/images/banner-img2.png"; 
+/**
+ * AlumniSection component displays a list of alumni with their details.
+ * It includes functionality to load more alumni profiles on button click.
+ */
 const AlumniSection: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(6);
 
@@ -182,13 +186,14 @@ const AlumniSection: React.FC = () => {
     setVisibleCount((prevCount) => prevCount + 3); // Load 3 more cards
   };
   const ImageComponent = ({ imagePath }: { imagePath: string }) => {
+    const [hasError, setHasError] = useState(false);
     const fullImagePath = imageBasePath + imagePath;
     const handleError = () => {
       setHasError(true); // Set error state if image fails to load
     };
     return (
       <Image
-      src={hasError ? fallbackImage : fullImagePath}
+        src={hasError ? fallbackImage : fullImagePath}
         alt="Student"
         className="w-full object-cover rounded-lg"
         loading="lazy"
@@ -201,22 +206,20 @@ const AlumniSection: React.FC = () => {
     
   return (
     <div className="py-12 bg-gray-50">
-      <h2 className="text-3xl font-bold text-center mb-8 elementl pb-2 mb-12 relative glitter_text">
+      <h2 className="text-3xl font-bold text-center mb-12 elementl pb-2  relative glitter_text w-3/4  mx-auto">
         Meet Our Alumni
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-24 max-w-5xl mx-auto py-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-24 w-3/4 mx-auto py-12">
         {alumni.slice(0, visibleCount).map((alum, index) => {
-          const colorClass = colorClasses[index % colorClasses.length]; // Assign a color class to each alumni card
+          const colorClass = borderColorClasses[index % borderColorClasses.length]; // Assign a color class to each alumni card
           return (
-            <div
+              <div
               key={index}
-              className={`relative bg-white shadow-card md:h-35 mx-4 flex-shrink-0 w-64 md:w-80 p-2 rounded-lg border-b-8 ${colorClass}`}
-              style={{ position: "relative", overflow: "visible" }}
+              className={`relative bg-white shadow-card md:h-35 mx-4 flex-shrink-0 w-64 md:w-80 p-2 rounded-lg border-b-8 ${colorClass} relative overflow-visible`}
             >
               {/* Image Section */}
               <div
-  className={`absolute left-1/2 transform -translate-x-1/2 -top-10 md:-top-14 w-16 md:w-24 h-16 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-white border-4 ${colorClass}`}
-  style={{ zIndex: 10 }}
+  className={`absolute left-1/2 transform -translate-x-1/2 -top-10 md:-top-14 w-16 md:w-24 h-16 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-white border-4 ${colorClass} z-10`}
 >
   <ImageComponent imagePath={alum.image} />
 </div>
