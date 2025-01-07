@@ -49,6 +49,13 @@ const BlogDetailsPage = () => {
   const { baseurl } = router.query;
   const { selectedBlog } = useBlogContext();
   const [blogDetails, setBlogDetails] = useState<Blog | null>(null);
+  useEffect(() => {
+    // Prefetch the page in the background
+    router.prefetch("/schedulePage");
+  }, [router]);
+  const goToSchedulePage = () => {
+    router.push("/schedulePage");
+  };
 
   useEffect(() => {
     if (!selectedBlog) {
@@ -114,7 +121,7 @@ const BlogDetailsPage = () => {
               aria-label="Enroll now and get 20% off on all courses"
             // onClick={openAdvisorModal}
             >
-              <span className="font-bold">Become an Industry-Recognized Expert <FontAwesomeIcon icon={faArrowRight} className="ml-2 font-bold" /></span>
+              <span className="font-bold"  onClick={goToSchedulePage}>Become an Industry-Recognized Expert <FontAwesomeIcon icon={faArrowRight} className="ml-2 font-bold" /></span>
             </button>
           </div>
         </div>
