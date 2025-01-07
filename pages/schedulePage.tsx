@@ -51,10 +51,20 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
   });
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [enrolling, setEnrolling] = useState<{ [key: number]: boolean }>({});
-  const [isBrochureModalOpen, setIsBrochureModalOpen] =
-    useState<boolean>(false);
-  const [isAdvisorModalOpen, setIsAdvisorModalOpen] = useState<boolean>(false);
-  const [modalKey, setModalKey] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalKey, setModalKey] = useState(0);
+  const [isAdvisorModalOpen, setIsAdvisorModalOpen] = useState(false); 
+
+  const openAdvisorModal = () => {
+    setModalKey((prevKey) => prevKey + 1); // Increment key to force re-render
+    setIsAdvisorModalOpen(true);
+  };
+
+
+  const closeAdvisorModal = () => {
+    setIsAdvisorModalOpen(false);
+  };
+
 
   // Fetch Courses
   useEffect(() => {
@@ -186,7 +196,10 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
   const clearFilters = () => {
     setFilters({ timeSlot: null, batch: null, category: null });
   };
+  const openModal = (courseName: string) => {
 
+    setIsModalOpen(true);
+  };
   const uniqueCourses = useMemo(
     () =>
       courses.filter(
@@ -200,27 +213,14 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
     return <p>Loading...</p>;
   }
 
-  const toggleBrochureModal = () => {
-    setIsBrochureModalOpen((prevState) => !prevState);
-  };
 
-  const handleModalClose = () => {
-    setIsAdvisorModalOpen(false);
-    setIsBrochureModalOpen(false);
-  };
 
+  
   const handleFilterClick = (key: keyof Filters, label: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [key]: prevFilters[key] === label ? null : label,
     }));
-  };
-
-  const toggleAdvisorModal = () => {
-    setIsAdvisorModalOpen((prevState) => !prevState);
-    if (!isAdvisorModalOpen) {
-      setModalKey((prevKey) => prevKey + 1);
-    }
   };
 
   return (
@@ -268,17 +268,17 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                   <p className="text-gray-800 text-sm">No Cost EMI ₹2,667/month*</p>
                   <button
                     className="btn-hover-bg-transition btn-hover-bg-transition-og text-black  border border-gray-500 px-5 py-2 pb-2 pt-2 text-white bg-cyan-950 "
-                    onClick={toggleBrochureModal}    >
+                onClick={openAdvisorModal} >
                     <span>Reach Us</span>
                   </button>
-                  {isBrochureModalOpen && !isAdvisorModalOpen && (  // Prevent advisor modal from opening when brochure is active
+                  {isAdvisorModalOpen&& (  // Prevent advisor modal from opening when brochure is active
                     <DwnldAdvisorModalForm
                       imageSrc="/assets/images/dwnldbrchrimg.png"
                       key={modalKey}
                       formName="Brochure"
                       title="Start Your Journey with Us"
                       text="Ready to take your career to the next level? Explore a world of possibilities and find your perfect fit with us!"
-                      closeModal={handleModalClose}
+                      closeModal={closeAdvisorModal}
                     />
                   )}
                 </div>
@@ -479,28 +479,28 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                           </div>
                         </div>
 
-                        <div className="mt-2 sm:ml-4 text-center">
+                        <div className="mt-2 sm:ml-4 text-center relative">
+                          <div className="relative">
                           <button
-                            onClick={toggleAdvisorModal}
-                            className={`px-6 py-2 rounded-lg font-medium ${
-                              enrolling[course.id]
-                                ? "bg-green-600 text-white"
-                                : "bg-mainblue text-white hover:bg-blue-700"
-                            }`}
-                          >
-                            {enrolling[course.id] ? "Enrolling..." : "Enroll"}
+    onClick={() => openModal}
+                            className={`px-6 py-2 rounded-lg font-medium relative `}
+                          >Enroll
                           </button>
-                          {isAdvisorModalOpen && (
-                            <DwnldAdvisorModalForm
-                              imageSrc="/assets/images/advisor.png"
-                              key={modalKey}
-                              formName="Course"
-                              title="Discuss with an Expert"
-                              text="Provide your information below to get your course syllabus delivered through WhatsApp and Email"
-                              closeModal={handleModalClose}
-                              modalclassname=""
-                            />
-                          )}
+                           {isModalOpen && (
+                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                              <DwnldAdvisorModalForm
+                                                  imageSrc="/assets/images/advisor.png"
+                                                  key={modalKey}
+                                                    formName="homepage/enroll"
+                                                    title="Launch Your Career Today"
+                                                    text="Provide your information below to get Kick-start your journey toward a bright future."
+                                                    closeModal={closeAdvisorModal} // Close modal using the same toggle function
+                                                    modalclassname=" md:max-w-4xl"
+                                                    downloadPdf={false}
+                                                  />
+                              </div>
+                           )}
+                          </div>
                           <p className="text-sm text-orange-500 mt-2 flex flex-col items-center">
                             <span className="text-yellow-500">
                               ⚡ Filling Fast
