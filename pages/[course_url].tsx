@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Head from "next/head";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faStar, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faStar, faCheck, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarOutline } from "@fortawesome/free-regular-svg-icons";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import PayScale from "@/components/PayScale";
@@ -21,7 +21,7 @@ import { imageBasePath } from "@/utils/img.config";
 import CourseTools from "@/components/CourseTools";
 import Image from "next/image";
 import BatchDetails from "@/components/CourseCardSchedule";
-
+import ProjectCards from "@/components/CourseProjects";
 type BatchDetail = {
   batchStartDate: string;
   batchTimings: string;
@@ -71,7 +71,7 @@ const CourseDetails: React.FC = () => {
 
 
   const ImageComponent: React.FC<{ imagePath: string }> = ({ imagePath }) => {
-    const fullImagePath = imageBasePath + imagePath;
+    const  fullImagePath = imagePath ? `${imageBasePath}${imagePath}` : "/assets/images/default-course.png";
 
     return (
       <Image
@@ -145,6 +145,7 @@ const CourseDetails: React.FC = () => {
     fetchCourseData();
   }, [fetchCourseData]);
 
+
   const seoTitle = useMemo(() => `${course?.title} - Course Details`, [course]);
   const seoDescription = useMemo(() => course?.description || '', [course]);
 
@@ -161,7 +162,7 @@ const CourseDetails: React.FC = () => {
         <meta name="robots" content="index, follow" />
       </Head>
       <div className="max-w-7xl mx-auto sm-p-0 md:gradient-bg-section rounded-lg">
-        <div className="p-5 sm:p-6 z-10 relative">
+      <div className="p-5 sm:p-6 z-10 relative">
           <div className="text-sm text-purple-100 mb-2 flex space-x-1">
             <Link
               href="/"
@@ -189,14 +190,20 @@ const CourseDetails: React.FC = () => {
             </h1>
             <div className="flex items-center mb-4">
               <div className="flex text-yellow-400">
-                {Array(5)
-                  .fill(0)
-                  .map((_, index) => (
-                    <FontAwesomeIcon
-                      key={index}
-                      icon={index < course.rating ? faStar : faStarOutline}
-                    />
-                  ))}
+              {Array(5) // Assuming ratings are out of 5
+  .fill(0)
+  .map((_, index) => {
+    if (index < Math.floor(course.rating)) {
+      // Full star for integers
+      return <FontAwesomeIcon key={index} icon={faStar} />;
+    } else if (index < course.rating) {
+      // Half star for fractional part
+      return <FontAwesomeIcon key={index} icon={faStarHalfAlt} />;
+    } else {
+      // Empty star for remaining
+      return <FontAwesomeIcon key={index} icon={faStarOutline} />;
+    }
+  })}
               </div>
               <span className="ml-2 text-gray-600">
                 {course.reviews}
@@ -287,7 +294,7 @@ const CourseDetails: React.FC = () => {
           </div>
           <div className="order-1 md:order-2 md:w-1/2 p-4 flex justify-center items-center z-1">
             <div className="relative w-full max-w-sm">
-              <ImageComponent imagePath={`management/uploads/course_image/${course.image}`} />
+            <ImageComponent imagePath={course.image ? `management/uploads/course_image/${course.image}`:""} />
             </div>
           </div>
         </div>
@@ -333,6 +340,7 @@ const CourseDetails: React.FC = () => {
         } />
         <CourseTools courseUrl={course_url as string} />
         <TrendingCoursesInIT text="Popular Trending Courses in IT Companies" />
+        <ProjectCards/>
         <FAQComponent faqData={faqData} />
         <Reviews />
       </div>

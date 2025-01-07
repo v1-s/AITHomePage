@@ -104,16 +104,6 @@ input {
 }
 
 
-@media (max-width: 768px) {
-  .search-container input {
-    display: none;
-  }
-
-  .search-container.show-input input {
-    display: block;
-    min-width: 200px;
-  }
-}
 /* mini border bottom */
 .element::after , .elements::after{
   content: '';

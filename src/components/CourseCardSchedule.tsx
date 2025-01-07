@@ -96,11 +96,10 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
         <h2 className="text-2xl font-semibold text-gray-900 ml-4 glitter_text">Course Enrollment</h2>
         <ul className="mt-4 space-y-4 px-4 cursor-pointer transform-scale-100">
           {batches.length > 0 ? (
-            batches.map((batch) => (
+            batches.map((batch,index) => (
               <li
                 key={batch.link}
-                className={`border-b py-4 bg-gray-50 rounded-md px-3 relative ${batch.status === "SOLD OUT" ? "border-maincolor_1" : "border-gray-300"} ${selectedBatchLink === batch.link ? "bg-blue-100" : ""} cursor-pointer transform transition-transform duration-200 hover:scale-105`} // Highlight selected batch
-                onClick={() => handleBatchSelect(batch.link)} // Use batch.link for selection
+                className={`border-b py-4 bg-gray-50 rounded-md px-3 relative  ${batch.status === "SOLD OUT" ? "border-maincolor_1" : "border-gray-300"} ${selectedBatchLink === batch.link ? "bg-blue-100" : ""} cursor-pointer transform transition-transform duration-200 hover:scale-105`}
               >
                 {batch.status !== "SOLD OUT" && (
                   <span
@@ -113,21 +112,22 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
                   </span>
                 )}
 
-                <div className="flex gap-7 items-center pt-4">
+<div className="flex flex-wrap gap-7 items-center pt-4">
                   {batch.status === "SOLD OUT" && (
                     <span className="text-maincolor_1 font-bold w-xs border border-maincolor_1 p-2 text-wrap rounded-md pointer-events-none">
                       {batch.status.replace(" ", "\n")}
                     </span>
                   )}
 
-                  {batch.status !== "SOLD OUT" && (
-                    <input
-                      type="radio"
-                      className="border border-gray-500 pointer"
-                      checked={selectedBatchLink === batch.link} // Use selectedBatchLink for checking
-                      readOnly
-                    />
-                  )}
+{batch.status !== "SOLD OUT" && (
+  <input
+    type="radio"
+    name="batchSelection" // All radio buttons share the same `name`
+    className="border border-gray-500 pointer"
+    checked={selectedBatchLink === index.toString()} // Use index as a unique identifier
+    onChange={() => setSelectedBatchLink(index.toString())} // Update selectedBatchLink based on the index
+  />
+)}
 
                   <p className="text-gray-900 text-lg font-semibold">
                     {batch.batchStartDate && format(new Date(batch.batchStartDate), 'dd-MM-yy')}

@@ -15,6 +15,7 @@ const ProgCard = () => {
         {/* Render DynamicMegaMenu */}
         <div className="w-full">
           <DynamicMegaMenu
+          categmenu=""
           showClose={false}
             region="global"
             showCourseImage={false}

@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from 'next/image';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
-import CorContactForm from "@/components/CorporateContactForm";
 import HiringPartners from "@/components/HiringPartners";
 import StaticHeroComponent from "@/components/StaticHeroComponent";
 import CircularGraphSection from "@/components/graphs";

@@ -86,16 +86,16 @@ const GetInTouch = () => {
 
         {/* Contact Details */}
         <div className="mt-12 md:mt-0 text-center md:text-left">
-          <p className="font-semibold text-md text-cyan-950">
+          <p className="font-semibold text-md text-cyan-950 text-lg md:text-md ">
             ACHIEVERSIT STUDENTS, NEED ASSISTANCE?
           </p>
-          <p className="text-center font-semibold text-xl glitter_text">
+          <p className="text-center font-semibold text-md md:text-xl glitter_text">
             CONTACT US At
           </p>
-          <p className="mt-2 text-sm">
+          <p className="mt-2 text-xs md:text-sm">
             <strong>Phone (India):</strong> +91 89517 55400
           </p>
-          <p className="text-sm">
+          <p className="text-xs md:text-sm">
             <strong>Phone (US & ROW):</strong> +1 888 732 7043 (Toll Free)
           </p>
         </div>
@@ -112,8 +112,8 @@ const GetInTouch = () => {
                 className="bg-flowGradientBottom p-6 rounded-lg shadow-md flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-lg cursor-pointer"
               >
                 <div className="text-orange-500 mb-4">{option.icon}</div>
-                <h2 className="text-lg font-semibold text-gray-800">{option.title}</h2>
-                <p className="text-gray-600 mt-2 text-sm">{option.description}</p>
+                <h2 className="text-md md:text-lg font-semibold text-gray-800">{option.title}</h2>
+                <p className="text-gray-600 mt-2 text-xs md:text-sm">{option.description}</p>
               </div>
             ))}
           </div>

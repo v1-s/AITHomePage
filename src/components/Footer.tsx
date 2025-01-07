@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { footerData } from "../utils/mockfooterdata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSync } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
   faInstagram,
@@ -22,10 +23,19 @@ interface FooterLink {
 }
 
 const Footer = () => {
-  const [isClient, setIsClient] = useState(false);
-  const [phone, setPhone] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  
+  const [phone, setPhone] = useState<string>(""); // Holds the phone number input
+  const [captcha, setCaptcha] = useState<string>(""); // Holds the generated CAPTCHA
+  const [captchaInput, setCaptchaInput] = useState<string>(""); // Holds the user-entered CAPTCHA
+  const [error, setError] = useState<string>(""); // Error message
+  const [loading, setLoading] = useState<boolean>(false); // Loading state
+  useEffect(() => {
+    generateCaptcha(); // Generate CAPTCHA when the component mounts
+  }, []);
+  const generateCaptcha = () => {
+    const newCaptcha = Math.random().toString(36).substring(2, 8).toUpperCase(); // Generate a random CAPTCHA
+    setCaptcha(newCaptcha);
+  };
 
   const validatePhone = (phone: string): boolean => {
     const phoneRegex = /^\d{10}$/; // Ensures only valid 10-digit numbers
@@ -41,10 +51,14 @@ const Footer = () => {
       setError("Please enter a valid 10-digit phone number.");
       return;
     }
-
-    setError(""); // Clear previous errors
-    setLoading(true); // Start loading state
-
+    if (captcha !== captchaInput) {
+      setError("Invalid CAPTCHA. Please try again.");
+      generateCaptcha(); // Regenerate CAPTCHA on failure
+      return;
+    }
+    // Clear errors and start loading state
+    setError("");
+    setLoading(true);
     // Payload for the API request
     const payload = {
       myData: [
@@ -65,6 +79,8 @@ const Footer = () => {
       if (response.ok) {
         alert("Phone number submitted successfully!");
         setPhone(""); // Clear the input field
+        setCaptchaInput(""); // Clear CAPTCHA input
+        generateCaptcha(); //
       } else {
         // Show error if submission fails
         setError("Submission failed. Please try again.");
@@ -100,7 +116,7 @@ const Footer = () => {
 
     {/* Right Column: Social Media Icons */}
     <div className="flex justify-center md:justify-end w-full lg:w-1/2">
-      <ul className="flex flex-wrap justify-center lg:justify-end space-x-4">
+    <ul className="flex flex-wrap justify-center lg:justify-end gap-12 md:space-x-4">
         {/* Facebook */}
         <li>
           <a
@@ -188,28 +204,60 @@ const Footer = () => {
                 Request a demo to explore how AchieversIT&apos;s solutions enhance success, efficiency, and growth opportunities.
               </p>
               <form className="mt-6 w-full" onSubmit={handleSubmit}>
-      <label htmlFor="UserPhone" className="sr-only">Phone</label>
-      <div className="rounded-md border border-gray-500 p-1 focus-within:ring sm:flex sm:items-center sm:gap-4">
-        <input
-          type="text"
-          id="UserPhone"
-          placeholder="Enter phone number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          className={`w-full sm:text-sm !leading-[2.5] pl-[10px] bg-transparent focus:outline-none ${
-            error ? "focus:border-maincolor_1 focus:ring-maincolor_1" : "focus:border-blue-600 focus:ring-blue-600"
-          }`}
-        />
-        <button
-          type="submit"
-          className="mt-1 w-full rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-none hover:bg-white hover:text-black sm:mt-0 sm:w-auto sm:shrink-0"
-          disabled={loading}
-        >
-          {loading ? "Submitting..." : "Subscribe"}
-        </button>
+        {/* Row for Phone Number and CAPTCHA */}
+  <div className="flex flex-wrap items-center gap-4">
+    {/* Phone Number Input */}
+    <div className="flex-1">
+      <label htmlFor="UserPhone" className="sr-only">
+        Phone
+      </label>
+      <input
+        type="text"
+        id="UserPhone"
+        placeholder="Enter phone number"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        className={`w-full sm:text-sm px-4 py-2 rounded-md border border-gray-500 bg-transparent focus:outline-none ${
+          error ? "focus:border-maincolor_1 focus:ring-maincolor_1" : "focus:border-blue-600 focus:ring-blue-600"
+        }`}
+      />
+    </div>
+    {/* CAPTCHA Section */}
+    <div className="flex items-center gap-2">
+    <input
+        type="text"
+        placeholder="Enter CAPTCHA"
+        value={captchaInput}
+        onChange={(e) => setCaptchaInput(e.target.value)}
+        className="w-32 sm:w-40 text-sm rounded-md border border-gray-500 px-4 py-2 bg-transparent focus:border-blue-600 focus:ring-blue-600"
+      />
+    <button
+        type="button"
+        onClick={generateCaptcha}
+        className="text-sm font-bold text-maincolor_1 hover:underline"
+      >
+       <FontAwesomeIcon icon={faSync} className="text-lg" />
+      </button>
+      <div className="text-md font-semibold bg-gray-200 px-4 py-2 rounded">
+        {captcha}
+        </div>
+      
+    
       </div>
-      {error && <p className="mt-2 text-sm text-maincolor_1">{error}</p>}
-    </form>
+    </div>
+    {/* Subscribe Button */}
+    <div className="mt-4">
+    <button
+      type="submit"
+      className="w-full sm:w-auto rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
+      disabled={loading}
+    >
+      {loading ? "Submitting..." : "Subscribe"}
+    </button>
+  </div>
+  {/* Error Message */}
+  {error && <p className="mt-2 text-sm text-maincolor_1">{error}</p>}
+</form>
             </div>
 
             {/* Company, Explore, Support Section */}

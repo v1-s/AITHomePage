@@ -28,6 +28,7 @@ interface DynamicMegaMenuProps {
     categotyclassName: string;
     region: string;
     showClose: boolean; 
+    categmenu:string;
 }
 
 const ImageComponent = ({ imagePath }: { imagePath: string }) => {
@@ -55,7 +56,8 @@ const DynamicMegaMenu: React.FC<DynamicMegaMenuProps> = ({
     courseMainclassName = "",
     categotyclassName = "",
     region,
-    showClose
+    showClose,
+    categmenu=""
 }) => {
     const [categories, setCategories] = useState<Category[]>([]);
     const [courseData, setCourseData] = useState<{ [key: string]: Course[] }>({});
@@ -173,7 +175,7 @@ const DynamicMegaMenu: React.FC<DynamicMegaMenuProps> = ({
                         id="categoryList"
                         className={`category-column overflow-y-auto flex flex-col p-4 gap-2 bg-white ${categotyclassName}`}
                     >
-                         <div className="flex justify-between items-center">
+                         <div className={`flex justify-between items-center${categmenu}`}>
                         <h3 className="font-semibold text-lg mb-4">Categories</h3>
                        {showClose && (<button
                             onClick={closeMenu}

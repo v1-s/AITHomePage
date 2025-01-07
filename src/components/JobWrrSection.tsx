@@ -204,6 +204,46 @@ function WorriedSection() {
           </div>
         </article>
       </div>
+      {isSmallMediumScreen && (
+          <div className="flex justify-between items-center mt-4">
+            <button
+              onClick={() => scroll("left")}
+              disabled={currentActiveIndex === 0}
+              className="p-2 bg-gray-200 rounded-full hover:bg-maincolor_1 hover:text-white disabled:opacity-50"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button
+              onClick={() => scroll("right")}
+              disabled={currentActiveIndex === trendCourses.length - 1}
+              className="p-2 bg-gray-200 rounded-full hover:bg-maincolor_1 hover:text-white disabled:opacity-50"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        )}
     </div>
   </div>
   
