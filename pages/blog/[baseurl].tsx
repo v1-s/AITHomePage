@@ -50,7 +50,7 @@ const BlogDetailsPage = () => {
   const { selectedBlog } = useBlogContext();
   const [blogDetails, setBlogDetails] = useState<Blog | null>(null);
   useEffect(() => {
-    // Prefetch the page in the background
+ 
     router.prefetch("/schedulePage");
   }, [router]);
   const goToSchedulePage = () => {
