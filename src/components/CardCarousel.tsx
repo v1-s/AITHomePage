@@ -247,7 +247,7 @@ const CardCarousel = ({ blogs, cardClassName = "" }: BlogsProps) => {
             onMouseLeave={handleMouseLeave}
           >
             {/* Individual card */}
-            <div className=" relative bg-white rounded-lg shadow-lg overflow-hidden lg:h-[65vh] flex flex-col p-3">
+            <div className=" relative bg-white rounded-lg shadow-card overflow-hidden lg:h-[65vh] flex flex-col p-3">
               {/* Image */}
               <span className="absolute top-1 right-0 bg-maincolor_1 text-white text-xs font-semibold px-3 py-1 "
         style={{
@@ -281,7 +281,7 @@ const CardCarousel = ({ blogs, cardClassName = "" }: BlogsProps) => {
                     {blog.blog_name}
                   </h2>
                   <p
-                    className="text-gray-700 line-clamp-3 mb-0"
+                    className="text-gray-700 line-clamp-3 mb-0 text-wrap"
                     dangerouslySetInnerHTML={{
                       __html: blog.blog_content.slice(0, 50),
                     }}

@@ -140,7 +140,7 @@ input {
 }
 
 /* mini border bottom */
-.elementl::after{
+.elementl::after{ 
   content: '';
   /* Creates the pseudo-element */
   position: absolute;

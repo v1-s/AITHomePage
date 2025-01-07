@@ -106,7 +106,7 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
         <div className="max-w-7xl mx-auto my-10 bg-flowGradientTop">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
             {/* Left Column */}
-            <div className="p-6 text-left mx-4 flex flex-col">
+            <div className="p-6 text-left md:mx-4 flex flex-col">
               <h1 className="text-2xl lg:text-2xl font-bold mb-4">
                 Empower your team to excel in essential business skills and
                 drive success.
@@ -185,7 +185,7 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
       <HiringPartners
         title={
           <>
-            <h2 className="text-sky-900 text-3xl uppercase ">
+            <h2 className="text-sky-900 text-xl md:text-3xl uppercase p-2 ">
               Trusted by{" "}
               <span className=" glitter_text">
                 digital leaders and practitioners
@@ -201,7 +201,7 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
       {/* FAQ Section */}
       <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 my-10 ">
         <div className=" w-full md:w-4/5 mx-auto">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">
+          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center glitter_text relative elementl pb-2 mb-8">
             Corporate Training
           </h1>
           <div className="space-y-8">

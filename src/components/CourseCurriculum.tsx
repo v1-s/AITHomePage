@@ -61,7 +61,7 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-5xl">
+      <div className="w-full">
         {/* <h1 className="text-2xl font-bold mb-4">{courseDetails.title}</h1> */}
         <p className="mb-6">{courseDetails.description}</p>
         <div id="accordion">
@@ -69,7 +69,7 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
             curriculumData.map((item, index) => (
               <div key={index} className="border-b my-2">
                 <button
-                  className="w-full text-left p-4 text-gray-700 font-medium flex justify-between items-center focus:outline-none bg-flowGradientTop bg-cover bg-bottom bg-no-repeat"
+                  className="w-full text-left p-4  font-medium flex justify-between items-center focus:outline-none bg-Bg1 no-repeat bg-cover shadow-soft"
                   onClick={() => toggleAccordion(index)}
                 >
                   <h3 className="font-semibold uppercase text-lg text-cyan-950">
@@ -83,7 +83,7 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                   </span>
                 </button>
                 {expanded === index && (
-                  <div className="accordion-content p-8 text-gray-600">
+                  <div className="accordion-content p-8 text-gray-600 bg-white shadow-medium">
                     <div className="relative">
                       {/* Append item.answer dynamically with dots */}
                       <div
@@ -94,9 +94,9 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                             .replace(
                               /<li>(.*?)<\/li>/g,
                               `<li class="flex items-start gap-3 pl-4 list-disc relative">
-                                <span class="absolute left-0 top-1/2 transform -translate-y-1/2 text-blue-500">
+                                <span class="absolute left-0 top-1/2 transform -translate-y-1/2 text-mainBlue mr-2">
                                   <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="canadian-maple-leaf" 
-                                      class="svg-inline--fa fa-canadian-maple-leaf text-blue-500 font-semibold" role="img" 
+                                      class="svg-inline--fa fa-canadian-maple-leaf text-mainBlue font-semibold" role="img" 
                                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path fill="currentColor" d="M383.8 351.7c2.5-2.5 105.2-92.4 105.2-92.4l-17.5-7.5c-10-4.9-7.4-11.5-5-17.4 
                                       2.4-7.6 20.1-67.3 20.1-67.3s-47.7 10-57.7 12.5c-7.5 2.4-10-2.5-12.5-7.5s-15-32.4-15-32.4-52.6 

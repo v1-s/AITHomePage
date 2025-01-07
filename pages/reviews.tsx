@@ -206,7 +206,7 @@ const ReviewPage = () => {
         <div className="w-full md:w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Text Section */}
           <div className="text-center md:text-left">
-            <h1 className="text-xl mb-5 relative elements after:bottom-N10">AchieversIT Testimonials</h1>
+            <h1 className="text-xl mb-5 relative element md:elements after:bottom-N10">AchieversIT Testimonials</h1>
             <span className="md:text-3xl font-bold mb-4">Authentic Experiences, Remarkable Journeys</span>
             <p className="text-sm md:text-base mb-6">
               Explore candid testimonials from students who have completed our programs—from AI specialists to digital marketing professionals, our diverse offerings have empowered individuals worldwide to realize their full potential and fulfill their career ambitions.
@@ -235,10 +235,10 @@ const ReviewPage = () => {
       {/* Career Impacted Cards Section */}
       <div className="bg-gray-50 py-16 px-4 md:px-16" id="Careercard">
         <div className="container mx-auto text-center">
-          <h2 className="text-2xl md:text-2xl font-bold pb-12 uppercase">
+          <h2 className="text-2xl md:text-2xl font-bold mb-20 relative elementl pb-2 uppercase">
             <span className="glitter_text">Uplifting careers and inspiring change</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto w-full md:w-4/5 lg:w-3/4">
             {careers.slice(0, visibleCareers).map((career, index) => (
               <CareerCard
                 key={index}

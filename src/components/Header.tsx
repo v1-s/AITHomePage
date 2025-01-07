@@ -9,7 +9,7 @@ import Search from "@/components/Search";
 import Image from "next/image";
 
 const DynamicMegaMenu = dynamic(() => import("@/components/Megamenu"), { ssr: false });
-
+import CorporateBanner from './CorporateBanner';
 
 function Header() {
   const router = useRouter();
@@ -166,7 +166,7 @@ function Header() {
             {/* More Dropdown */}
             <div className="relative group" ref={menuRef}>
               <button
-                className="text-gray-700 flex items-center space-x-1 font-bold"
+                className="text-gray-700 flex items-center space-x-1 font-semibold"
                 aria-label="More Links"
                 onClick={handleMoreDropdownToggle}
               >

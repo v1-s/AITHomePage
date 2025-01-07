@@ -166,7 +166,7 @@ const DynamicMegaMenu: React.FC<DynamicMegaMenuProps> = ({
             <div
                 ref={menuRef}
                 id="dynamicMegaMenu"
-                className={`block flex flex-col sm:flex-col lg:flex-row lg:justify-center items-stretch mx-auto w-[80vw] xl:w-[80vw] 2xl:w-[80vw] shadow-card xl:min-h-0 z-100 ${menuclassName} overflow-auto max-h-[calc(100vh-20px)]`}
+                className={`block flex flex-col sm:flex-col lg:flex-row lg:justify-center items-stretch mx-auto w-full md:w-[80vw] 2xl:w-[80vw] shadow-card xl:min-h-0 z-100 ${menuclassName} overflow-auto max-h-[calc(100vh-20px)]`}
             >
                 {showCategoryList && (
                     <div

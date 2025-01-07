@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import EnrollmentForm from "@/components/EnrollForm";
 import BannerPromo from "@/components/BannerPromotion";
 import { imageBasePath } from "@/utils/img.config";
-import StaticHeroComponent from "@/components/StaticHeroComponent";
 
 // Define interfaces for props and blog data
 interface Blog {
@@ -50,8 +49,7 @@ const BlogPage = () => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true); // State for loading status
-  const [modalKey, setModalKey] = useState(0); // Key to force re-render
-  const [activeModal, setActiveModal] = useState<string | null>(null); 
+
   // Fetch blog details from the API
   useEffect(() => {
     const fetchBlogDetails = async () => {
@@ -82,14 +80,6 @@ const BlogPage = () => {
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(selectedCategory === category ? null : category);
   };
-  const openModal = (modalType: string) => {
-    setModalKey((prevKey) => prevKey + 1); // Increment key for re-render
-    setActiveModal(modalType); // Set the active modal
-  };
-
-  const closeModal = () => {
-    setActiveModal(null); // Close any active modal
-  };
 
   // Handle 'Read More' click to select the blog
   const handleReadMoreClick = (blog: Blog) => {
@@ -104,27 +94,41 @@ const BlogPage = () => {
       ) : (
         <div>
           {/* ------------------------------hero section -------------------------------------------- */}
-          {/* <h2 className="mx-14 text-2xl font-semibold mb-6 text-left relative elements pb-2 glitter_text uppercase">
+          <h2 className="mx-14 text-2xl md:text-4xl font-semibold my-10 text-center pb-2 glitter_text uppercase">
             <span>Blogs</span>
-          </h2> */}
+          </h2>
 
-<StaticHeroComponent
-        titleSubContext={
-          <>
-            <span className="glitter_text text-orange-500">Blogs</span> 
-  
-          </>
-        }
-        onEnrollClick={() => openModal("advisor")} // Open advisor modal
-        modalTitle="Read Our Latest Blogs:Stay Updated with Insights and Trends"
-        modalText="Share your interests, and our team  will help you connect with the right insights and trends effortlessly."
-        modalform="blog/enroll"
-      />
-          
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap items-center">
+              {/* Text Block */}
+              <div className="sm:w-full md:w-1/3 lg:w-1/2 xl:w-1/2 flex items-center">
+                <div className="home-marquee__text-block">
+                  <h1 className="text-xl md:text-3xl lg:text-5xl font-bold glitter_text">Where Opportunities Unfold</h1>
+                  <p className="hidden md:block text-lg">
+                    We are a premier platform for knowledge exchange and skill development. Discover some of our most popular resources and enhance your expertise in a variety of subjects
+                  </p>
+                </div>
+              </div>
 
-          <div className="grid md:grid lg:grid-cols-4 gap-6 md:p-6 h-full">
+              {/* Image Block */}
+              <div className="sm:w-full md:w-1/2 xl:w-1/2 flex justify-end order-first sm:order-none">
+                <Image
+                  width={500}
+                  height={500}
+                  src="/assets/images/blogs.png"
+                  className="home-marquee__marquee-image"
+                  alt="Blogs"
+                  decoding="async"
+                  fetchPriority="high"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid lg:grid-cols-4 gap-6 m-4 md:mx-45  lg:mx-20 h-full">
             {/* Right Section: Carousel */}
-            <div className="md:col-span-3 relative shadow-glassShadow lg:h-[480px] w-auto">
+            <div className="md:col-span-3 relative shadow-glassShadow lg:h-[480px]">
               <Carousel
                 blogs={blogDetails || []}
                 showOverlayText={true}
@@ -136,8 +140,8 @@ const BlogPage = () => {
             </div>
 
             {/* Left Section: Stacked Card */}
-            <div className="space-y-6 border rounded-lg shadow-lg p-12 md:p-6 lg:mt-0 lg:h-[480px] flex flex-col justify-center items-center mt-[100vh] sm:mt-[60vh] sm:block">
-              <h2 className="text-2xl font-semibold text-maincolor_1 mb-0">Trending Posts</h2>
+            <div className="space-y-6 border rounded-lg shadow-lg p-6 lg:mt-0 lg:h-[480px] flex flex-col justify-center items-center sm:block">
+              <h2 className="text-2xl font-semibold mb-0 text-center relative element mb-6">Trending Posts</h2>
               <Carousel
                 blogs={blogDetails || []}
                 showOverlayText={false}
@@ -149,22 +153,13 @@ const BlogPage = () => {
             </div>
           </div>
 
-          <EnrollmentForm
-            buttonText="Enroll Now"
-            showNameField={false}
-            showEmailField={true}
-            showMessageField={false}
-            showCaptchaField={true}
-            contacttext="Contact Us to Enroll!"
-          />
 
-          <div className="mx-45 p-5">
-            <h3 className="mb-4 text-2xl font-semibold text-center">Programming Blog Posts</h3>
+          <div className="m-4 md:mx-45 my-14 mb-20">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Left Column: Categories */}
-              <div className="lg:col-span-1">
-                <div className="sticky top-[23%]">
-                  <h4 className="text-xl font-semibold mb-4">Categories</h4>
+              <div className="lg:col-span-1 ">
+                <div className="sticky top-[15%] p-4 shadow-card">
+                  <h4 className="text-xl font-semibold mb-8 relative elements pb-1">Categories</h4>
                   <ul className="space-y-2">
                     {[...new Set(blogDetails?.map((blog) => blog.blog_category))].map((category) => (
                       <li key={category}>
@@ -187,77 +182,90 @@ const BlogPage = () => {
               </div>
 
               {/* Right Column: Blog Cards */}
-              <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 ">
-                {filteredBlogs?.map((blog) => (
-                  <div key={blog.baseurl} className="sm:w-1/2 md:w-1/2 lg:w-[350px] p-4 h-full flex-shrink-0 rounded-lg shadow-lg flex flex-col w-full">
-                    <span className="absolute top-1 right-0 bg-maincolor_1 text-white text-xs font-semibold px-3 py-1"
-                      style={{
-                        clipPath: 'polygon(0 0, 100% 0, 100% 51%, 100% 99%, 0 99%, 5% 50%)'
-                      }}>
-                      {blog.blog_category}
-                    </span>
-                    <div className="w-full h-35">
-                      <ImageComponent imagePath={`${blog.image}` || "assets/images/ai.jpg"} />
-                    </div>
-                    <div className="p-4 flex flex-col justify-between flex-grow h-full">
-                      {/* Category and Views */}
-                      <div className="mb-0 flex justify-between">
-                        <span className="text-yellow-500 text-sm">
-                          <FontAwesomeIcon
-                            icon={faEye}
-                            className="mr-1 text-yellow-500 text-md"
-                          />{" "}
-                          {blog.no_of_views}
-                        </span>
+              <div className="lg:col-span-2 p-4">
+                <h3 className="mb-4 text-2xl font-semibold text-left relative elements mb-8 pb-1">Programming Blog Posts</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                  {filteredBlogs?.map((blog) => (
+                    <div key={blog.baseurl} className="p-4 h-full flex-shrink-0 rounded-lg shadow-lg flex flex-col w-full relative">
+                      <span className="absolute top-1 right-0 bg-maincolor_1 text-white text-xs font-semibold px-3 py-1"
+                        style={{
+                          clipPath: 'polygon(0 0, 100% 0, 100% 51%, 100% 99%, 0 99%, 5% 50%)'
+                        }}>
+                        {blog.blog_category}
+                      </span>
+                      <div className="w-full h-35">
+                        <ImageComponent imagePath={`${blog.image}` || "assets/images/ai.jpg"} />
                       </div>
-
-                      {/* Title and Content */}
-                      <div className="flex-grow overflow-hidden h-25 mt-2">
-                        <h2 className="text-lg font-bold text-gray-800 mb-2 lg:h-12 1024-1200:h-14 break-words text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
-                          {blog.blog_name}
-                        </h2>
-                        <p className="text-gray-700 line-clamp-3 mb-3 text-wrap" dangerouslySetInnerHTML={{ __html: blog.blog_content }}>
-                        </p>
-                      </div>
-
-                      {/* Divider */}
-                      <hr className="bg-gray-600 w-full mb-3" />
-
-                      <div className="flex flex-col md:flex-row justify-between items-center">
-                        {/* Left Column: Author and Date */}
-                        <div>
-                          <span className="text-sm text-black font-bold"> by{" "}</span>
-                          <span className="text-maincolor_1 text-md font-bold capitalize text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
-                            {blog.blog_writter}
+                      <div className="p-4 flex flex-col justify-between flex-grow h-full">
+                        {/* Category and Views */}
+                        <div className="mb-0 flex justify-between">
+                          <span className="text-yellow-500 text-sm">
+                            <FontAwesomeIcon
+                              icon={faEye}
+                              className="mr-1 text-yellow-500 text-md"
+                            />{" "}
+                            {blog.no_of_views}
                           </span>
-                          <p className="text-sm text-gray-500 flex flex-col">
-                            on{" "}
-                            <span className="text-yellow-500 text-sm">
-                              {new Date(blog.created_at).toISOString().split('T')[0]}
-                            </span>
+                        </div>
+
+                        {/* Title and Content */}
+                        <div className="flex-grow overflow-hidden h-25 mt-2">
+                          <h2 className="text-lg font-bold text-gray-800 mb-2 lg:h-12 1024-1200:h-14 break-words text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
+                            {blog.blog_name}
+                          </h2>
+                          <p className="text-gray-700 line-clamp-3 mb-3 text-wrap" dangerouslySetInnerHTML={{ __html: blog.blog_content }}>
                           </p>
                         </div>
 
-                        {/* Right Column: Read More Link */}
-                        <div className="mt-3 md:mt-0 md:ml-6">
-                          <button
-                            className="btn-solid-bg-transition btn-solid-bg-transition-orange px-2 py-1 flex items-center"
-                            onClick={() => handleReadMoreClick(blog)}
-                          >
-                            <span className="flex items-center text-nowrap gap-2">Read More
-                              <FontAwesomeIcon icon={faBook} className="fa fa-arrow-right animate-pulse" /></span>
-                          </button>
+                        {/* Divider */}
+                        <hr className="bg-gray-600 w-full mb-3" />
+
+                        <div className="flex flex-col md:flex-row justify-between items-center">
+                          {/* Left Column: Author and Date */}
+                          <div className="flex gap-2 items-center">
+                            <span className="text-sm text-black font-bold"> by{" "}</span>
+                            <span className="text-maincolor_1 text-md font-bold capitalize text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
+                               {blog.blog_writter}
+                            </span>
+                            <span className="text-sm text-gray-500">
+                              on{" "}
+                              <span className="text-yellow-500 text-sm">
+                                {new Date(blog.created_at).toISOString().split('T')[0]}
+                              </span>
+                            </span>
+                          </div>
+
+                          {/* Right Column: Read More Link */}
+                          <div className="mt-3 md:mt-0 md:ml-6">
+                            <button
+                              className="btn-solid-bg-transition btn-solid-bg-transition-orange px-2 py-1 flex items-center"
+                              onClick={() => handleReadMoreClick(blog)}
+                            >
+                              <span className="flex items-center text-nowrap gap-2">Read More
+                                <FontAwesomeIcon icon={faBook} className="fa fa-arrow-right animate-pulse" /></span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="container-fluid py-5">
-            <h3 className="mb-4 text-2xl font-semibold text-center">Latest Blog Posts</h3>
+         <div className="container mx-auto px-4">
+         <EnrollmentForm
+            buttonText="Enroll Now"
+            showNameField={false}
+            showEmailField={true}
+            showMessageField={false}
+            showCaptchaField={true}
+            contacttext="Contact Us to Enroll!"
+          />
+         </div>
+          <div className="md:container mx-auto py-5 my-10">
+            <h3 className="mb-4 text-3xl font-semibold text-center glitter_text relative element pb-2 mb-6">Latest Blog Posts</h3>
             <CardCarousel blogs={blogDetails || []} cardClassName="w-full sm:w-1/2 md:w-1/3 lg:w-[350px] xl:w-1/3" />
           </div>
 

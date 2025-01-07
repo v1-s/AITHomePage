@@ -4,8 +4,9 @@ import { useBlogContext } from "@/utils/BlogContext";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import { faThumbTack } from "@fortawesome/free-solid-svg-icons";
+import { faThumbTack, faChevronRight, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import BannerPromo from "@/components/BannerPromotion";
 // import EnrollmentForm from "@/components/EnrollForm";
 
 import { imageBasePath } from "@/utils/img.config";
@@ -24,11 +25,6 @@ interface Blog {
   created_at: string;
   image: string;
 }
-
-// interface EnrollmentFormProps {
-//     // ...existing properties...
-//     onClose: () => void;
-// }
 
 const ImageComponent = ({ imagePath }: { imagePath: string }) => {
   const fullImagePath = imageBasePath + imagePath;
@@ -50,7 +46,7 @@ const ImageComponent = ({ imagePath }: { imagePath: string }) => {
 
 const BlogDetailsPage = () => {
   const router = useRouter();
-  const { baseurl } = router.query; 
+  const { baseurl } = router.query;
   const { selectedBlog } = useBlogContext();
   const [blogDetails, setBlogDetails] = useState<Blog | null>(null);
 
@@ -78,49 +74,88 @@ const BlogDetailsPage = () => {
       // If selectedBlog is available from context
     }
   }, [baseurl, selectedBlog]);
-  
-  if (!selectedBlog) {
+
+  if (!blogDetails) {
     return <div className="text-center py-20">Not Loading blog details...</div>;
   }
 
   return (
-    <div>
-      <div className="container max-w-5xl mx-auto">
-        {/* Dynamic Breadcrumb Navigation */}
-        <nav aria-label="breadcrumb">
-          <ol className="flex mb-0 px-0 mt-5">
-            <li className="breadcrumb-item">
-              <Link href="/" className="text-black font-bold hover:text-maincolor_1">
-                Home
-              </Link>
-            </li>
-            <span className="mx-2 text-gray-400">/</span>
-            <li className="breadcrumb-item">
-              <Link href="/blog" className="text-black font-bold hover:text-maincolor_1">Blog</Link>
-            </li>
-            <span className="mx-2 text-gray-400">/</span>
-            <li className="breadcrumb-item text-maincolor_1 font-bold" aria-current="page">
-              {selectedBlog.blog_category}
-            </li>
-          </ol>
-        </nav>
-        <hr className="border-gray-300 w-full my-5" />
+    <div className=" mx-auto">
+      <div className="bg-gray-100">
+        <div className="w-full md:w-2/3 mx-auto p-4">
 
-        <div className="hero-banner">
-          <h1 className="text-blue text-left text-2xl lg:text-3xl text-maincolor_1 mb-5 elementl relative pb-4 text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
-            {selectedBlog.blog_name}
-          </h1>
-          <div className="w=full mx-auto flex justify-center">
+          <nav aria-label="breadcrumb" className=" mb-4">
+            <ol className="flex mb-0 px-0">
+              <li className="breadcrumb-item">
+                <Link href="/" className="text-black font-bold hover:text-maincolor_1">
+                  Home
+                </Link>
+              </li>
+              <span className="mx-2 text-gray-400"><FontAwesomeIcon icon={faChevronRight} /></span>
+              <li className="breadcrumb-item">
+                <Link href="/blog" className="text-black font-bold hover:text-maincolor_1">Blog</Link>
+              </li>
+              <span className="mx-2 text-gray-400"><FontAwesomeIcon icon={faChevronRight} /></span>
+              <li className="breadcrumb-item  font-bold" aria-current="page">
+                {blogDetails.blog_category}
+              </li>
+              <span className="mx-2 text-gray-400"><FontAwesomeIcon icon={faChevronRight} /></span>
+              <li className="breadcrumb-item text-maincolor_1 font-bold" aria-current="page">
+                {blogDetails.blog_name}
+              </li>
+            </ol>
+          </nav>
+          <div className="flex items-center justify-between">
+            <h1 className="glitter_text font-bold text-left text-2xl lg:text-3xl text-wrap overflow-hidden text-ellipsis whitespace-nowrap uppercase">
+              {blogDetails.blog_category}
+            </h1>
+            <button
+              className="btn-solid-bg-transition btn-solid-bg-transition-orange py-2 px-8"
+              aria-label="Enroll now and get 20% off on all courses"
+            // onClick={openAdvisorModal}
+            >
+              <span className="font-bold">Become an Industry-Recognized Expert <FontAwesomeIcon icon={faArrowRight} className="ml-2 font-bold" /></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full md:w-3/4 mx-auto my-10">
+        <div className="hero-banner shadow-card p-8">
+
+          <div className="w-full mx-auto flex flex-col md:flex-row gap-6 justify-center">
             <ImageComponent imagePath={`${blogDetails?.image || "assets/images/ai.jpg"}`} />
+            <div className="content-center">
+              <h1 className=" font-bold text-left text-maincolor_1 text-base lg:text-2xl text-wrap">
+                <span> {blogDetails.blog_name}</span> : sub text need to be added abt breif(The Next Gen Big Data Analytics Framework For Stream And Batch Data Processing)
+              </h1>
+              <small className="font-bold">Last Updated On : <span className="text-yellow-500"> 07-01-2024</span></small>
+              <div className="flex flex-col md:flex-row  items-start md:items-center my-2 text-left">
+                <Image
+                  src="/assets/images/4.png"
+                  alt="Writer"
+                  className="rounded-full mr-6 mb-2 md:mb-0"
+                  width={80}
+                  height={80}
+                />
+                <div>
+                  <p className="ml-2whitespace-nowrap font-bold text-maincolor_1">{blogDetails.blog_writter}</p>
+                  <small className="text-wrap  ">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium consectetur sint nulla optio quos labore saepe voluptatum consequatur deleniti tempore vitae ea quam voluptatem corporis at asperiores sunt, a illo?</small>
+                </div>
+              </div>
+              {/* <p>Created on <span className="text-yellow-500 text-sm">
+                {new Date(blogDetails.created_at).toISOString().split('T')[0]}
+              </span>
+              </p> */}
+            </div>
           </div>
           <div className="mt-5">
             {/* Add your content here below the image */}
           </div>
         </div>
-
-        {/* Blog Content Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-          <div className="col-span-1 md:col-span-1 mt-5 md:bg-transparent bg-white z-40">
+        <hr className="border-gray-300 w-full my-5" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-12">
+          <div className="col-span-1 lg:col-span-1 mt-5 bg-white z-40 shadow-card p-4">
             <div className="quick-links sticky top-[120px]">
               <ul className="list-none">
                 <h5 className="font-bold text-maincolor_1 mb-0 text-xl">
@@ -132,15 +167,15 @@ const BlogDetailsPage = () => {
                     href="#section1"
                     className="flex items-center text-blue-500 p-1 hover:bg-maincolor_1 rounded hover:text-white group"
                   >
-                    <b>
-                      <FontAwesomeIcon
-                        icon={faThumbTack}
-                        className="mr-1 text-maincolor_1 text-xl group-hover:text-white"
-                      />{" "}
-                    </b>
-                    <span>Introduction</span>
-                  </a>
-                  <hr className="border-1 my-1" />
+                    <div className="flex items-center text-md font-bold my-1">
+                      <b>
+                        <FontAwesomeIcon
+                          icon={faChevronRight}
+                          className="mr-1 text-maincolor_1 group-hover:text-white"
+                        />{" "}
+                      </b>
+                      <span className="ml-2">Methodology</span>
+                    </div></a>
                 </li>
 
                 <li>
@@ -148,15 +183,16 @@ const BlogDetailsPage = () => {
                     href="#section2"
                     className="flex items-center text-maincolor_1 p-1 hover:bg-maincolor_1 rounded hover:text-white group"
                   >
-                    <b>
-                      <FontAwesomeIcon
-                        icon={faThumbTack}
-                        className="mr-1 text-maincolor_1 text-xl group-hover:text-white"
-                      />{" "}
-                    </b>
-                    <span>Methodology</span>
+                    <div className="flex items-center text-md font-bold my-1">
+                      <b>
+                        <FontAwesomeIcon
+                          icon={faChevronRight}
+                          className="mr-1 text-maincolor_1 group-hover:text-white"
+                        />{" "}
+                      </b>
+                      <span className="ml-2">Methodology</span>
+                    </div>
                   </a>
-                  <hr className="border-1 my-1" />
                 </li>
 
                 <li>
@@ -164,34 +200,54 @@ const BlogDetailsPage = () => {
                     href="#section3"
                     className="flex items-center text-maincolor_1 p-1 hover:bg-maincolor_1 rounded hover:text-white group"
                   >
-                    <b>
-                      <FontAwesomeIcon
-                        icon={faThumbTack}
-                        className="mr-1 text-maincolor_1 text-xl group-hover:text-white"
-                      />{" "}
-                    </b>
-                    <span>Conclusion</span>
+                    <div className="flex items-center text-md font-bold my-1">
+                      <b>
+                        <FontAwesomeIcon
+                          icon={faChevronRight}
+                          className="mr-1 text-maincolor_1 group-hover:text-white"
+                        />{" "}
+                      </b>
+                      <span className="ml-2">Conclusion</span>
+                    </div>
                   </a>
-                  <hr className="border-1 my-1" />
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="blog-section col-span-2 mt-5">
+          <div className="blog-section col-span-2 mt-5 shadow-card p-4">
             <h2 className="text-2xl font-semibold mb-4 text-maincolor_1">
               Main Content
             </h2>
-            <p className="mb-4" dangerouslySetInnerHTML={{ __html: selectedBlog.blog_content }}></p>
-            <p className="text-lg font-medium" dangerouslySetInnerHTML={{ __html: selectedBlog.blog_content }}></p>
-            <p className="uppercase text-wrap overflow-hidden text-ellipsis whitespace-nowrap">by {selectedBlog.blog_writter}</p>
-            <p>Created on <span className="text-yellow-500 text-sm">
-              {new Date(selectedBlog.created_at).toISOString().split('T')[0]}
-            </span>
-            </p>
+            <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+            <p className="text-lg font-medium" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+
+            <Image
+              width={500}
+              height={500}
+              src="/assets/images/banner.jpg"
+              className="w-full my-10"
+              alt="bannerimage"
+              loading="lazy"
+            />
+            <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+            <p className="text-lg font-medium" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+            <Image
+              width={500}
+              height={500}
+              src="/assets/images/banner.jpg"
+              className="w-full my-10"
+              alt="bannerimage"
+              loading="lazy"
+            />
+            <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+            <p className="text-lg font-medium" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+
+
+
           </div>
 
-          <div className="col-span-1 md:col-span-1 mt-5 hidden md:block">
+          <div className="col-span-1 lg:col-span-1 mt-5 hidden lg:block">
             {/* <div className="w-full">
               <img
                 src="https://www.mbloging.com/_?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fyynr1uml%2Fproduction%2Fd3f0ff2ab5398aaffb00fa0b3afcb238772f42e7-1024x576.jpg%3Fw%3D1024%26auto%3Dformat&w=3840&q=75"
@@ -202,31 +258,28 @@ const BlogDetailsPage = () => {
           </div>
         </div>
 
-    
-
         <Image
           width={500}
           height={500}
-          src="/assets/images/Banner_Post.webp"
+          src="/assets/images/banner.jpg"
           className="w-full my-24"
           alt="bannerimage"
           loading="lazy"
         />
 
+        <h2 className="text-2xl font-semibold mb-4 text-maincolor_1 relative elementl text-center">
+          Contact Us
+        </h2>
+        <TrainingAdvisorForm />
 
-<h2 className="text-2xl font-semibold mb-4 text-maincolor_1 relative elementl text-center">
-             Contact Us
-            </h2>
-        <TrainingAdvisorForm/>
-
-{/* <EnrollmentForm
-            buttonText="Enroll Now"
-            showNameField={false}
-            showEmailField={true}
-            showMessageField={false}
-            showCaptchaField={true}
-            contacttext="Contact Us to Enroll!"
-          /> */}
+        {/* <EnrollmentForm
+          buttonText="Enroll Now"
+          showNameField={false}
+          showEmailField={true}
+          showMessageField={false}
+          showCaptchaField={true}
+          contacttext="Contact Us to Enroll!"
+        /> */}
       </div>
     </div>
   );

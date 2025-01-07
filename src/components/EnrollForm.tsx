@@ -131,14 +131,14 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   };
 
   return (
-    <div className="md:mx-12 bg-Bg2 bg-cover bg-no-repeat px-12 py-12 rounded-md shadow-glassShadow">
-      <h3 className="text-lightgrey font-semibold text-2xl text-maincolor_1 mb-5">{contacttext}</h3>
+    <div className="mx-12 bg-Bg2 bg-cover bg-no-repeat px-12 py-12 rounded-md shadow-glassShadow">
+      <h3 className="text-lightgrey font-semibold text-2xl glitter_text mb-5">{contacttext}</h3>
 
       <form className="needs-validation" name="enrollmentForm" onSubmit={handleSubmit} noValidate>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-center justify-center">
           {showNameField && (
             <div className="form-group font-bold">
-              <label htmlFor="name" className="block text-maincolor_1 text-lg mb-2">Name</label>
+              <label htmlFor="name" className="block text-lg mb-2">Name</label>
               <input
                 type="text"
                 id="name"
@@ -153,7 +153,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
 
           {showEmailField && (
             <div className="form-group font-bold">
-              <label htmlFor="email" className="block text-maincolor_1 text-lg mb-2">Email</label>
+              <label htmlFor="email" className="block text-lg mb-2">Email<span className="text-red-500 ml-1">*</span></label>
               <input
                 type="email"
                 id="email"
@@ -167,7 +167,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
           )}
 
           <div className="form-group font-bold">
-            <label htmlFor="contact" className="block text-maincolor_1 text-lg mb-2">Contact Number</label>
+            <label htmlFor="contact" className="block text-lg mb-2">Contact Number<span className="text-red-500 ml-1">*</span></label>
             <input
               type="tel"
               id="contact"
@@ -196,8 +196,8 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
 
           {showCaptchaField && (
             <div className="mb-0">
-              <label htmlFor="captchaInput" className="block mb-2 font-semibold text-maincolor_1 text-lg">
-                Captcha: <span className="font-mono text-lg bg-gray-200 px-2 rounded">{captcha}</span>
+              <label htmlFor="captchaInput" className="block mb-2 font-semibold text-lg">
+                Captcha<span className="text-red-500 ml-1">*</span> : <span className="font-mono text-lg bg-gray-200 px-2 rounded">{captcha}</span>
                 <FontAwesomeIcon
                   icon={faRotate}
                   className="fa-rotate-270 cursor-pointer ml-2"

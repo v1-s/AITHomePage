@@ -34,7 +34,7 @@ const MentorShip = () => {
         titleSubContext={
           <>
             Become{" "}
-            <span className="glitter_text text-orange-500 ">Guide</span> at
+            <span className="glitter_text text-orange-500">Guide</span> at
             AchieversIT <br />
             Empower the Future with{" "}
             <span className="glitter_text text-mainblue">Your Knowledge</span>
@@ -52,8 +52,8 @@ const MentorShip = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             {/* Heading Section */}
             <div className="text-center md:text-left">
-              <h1 className="text-xl md:text-4xl font-bold mb-4 text-gray-900">
-                <span className="text-xl md:text-2xl">
+              <h1 className="text-4xl font-bold mb-4 text-gray-900">
+                <span className="text-2xl">
                   Welcome to{" "}
                   <span className="glitter_text">AchieversIT</span>
                 </span>
@@ -78,7 +78,7 @@ const MentorShip = () => {
                       <>
                         <h2 className="uppercase text-center">
                           Ready to Inspire? <br />
-                          <span className="glitter_text uppercase text-xl md:text-2xl">
+                          <span className="glitter_text uppercase text-2xl">
                             Connect With Us Now!!
                           </span>
                         </h2>
@@ -115,7 +115,7 @@ const MentorShip = () => {
       <div className="flex items-center justify-center h-full py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-7xl p-8">
           <div className="bg-white p-8 rounded shadow-lg w-full max-w-lg mx-auto">
-            <h2 className="text-xl md:text-2xl font-semibold mb-6 text-center relative elementl pb-2 glitter_text uppercase">
+            <h2 className="text-2xl font-semibold mb-6 text-center relative elementl pb-2 glitter_text uppercase">
               <span>Join the Mentoring Community</span>
             </h2>
             <TrainingAdvisorForm/>
@@ -125,7 +125,7 @@ const MentorShip = () => {
               {/* Content Sections */}
               <div className="mb-2">
                 <h3 className="text-xl font-bold text-gray-800 mb-2 text-orange-500 uppercase"> Who can Lead?</h3>
-                <p className="text-gray-600 leading-relaxed text-md sm:text-xs">
+                <p className="text-gray-600 leading-relaxed">
                   Anyone who possesses profound expertise in a specific field and is
                   passionate about educating and imparting their knowledge to students
                   and professionals can lead at AchieversIT. Excellent communication skills
@@ -134,8 +134,8 @@ const MentorShip = () => {
               </div>
               {/* Process Section */}
               <div>
-                <h3 className="md:text-xl font-bold text-gray-800 mb-2 text-orange-500 uppercase"> How It Works</h3>
-                <p className="text-gray-600 leading-relaxed text-xs md:text-md">
+                <h3 className="text-xl font-bold text-gray-800 mb-2 text-orange-500 uppercase"> How It Works</h3>
+                <p className="text-gray-600 leading-relaxed">
                   First step! Complete the application form. If you&apos;re selected, you will
                   undergo a comprehensive training program based on AchieversIT&apos;s teaching
                   approach.

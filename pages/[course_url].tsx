@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Head from "next/head";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faStar, faCheck, faStarHalfAlt } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faStar, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarOutline } from "@fortawesome/free-regular-svg-icons";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import PayScale from "@/components/PayScale";
@@ -21,7 +21,6 @@ import { imageBasePath } from "@/utils/img.config";
 import CourseTools from "@/components/CourseTools";
 import Image from "next/image";
 import BatchDetails from "@/components/CourseCardSchedule";
-import ProjectCards from "@/components/CourseProjects";
 
 type BatchDetail = {
   batchStartDate: string;
@@ -43,7 +42,7 @@ type Course = {
   highlights_2: string[];
   highlights_3: string[];
   batchDetails: BatchDetail[];
-  skills: string[]; 
+  skills: string[];
 };
 type FAQ = {
   question: string;
@@ -52,27 +51,27 @@ type FAQ = {
 
 const CourseDetails: React.FC = () => {
   const params = useParams();
-  const course_url = params?.course_url || ''; 
+  const course_url = params?.course_url || '';
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [courseSkills, setCourseSkills] = useState<string[]>([]);
   const [faqData, setFaqData] = useState<FAQ[]>([]);
-   const [activeForm, setActiveForm] = useState<string | null>(null); // Track active form
-    const [modalKey, setModalKey] = useState<number>(0); // Unique key to force re-render
-  
-   
+  const [activeForm, setActiveForm] = useState<string | null>(null); // Track active form
+  const [modalKey, setModalKey] = useState<number>(0); // Unique key to force re-render
+
+
   const toggleForm = (formName: string) => {
     setActiveForm(formName);
     setModalKey((prevKey) => prevKey + 1); // Ensure the modal always re-renders
   };
-    const handleModalClose = () => {
-      setActiveForm(null); // Close all forms
-    };
-  
+  const handleModalClose = () => {
+    setActiveForm(null); // Close all forms
+  };
+
 
   const ImageComponent: React.FC<{ imagePath: string }> = ({ imagePath }) => {
-    const  fullImagePath = imagePath ? `${imageBasePath}${imagePath}` : "/assets/images/default-course.png";
+    const fullImagePath = imageBasePath + imagePath;
 
     return (
       <Image
@@ -82,7 +81,7 @@ const CourseDetails: React.FC = () => {
         loading="lazy"
         width={500}
         height={400}
-        onLoad={() => {}}
+        onLoad={() => { }}
       />
     );
   };
@@ -145,10 +144,6 @@ const CourseDetails: React.FC = () => {
   useEffect(() => {
     fetchCourseData();
   }, [fetchCourseData]);
-  useEffect(() => {
-    const fullPath = `${imageBasePath}${course?.image}`;
-    console.log("Full Image Path:", fullPath);
-}, [course]);
 
   const seoTitle = useMemo(() => `${course?.title} - Course Details`, [course]);
   const seoDescription = useMemo(() => course?.description || '', [course]);
@@ -165,8 +160,8 @@ const CourseDetails: React.FC = () => {
         <meta name="keywords" content={course?.meta_keyword} />
         <meta name="robots" content="index, follow" />
       </Head>
-      <div className="max-w-7xl mx-auto sm-p-0 gradient-bg-section rounded-lg">
-        <div className="p-5 sm:p-6 relative">
+      <div className="max-w-7xl mx-auto sm-p-0 md:gradient-bg-section rounded-lg">
+        <div className="p-5 sm:p-6 z-10 relative">
           <div className="text-sm text-purple-100 mb-2 flex space-x-1">
             <Link
               href="/"
@@ -187,30 +182,24 @@ const CourseDetails: React.FC = () => {
         </div>
 
         {/* Hero Banner Section */}
-        <div className="relative flex flex-col md:flex-row bg-transparent rounded-lg overflow-hidden lg:gradient-bg-section">
-          <div className="order-2 md:order-1 md:w-3/4 p-4 ">
-            <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-4 text-wrap uppercase glitter_text">
+        <div className="relative flex flex-col md:flex-row bg-transparent rounded-lg overflow-hidden z-auto lg:gradient-bg-section before:content-none md:before:content-['']">
+          <div className="order-2 md:order-1 md:w-3/4 p-4 z-auto">
+            <h1 className="text-3xl font-semibold text-gray-800 mb-4 text-wrap  glitter_text">
               {course.title}
             </h1>
             <div className="flex items-center mb-4">
               <div className="flex text-yellow-400">
-              {Array(5) // Assuming ratings are out of 5
-  .fill(0)
-  .map((_, index) => {
-    if (index < Math.floor(course.rating)) {
-      // Full star for integers
-      return <FontAwesomeIcon key={index} icon={faStar} />;
-    } else if (index < course.rating) {
-      // Half star for fractional part
-      return <FontAwesomeIcon key={index} icon={faStarHalfAlt} />;
-    } else {
-      // Empty star for remaining
-      return <FontAwesomeIcon key={index} icon={faStarOutline} />;
-    }
-  })}
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => (
+                    <FontAwesomeIcon
+                      key={index}
+                      icon={index < course.rating ? faStar : faStarOutline}
+                    />
+                  ))}
               </div>
               <span className="ml-2 text-gray-600">
-                {course.reviews} 
+                {course.reviews}
               </span>
             </div>
 
@@ -230,7 +219,7 @@ const CourseDetails: React.FC = () => {
 /> */}
 
             <ul className="space-y-2 mb-6 text-gray-600">
-              <li className="flex items-center">
+              <li className="flex items-start">
                 <span className="text-green-500 mr-2">
                   <FontAwesomeIcon
                     icon={faCanadianMapleLeaf}
@@ -239,7 +228,7 @@ const CourseDetails: React.FC = () => {
                 </span>
                 <p className="text-wrap" dangerouslySetInnerHTML={{ __html: course.highlights_1 }}></p>
               </li>
-              <li className="flex items-center">
+              <li className="flex items-start">
                 <span className="text-green-500 mr-2">
                   <FontAwesomeIcon
                     icon={faCanadianMapleLeaf}
@@ -248,7 +237,7 @@ const CourseDetails: React.FC = () => {
                 </span>
                 <p className="text-wrap" dangerouslySetInnerHTML={{ __html: course.highlights_2 }}></p>
               </li>
-              <li className="flex items-center">
+              <li className="flex items-start">
                 <span className="text-green-500 mr-2">
                   <FontAwesomeIcon
                     icon={faCanadianMapleLeaf}
@@ -260,7 +249,7 @@ const CourseDetails: React.FC = () => {
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                 onClick={() => toggleForm("advisorForm")}
+                onClick={() => toggleForm("advisorForm")}
                 className="bg-maincolor_1 text-white py-4 px-6 rounded-lg font-semibold transition hover:text-white hover:border-mainBlue flex items-center justify-center"
               >
                 Talk to Advisor
@@ -283,7 +272,7 @@ const CourseDetails: React.FC = () => {
               >
                 <span>Download Brochure</span>
               </button>
-              { activeForm === "brochureForm" && (  // Prevent advisor modal from opening when brochure is active
+              {activeForm === "brochureForm" && (  // Prevent advisor modal from opening when brochure is active
                 <DwnldAdvisorModalForm
                   imageSrc="/assets/images/dwnldbrchrimg.png"
                   key={modalKey}
@@ -298,7 +287,7 @@ const CourseDetails: React.FC = () => {
           </div>
           <div className="order-1 md:order-2 md:w-1/2 p-4 flex justify-center items-center z-1">
             <div className="relative w-full max-w-sm">
-              <ImageComponent imagePath={course.image ? `management/uploads/course_image/${course.image}`:""} />
+              <ImageComponent imagePath={`management/uploads/course_image/${course.image}`} />
             </div>
           </div>
         </div>
@@ -307,7 +296,7 @@ const CourseDetails: React.FC = () => {
       <TypesOfTraining />
       <div className="bg-gray-100 flex justify-center py-12">
         <div className="bg-white max-w-6xl w-full p-8 rounded-lg shadow-lg bg-Bg1 bg-cover">
-          <h2 className="text-lg md:text-2xl font-bold mb-6 underline-orange uppercase">Skills Covered In {course.title}</h2>
+          <h2 className="text-2xl font-bold mb-8 relative elements ">Skills Covered In <span className="glitter_text">{course.title}</span></h2>
           <div className="flex flex-wrap gap-4">
             {courseSkills.length > 0 ? (
               courseSkills.map((skill, index) => (
@@ -326,27 +315,28 @@ const CourseDetails: React.FC = () => {
         </div>
       </div>
       <PayScale courseUrl={course_url as string} />
-      <div className="w-full flex-col justify-center items-center">
-        <h1 className="w-2/3 mx-auto text-lg md:text-3xl font-bold mb-4 border-bborder pb-3 text-center border-b border-black glitter_text uppercase">
-          {course.title} Curriculum
-        </h1>
-        <CourseCurriculum courseUrl={course_url as string} courseDetails={course}/>
+      <div className="bg-gray-100 flex justify-center py-12">
+        <div className="w-full flex-col justify-center items-center bg-white max-w-6xl p-8 rounded-lg shadow-lg bg-Bg1 bg-cover mx-auto">
+          <h1 className="text-2xl font-bold mb-8 relative element text-center pb-2">
+            <span className="glitter_text text-xl md:text-3xl ">{course.title}</span> Curriculum
+          </h1>
+          <CourseCurriculum courseUrl={course_url as string} courseDetails={course} />
+        </div>
+        </div>
+        <Certificate />
+        <HiringPartners title={
+          <>
+            <h2 className="text-2xl md:text-2xl font-bold">
+              Empowering Students with <span className="text-maincolor_1 text-lg md:text-3xl glitter_text"> Industry-Focused Training </span>
+            </h2>
+          </>
+        } />
+        <CourseTools courseUrl={course_url as string} />
+        <TrendingCoursesInIT text="Popular Trending Courses in IT Companies" />
+        <FAQComponent faqData={faqData} />
+        <Reviews />
       </div>
-      <Certificate />
-      <HiringPartners title={
-        <>
-          <h2 className="text-2xl md:text-2xl font-bold">
-            Empowering Students with <span className="text-maincolor_1 text-lg md:text-3xl glitter_text"> Industry-Focused Training </span>
-          </h2>
-        </>
-      }/>
-      <CourseTools courseUrl={course_url as string} />
-      <TrendingCoursesInIT text="Popular Trending Courses in IT Companies" />
-      <ProjectCards/>
-      <FAQComponent faqData={faqData}/>
-      <Reviews />
-    </div>
-  );
+      );
 };
 
-export default CourseDetails;
+      export default CourseDetails;

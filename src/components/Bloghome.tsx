@@ -89,8 +89,8 @@ const BlogPage = () => {
   if (blogs.length === 0) return <div>No blogs available.</div>;
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-center mb-12">Trending Blogs</h1>
+    <div className="my-20">
+      <h1 className="text-3xl font-bold mb-12 w-full md:w-4/5 text-center mx-auto glitter_text elementl relative pb-4">Trending Blogs</h1>
       <div className="overflow-hidden relative w-full pb-12">
         <div
           className="flex animate-scroll whitespace-nowrap"
@@ -105,8 +105,10 @@ const BlogPage = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <span className="absolute top-1 right-0 bg-maincolor_1 text-white text-xs font-semibold px-3 py-1 "
-                style={{ clipPath: 'polygon(0 0, 100% 0, 100% 51%, 100% 99%, 0 99%, 5% 50%)' }}>
+              <span
+                className="absolute top-1 right-1 bg-maincolor_1 text-white text-xs font-semibold px-3 py-1 z-10"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 100% 51%, 100% 99%, 0 99%, 5% 50%)' }}
+              >
                 {blog.blog_category}
               </span>
               <div className="w-full h-[150px]">
@@ -167,4 +169,3 @@ const BlogPage = () => {
 };
 
 export default BlogPage;
-

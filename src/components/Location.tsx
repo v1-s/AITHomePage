@@ -61,7 +61,7 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
   return (
     <div className="relative w-full pb-20">
       <div className="relative z-10 w-full lg:max-w-7xl mx-auto my-5 p-2">
-        <h1 className="text-center text-3xl font-bold mb-10">
+        <h1 className="text-center text-3xl font-bold mb-12">
           <span className="glitter_text element relative">Get in Touch & Visit Us</span>
         </h1>
 
@@ -70,7 +70,7 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
             <div className="text-center lg:text-left">
               <Link
                 href={locationData.logoLink}
-                className="flex items-center space-x-0 border-b-2 border-gray-800 pb-2 mb-2 border-b-2 border-gray-800"
+                className="flex items-center space-x-0 pb-2 mb-2 border-b-2 "
               >
                 <Image
                   src={locationData.logoSrc}
@@ -80,7 +80,7 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
                   height={100}
                 />
               </Link>
-              <p className="text-gray-700 mb-6 text-wrap font-bold">
+              <p className="text-gray-400 mb-6 text-wrap font-bold">
                 {locationData.description}
               </p>
 
@@ -119,7 +119,7 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
 
           <div className="flex-1 p-6 lg:max-w-[50%] text-wrap border-l-2">
             <div className="text-center lg:text-left">
-              <h2 className="text-2xl font-bold text-gray-700 mb-8  relative elements mb-2">Locations</h2>
+              <h2 className="text-xl md:text-3xl font-bold text-gray-700 mb-8 relative border-b-2 pb-2 mb-4 text-center glitter_text mb-2">Locations</h2>
               <div className="flex flex-col gap-2">
                 {locations.map((location, index) => (
                   <div

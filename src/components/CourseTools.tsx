@@ -81,10 +81,10 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
   return (
     <div className="bg-gray-100 flex justify-center py-12">
       <div className="bg-white max-w-6xl w-full p-8 rounded-lg shadow-lg bg-Bg1 bg-cover">
-        <h2 className="text-2xl font-bold mb-6 relative elements uppercase">
-          Tools & Technologies covered in <span className="glitter_text">{courseUrl}</span>
+        <h2 className="text-2xl font-bold mb-8 relative elements ">
+          Tools & Technologies covered in <span className="glitter_text">{courseUrl.replace(/-/g, " ")}</span>
         </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-6  gap-4 md:gap-6">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 md:gap-6">
           {tools.map((tool, index) => (
             <div
               key={index}

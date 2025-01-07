@@ -8,14 +8,14 @@ const WhoWeAre = () => {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Content Column */}
         <div className="text-center lg:text-left">
-          <h2 className="text-lg md:text-3xl font-bold mb-6 text-maincolor_1">Who We Are?</h2>
-          <p className="text-xs md:text-lg text-gray-700 mb-6">
+          <h2 className="text-3xl font-bold mb-6 text-maincolor_1">Who We Are?</h2>
+          <p className="text-lg text-gray-700 mb-6">
             At AchieversIT, we are a global leader in digital upskilling, committed to empowering businesses and individuals to thrive in the digital age.
           </p>
-          <p className="text-xs md:text-base text-gray-600 mb-6">
+          <p className="text-base text-gray-600 mb-6">
             Founded with a mission to provide cutting-edge technology solutions, AchieversIT offers world-class training programs to individuals and businesses worldwide. We strive to make digital transformation accessible to all by providing high-quality training designed to upskill professionals across industries.
           </p>
-          <p className="text-xs md:text-base text-gray-600">
+          <p className="text-base text-gray-600">
             With a focus on practical, role-based, and industry-relevant training, our programs are crafted with the latest industry insights and are backed by leading global corporations and universities. Whether you&apos;re a student, early-career professional, manager, or executive, AchieversIT offers the tools and knowledge you need to accelerate your career or business in the digital era.
           </p>
         </div>

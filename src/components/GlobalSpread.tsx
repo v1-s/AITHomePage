@@ -18,7 +18,7 @@ const GlobalReach = () => {
   const visibleCountries = currentSetIndex === 0 ? countriesSet1 : countriesSet2;
 
   return (
-    <div id="map-container" className="relative w-screen md:w-full overflow-hidden mb-0">
+    <div id="map-container" className="relative w-screen md:w-full overflow-hidden mb-0 hidden md:block">
       <Image
         src="/assets/images/worldmapbase.svg"
         alt="Global map"
