@@ -99,7 +99,7 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
             batches.map((batch,index) => (
               <li
                 key={batch.link}
-                className={`border-b py-4 bg-gray-50 rounded-md px-3 relative ${batch.status === "SOLD OUT" ? "border-maincolor_1" : "border-gray-300"} ${selectedBatchLink === batch.link ? "bg-blue-100" : ""} cursor-pointer transform transition-transform duration-200 hover:scale-105`} // Highlight selected batch
+                className={`border-b py-4 bg-gray-50 rounded-md px-3 relative  ${batch.status === "SOLD OUT" ? "border-maincolor_1" : "border-gray-300"} ${selectedBatchLink === batch.link ? "bg-blue-100" : ""} cursor-pointer transform transition-transform duration-200 hover:scale-105`} // Highlight selected batch
                 onClick={() => handleBatchSelect(batch.link)} // Use batch.link for selection
               >
                 {batch.status !== "SOLD OUT" && (
@@ -113,7 +113,7 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
                   </span>
                 )}
 
-                <div className="flex gap-7 items-center pt-4">
+                <div className="flex flex-wrap gap-7 items-center pt-4">
                   {batch.status === "SOLD OUT" && (
                     <span className="text-maincolor_1 font-bold w-xs border border-maincolor_1 p-2 text-wrap rounded-md pointer-events-none">
                       {batch.status.replace(" ", "\n")}

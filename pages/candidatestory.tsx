@@ -49,7 +49,7 @@ const CandidateStory: React.FC = () => {
         <nav aria-label="breadcrumb">
           <ol className="flex mb-0 px-0 pt-12 items-center gap-4">
             <li className="breadcrumb-item">
-              <Link href="/" className="text-black font-bold text-md hover:text-maincolor_1">
+              <Link href="/" className="text-black font-bold  text-lg md:text-md hover:text-maincolor_1">
                 Home
               </Link>
             </li>
@@ -72,13 +72,13 @@ const CandidateStory: React.FC = () => {
           <div className="space-y-6">
             {/* Card 1 */}
             <div className="bg-white shadow-md rounded-lg p-6 flex flex-col">
-              <h2 className="text-3xl font-bold">Freelancing in the AI Era</h2>
+              <h2 className="text-xl md:text-3xl font-bold">Freelancing in the AI Era</h2>
               <p className="mt-2 text-gray-600">
                 {name} Business Transformation Journey
               </p>
 
               {/* Candidate Info Row */}
-              <div className="flex justify-center items-center mt-4 space-x-6">
+              <div className="flex flex-col  md:flex-row  justify-center items-center mt-4 space-x-6">
                 <Image
                   src={image as string} // Replace with the profile image URL
                   alt={name as string}
@@ -87,39 +87,39 @@ const CandidateStory: React.FC = () => {
                   className="object-cover rounded-full border border-2 shadow-glassShadow"
                 />
                 <div className="flex flex-col justify-center">
-                  <h3 className="text-lg font-semibold">{name}</h3>
-                  <p className="text-sm text-gray-500">Work Experience: 1 Year</p>
+                  <h3 className="text-md md:text-lg font-semibold">{name}</h3>
+                  <p className="text-xs md:text-sm text-gray-500">Work Experience: 1 Year</p>
                 </div>
 
-                <div className="flex flex-col justify-center">
-                  <div className="flex items-center justify-center w-12 h-12 bg-gray-100 border rounded-lg">
+                <div className="flex flex-col justify-center md:mb-0 mb-5">
+                  <div className="flex items-center justify-center w-full md:w-12 md:h-12 bg-gray-100 border rounded-lg">
                     <Image
                       src={prevcmpnyimage as string}
                       alt="Lodha Logo"
-                      className="h-6"
+                      className="w-full md:h-6"
                       width={24}
                       height={24}
                     />
                   </div>
-                  <p className="text-base text-gray-800">{prevcompnayrole}</p>
-                  <p className="text-sm text-gray-500">{prevcompanyname}</p>
+                  <p className="text-xs md:text-base text-gray-800">{prevcompnayrole}</p>
+                  <p className="text-xs md:text-sm text-gray-500">{prevcompanyname}</p>
                 </div>
                 {/* Arrow */}
-                <div className="flex items-center justify-start">
+                <div className="flex items-center justify-start ">
                   <div className="w-4 h-4 border-t-2 border-r-2 border-orange-400 transform rotate-45 -translate-y-2"></div>
                 </div>
                 <div className="flex flex-col justify-center">
-                  <div className="flex items-center justify-center w-12 h-12 bg-gray-100 border rounded-lg">
+                  <div className="flex items-center justify-center items-center  md:w-12 md:h-12 bg-gray-100 border rounded-lg">
                     <Image
                       src={presentimage as string}
                       alt="Lodha Logo"
-                      className="h-6"
+                      className="w-full md:h-6"
                       width={24}
                       height={24}
                     />
                   </div>
-                  <p className="text-base text-gray-800">{presentrole}</p>
-                  <p className="text-sm text-gray-500">{presentcompnayname}</p>
+                  <p className="text-xs  md:text-base text-gray-800">{presentrole}</p>
+                  <p className="text-xs md:text-sm text-gray-500">{presentcompnayname}</p>
                 </div>
               </div>
             </div>
@@ -144,11 +144,11 @@ const CandidateStory: React.FC = () => {
           {/* ------------------------------banner --------------- */}
           <BannerPromo/>
 
-          <h3 className="text-3xl text-cyan-950 text-bold pb-5 my-5">Learning Journey with AchieversIT</h3>
-          <p>My educational journey with AchieversIT has been truly transformative. The sessions conducted by Meenal Ma&apos;am were enlightening, covering essential topics and addressing all of my questions. The course&apos;s flexible format allowed me to seamlessly incorporate learning into my busy routine. The curriculum was thorough and engaging, providing me with the opportunity to apply AI concepts in a practical setting relevant to my profession.</p>
+          <h3 className="text-xl md:text-3xl text-cyan-950 text-bold pb-5 my-5">Learning Journey with AchieversIT</h3>
+          <p className="text-xs md:text-md">My educational journey with AchieversIT has been truly transformative. The sessions conducted by Meenal Ma&apos;am were enlightening, covering essential topics and addressing all of my questions. The course&apos;s flexible format allowed me to seamlessly incorporate learning into my busy routine. The curriculum was thorough and engaging, providing me with the opportunity to apply AI concepts in a practical setting relevant to my profession.</p>
 
-          <h3 className="text-3xl text-bold text-cyan-950 py-10">Effect of the Learning Experience</h3>
-          <p>The certification has had a profound effect on my professional life. As a freelancer specializing in marketing and technology, I&apos;ve leveraged AI to optimize my workflow, significantly reducing time spent on repetitive tasks. This increase in efficiency has proven invaluable. Acquiring AI skills has expanded my outlook, equipping me to address challenges across various sectors, from customer service to technical assistance. This experience has empowered me to work more autonomously, bolstering both my productivity and career growth.
+          <h3 className="text-xl md:text-3xl text-bold text-cyan-950 py-10">Effect of the Learning Experience</h3>
+          <p className="text-xs md:text-md">The certification has had a profound effect on my professional life. As a freelancer specializing in marketing and technology, I&apos;ve leveraged AI to optimize my workflow, significantly reducing time spent on repetitive tasks. This increase in efficiency has proven invaluable. Acquiring AI skills has expanded my outlook, equipping me to address challenges across various sectors, from customer service to technical assistance. This experience has empowered me to work more autonomously, bolstering both my productivity and career growth.
           </p>
         </div>
 
@@ -179,11 +179,11 @@ const CandidateStory: React.FC = () => {
 
           {/* Card 2 */}
           <div className="bg-yellow-50 rounded-lg p-4">
-            <h3 className="text-lg font-semibold">Did you know?</h3>
-            <p className="text-sm text-gray-600 mt-2">
+            <h3 className="text-md md:text-lg font-semibold">Did you know?</h3>
+            <p className="text-xs md:text-sm text-gray-600 mt-2">
               Annual Salary of <span className="font-bold text-cyan-950 text-md">{presentrole}</span> in India is
             </p>
-            <p className="mt-4 text-lg font-bold">INR 9.78LPA - 12.43LPA</p>
+            <p className="mt-4 text-md md:text-lg font-bold">INR 9.78LPA - 12.43LPA</p>
           </div>
         </div>
       </div>

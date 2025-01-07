@@ -84,7 +84,7 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
         <h2 className="text-2xl font-bold mb-6 relative elements uppercase">
           Tools & Technologies covered in <span className="glitter_text">{courseUrl}</span>
         </h2>
-        <div className="grid grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-6  gap-4 md:gap-6">
           {tools.map((tool, index) => (
             <div
               key={index}

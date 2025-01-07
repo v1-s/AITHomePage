@@ -109,10 +109,10 @@ const Carousel: React.FC<CarouselProps> = ({
   };
 
   return (
-    <div className="relative h-full w-full lg:overflow-hidden">
+    <div className="relative h-full w-full md:w-full lg:overflow-hidden">
       {/* Image for main carousel */}
       {showImage && safeBlogs[currentSlide]?.baseurl && (
-        <div className="w-full h-64">
+        <div className="h-64">
           <ImageComponent imagePath={`${safeBlogs[currentSlide]?.image}` || "assets/images/ai.jpg"} />
         </div>
       )}

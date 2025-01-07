@@ -212,12 +212,13 @@ export default function DwnldAdvisorModalForm({
     <div>
       {isOpen && (
         <div
-          className="z-[9999] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4"
+          className="z-[9999] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 min-h-screen overflow-y-auto"
           style={{ zIndex: 9999 }}
           onClick={closeModal}
         >
           <div
             className={`bg-white rounded-lg shadow-lg w-full max-w-4xl md:max-w-5xl relative ${modalclassname}`}
+            style={{ zIndex: 20000 }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -308,7 +309,7 @@ export default function DwnldAdvisorModalForm({
                         onChange={handleInputChange}
                         className="mr-2"
                       />
-                      <span className="text-xs text-black">I accept AchieversIT <Link href="/termsnCondition" className="text-blue-500"> Privacy Terms </Link> and <Link href="/termsnCondition" className="text-blue-500">Conditions.</Link></span>
+                      <span className="text-xs text-black text-wrap">I accept AchieversIT <Link href="/termsnCondition" className="text-blue-500"> Privacy Terms </Link> and <Link href="/termsnCondition" className="text-blue-500">Conditions.</Link></span>
                     </label>
                     {errors.acceptTerms && (
                       <p className="text-maincolor_1 text-sm">{errors.acceptTerms}</p>

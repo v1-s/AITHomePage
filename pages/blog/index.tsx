@@ -122,9 +122,9 @@ const BlogPage = () => {
       />
           
 
-          <div className="grid md:grid lg:grid-cols-4 gap-6 p-6 h-full">
+          <div className="grid md:grid lg:grid-cols-4 gap-6 md:p-6 h-full">
             {/* Right Section: Carousel */}
-            <div className="col-span-3 relative shadow-glassShadow lg:h-[480px]">
+            <div className="md:col-span-3 relative shadow-glassShadow lg:h-[480px] w-auto">
               <Carousel
                 blogs={blogDetails || []}
                 showOverlayText={true}
@@ -136,7 +136,7 @@ const BlogPage = () => {
             </div>
 
             {/* Left Section: Stacked Card */}
-            <div className="space-y-6 border rounded-lg shadow-lg p-6 lg:mt-0 lg:h-[480px] flex flex-col justify-center items-center mt-[100vh] sm:mt-[60vh] sm:block">
+            <div className="space-y-6 border rounded-lg shadow-lg p-12 md:p-6 lg:mt-0 lg:h-[480px] flex flex-col justify-center items-center mt-[100vh] sm:mt-[60vh] sm:block">
               <h2 className="text-2xl font-semibold text-maincolor_1 mb-0">Trending Posts</h2>
               <Carousel
                 blogs={blogDetails || []}
@@ -187,9 +187,9 @@ const BlogPage = () => {
               </div>
 
               {/* Right Column: Blog Cards */}
-              <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-6 ">
+              <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 ">
                 {filteredBlogs?.map((blog) => (
-                  <div key={blog.baseurl} className="sm:w-1/2 md:w-1/2 lg:w-[350px] p-4 h-full flex-shrink-0 rounded-lg shadow-lg flex flex-col">
+                  <div key={blog.baseurl} className="sm:w-1/2 md:w-1/2 lg:w-[350px] p-4 h-full flex-shrink-0 rounded-lg shadow-lg flex flex-col w-full">
                     <span className="absolute top-1 right-0 bg-maincolor_1 text-white text-xs font-semibold px-3 py-1"
                       style={{
                         clipPath: 'polygon(0 0, 100% 0, 100% 51%, 100% 99%, 0 99%, 5% 50%)'

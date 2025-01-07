@@ -54,7 +54,7 @@ const ScrollSections: React.FC = () => {
   return (
     <div className="w-full md:w-4/5 mx-auto ">
       <div className="z-10 p-4 text-center relative">
-        <h1 className="text-2xl md:text-3xl text-maincolor_1 font-bold glitter_text inline-block element relative after:bottom-N20">
+        <h1 className="text-lg md:text-2xl md:text-3xl text-maincolor_1 font-bold glitter_text inline-block element relative after:bottom-N20">
           Experience the AchieversIT Advantage
         </h1>
 
