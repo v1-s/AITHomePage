@@ -1,7 +1,7 @@
 "use client";
 
+import StaticHeroComponent from "@/components/StaticHeroComponent";
 import React, { useState } from "react";
-
 const JobListingPage = () => {
   // Define the Job type
   interface Job {
@@ -12,7 +12,6 @@ const JobListingPage = () => {
     date: string;
     experience: string; // Experience level
   }
-
   // Dummy data for jobs
   const dummyJobs: Job[] = [
     { title: "Software Engineer", department: "Engineering", location: "Bangalore", type: "Full-Time", date: "2024-11-01", experience: "2" },
@@ -27,6 +26,17 @@ const JobListingPage = () => {
   const [jobs] = useState<Job[]>(dummyJobs);
   const [loading, setLoading] = useState(false);
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(dummyJobs); // State for filtered jobs
+  const [modalKey, setModalKey] = useState(0); // Key to force re-render
+  const [activeModal, setActiveModal] = useState<string | null>(null); // Manage active modal state
+  // Handlers to open specific modals
+  const openModal = (modalType: string) => {
+    setModalKey((prevKey) => prevKey + 1); // Increment key for re-render
+    setActiveModal(modalType); // Set the active modal
+  };
+  const closeModal = () => {
+    setActiveModal(null); // Close any active modal
+  };
+
 
   // Search filter states
   const [jobTitle, setJobTitle] = useState<string>("");
@@ -64,13 +74,27 @@ const JobListingPage = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header Section */}
-      <header className="bg-mainblue text-white py-4">
-        <div className="container mx-auto px-4">
-          <h1 className="text-2xl font-bold text-center md:text-left text-white uppercase">
+      {/* Header Section */}
+      <header className=" ">
+        <div className="container mx-auto ">
+        <StaticHeroComponent
+        titleSubContext={
+          <>
+            <span className="glitter_text text-orange-500">Careers</span> at AchieversIT <br />
+            Build Your Dream with  <span className="glitter_text text-mainblue">Expert Talent</span>
+          </>
+        }
+        onEnrollClick={() => openModal("advisor")} // Open advisor modal
+        modalTitle="Unlock Expert Talent with AchieversIT"
+        modalText="Share your details so we can match your requirements and reach out to you in the future"
+        modalform="currentopenings/enroll"
+      />
+          {/* <h1 className="text-2xl font-bold text-center md:text-left text-white uppercase">
             Careers at AchieversIT
-          </h1>
+          </h1> */}
         </div>
       </header>
+
 
       {/* Search Section */}
       <div className="bg-white shadow-md py-6 px-4">

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faHome } from "@fortawesome/free-solid-svg-icons";
 import DwnldAdvisorModalForm from "./forms/advisorfrm";
+import AboutAchieversIT from './../src/components/AboutAchieversIT';
 // Adjust the path as necessary
 
 // Define types for Course and Schedule
@@ -50,10 +51,16 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
   });
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [enrolling, setEnrolling] = useState<{ [key: number]: boolean }>({});
-  const [isBrochureModalOpen, setIsBrochureModalOpen] =
-    useState<boolean>(false);
-  const [isAdvisorModalOpen, setIsAdvisorModalOpen] = useState<boolean>(false);
-  const [modalKey, setModalKey] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalKey, setModalKey] = useState(0);
+  const [isAdvisorModalOpen, setIsAdvisorModalOpen] = useState(false); 
+  const openAdvisorModal = () => {
+    setModalKey((prevKey) => prevKey + 1); // Increment key to force re-render
+    setIsAdvisorModalOpen(true);
+  };
+  const closeAdvisorModal = () => {
+    setIsAdvisorModalOpen(false);
+  };
   const enrollTimeoutRef = useRef<{ [key: number]: NodeJS.Timeout | null }>({});
 
   // Fetch Courses
@@ -206,11 +213,17 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
       router.push(`/payment-gateway?scheduleId=${id}`);
     }, 1000);
   };
+  const openModal = (courseName: string) => {
 
-  const clearFilters = () => {
-    setFilters({ timeSlot: null, batch: null, category: null });
+    setIsModalOpen(true);
   };
-
+  
+  const handleFilterClick = (key: keyof Filters, label: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [key]: prevFilters[key] === label ? null : label,
+    }));
+  }
   const uniqueCourses = useMemo(
     () =>
       courses.filter(
@@ -224,48 +237,23 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
     return <p>Loading...</p>;
   }
 
-  const toggleBrochureModal = () => {
-    setIsBrochureModalOpen((prevState) => !prevState);
-  };
-
-  const handleModalClose = () => {
-    setIsAdvisorModalOpen(false);
-    setIsBrochureModalOpen(false);
-  };
-  const openAdvisorModal = () => {
-    setIsAdvisorModalOpen(true);
-    setModalKey((prevKey) => prevKey + 1);
-  };
-
-  const closeAdvisorModal = () => {
-    setIsAdvisorModalOpen(false);
-  };
-
-  const toggleAdvisorModal = () => {
-    setIsAdvisorModalOpen((prevState) => !prevState);
-    if (!isAdvisorModalOpen) {
-      setModalKey((prevKey) => prevKey + 1);
-    }
-  };
-
-  const buttonClassNames = "px-6 py-2 rounded-lg font-medium";
 
   return (
     <div className="bg-Bg1 bg-cover bg-norepeat min-h-screen py-7 px-4">
       <div className="flex px-4 items-center gap-3">
         <button
-          className="flex items-center text-sm text-gray-600 hover:text-gray-800 gap-3"
+          className="flex items-center text-xs md:text-sm  text-gray-600 hover:text-gray-800 gap-3"
           onClick={handleHomeClick}
         >
           <FontAwesomeIcon icon={faHome} className="text-orange-800" />
-          <span>Home</span>
+          <span className="text-md">Home</span>
         </button>
         <button
-          className="flex items-center text-sm text-gray-600 hover:text-gray-800 gap-3"
+          className="flex items-center text-xs  md:text-sm  text-gray-600 hover:text-gray-800 gap-3"
           onClick={handleBackClick}
         >
           <FontAwesomeIcon icon={faChevronRight} className="text-orange-800" />
-          <span className="text-md text-cyan-950">Back to Course Details</span>
+          <span className="text-md md:text-md text-cyan-950">Back to Course Details</span>
         </button>
       </div>
 
@@ -292,20 +280,20 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                   </svg>
                 </div>
                 <div className="bg-flowGradientBottom">
-                  <p className="text-gray-800 text-sm">No Cost EMI ₹2,667/month*</p>
+                  <p className="text-gray-800 text-xs  md:text-sm">No Cost EMI ₹2,667/month*</p>
                   <button
                     className="btn-hover-bg-transition btn-hover-bg-transition-og text-black  border border-gray-500 px-5 py-2 pb-2 pt-2 text-white bg-cyan-950 "
-                    onClick={toggleBrochureModal}    >
+                    onClick={openAdvisorModal}   >
                     <span>Reach Us</span>
                   </button>
-                  {isBrochureModalOpen && !isAdvisorModalOpen && (  // Prevent advisor modal from opening when brochure is active
+                  {isAdvisorModalOpen && (  // Prevent advisor modal from opening when brochure is active
                     <DwnldAdvisorModalForm
                       imageSrc="/assets/images/dwnldbrchrimg.png"
                       key={modalKey}
                       formName="Brochure"
                       title="Start Your Journey with Us"
                       text="Ready to take your career to the next level? Explore a world of possibilities and find your perfect fit with us!"
-                      closeModal={handleModalClose}
+                      closeModal={closeAdvisorModal}
                     />
                   )}
                 </div>
@@ -330,13 +318,13 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-gray-800 text-sm">Group Discount Available</p>
-                  <p className="text-gray-600 text-sm">Up to -15%</p>
+                  <p className="text-gray-800 text-xs md:text-sm">Group Discount Available</p>
+                  <p className="text-gray-600 text-xs md:text-sm">Up to -15%</p>
                 </div>
               </div>
             </div>
             <div className="shadow-md rounded-lg p-6 text-center bg-flowGradientBottom">
-              <h1 className="text-2xl glitter_text ">Courses</h1>
+              <h1 className="text-xl md:text-2xl glitter_text ">Courses</h1>
               <ul>
                 {uniqueCourses.map((course) => (
                   <div key={course.category} className="mb-4 bg-flowGradientTop">
@@ -364,43 +352,12 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
             <div className="px-6 md:w-full">
               {/* Header */}
               <div className="px-6">
-                <h1 className="text-2xl font-semibold text-gray-800 glitter_text font-bold mb-4">
+                <h1 className="text-xl md:text-2xl font-semibold text-gray-800 glitter_text font-bold mb-4">
                   Schedules Of Courses
                 </h1>
               </div>
-
-{/* <div className="flex flex-wrap items-center gap-2 p-6 mt-0 shadow-lg rounded-lg w-full">
-  {/* Dynamically generate buttons from unique course categories */}
-  {/* {uniqueCourses.map((course) => (
-    <button
-      key={course.category}
-      onClick={() => handleFilterClick("category" as keyof Filters, course.category)}
-      className={`px-4 py-2 text-sm font-medium rounded-full border border-1 ${
-        filters.category === course.category
-          ? "bg-maincolor_1 text-black"
-          : "bg-cyan-950 text-white hover:bg-gray-200 hover:text-cyan-950"
-      }`}
-    >
-      {course.category}
-    </button>
-  ))}
-
-  {/* Spacer to ensure "Clear All" appears at the end */}
-  {/* <div className="flex-grow"></div>
-
-  <button
-    onClick={clearFilters}
-    className="px-4 py-2 mt-0 text-sm font-medium rounded-full border border-1 bg-gray-300 text-black hover:bg-gray-400"
-  >
-    Clear All
-  </button>
-</div>  */}
-
-
-{/* Courses */}
-<div className="container mx-auto grid gap-4 lg:grid-cols-1 sm:grid-cols-2 grid-cols-1">
+            <div className="container mx-auto grid gap-4 lg:grid-cols-1 sm:grid-cols-2 grid-cols-1">
               {/* Courses */}
-              <div>
                 <div className="container mx-auto p-4 grid gap-4 lg:grid-cols-1 sm:grid-cols-2 grid-cols-1">
                   {courses.map((course) => (
                     <div key={course.course_url}>
@@ -410,10 +367,10 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                           <span className="bg-green-100 text-green-800 text-sm font-semibold px-2 py-1 rounded">
                             🌓 Morning
                           </span>
-                          <h2 className="text-xl font-bold mt-2">
+                          <h2 className="text-lg md:text-xl font-bold mt-2">
                             {course.course_name}
                           </h2>
-                          <h2 className="text-lg font-semibold mt-2">
+                          <h2 className="text-md md:text-lg font-semibold mt-2">
                             Jan 02 - Jan 03, 2025
                           </h2>
                           <div className="flex items-center text-gray-600 mt-1">
@@ -449,8 +406,8 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                                 d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 0V5m0 6v6m0 0h-3m3 0h3"
                               ></path>
                             </svg>
-                            <span>Online Classroom</span>
-                            <span className="ml-2">Weekday Batch</span>
+                            <span className="text-md md:text-md">Online Classroom</span>
+                            <span className="ml-2 text-md md:text-md ">Weekday Batch</span>
                           </div>
                           <div className="flex items-center text-gray-600 mt-1">
                             <svg
@@ -482,7 +439,7 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                             >
                               -
                             </button>
-                            <span className="text-lg font-medium">
+                            <span className="text-md md:text-lg font-medium">
                               {quantities[course.id] || 1}
                             </span>
                             <button
@@ -492,7 +449,7 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                               +
                             </button>
                           </div>
-                          <div className="text-maincolor_1 font-bold text-lg mt-2">
+                          <div className="text-maincolor_1 font-bold text-md:text-lg mt-2">
                             ₹14,499
                           </div>
                           <div className="text-gray-500 line-through">
@@ -504,27 +461,32 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                           <div className="bg-yellow-100 text-yellow-800 text-sm font-semibold px-2 py-1 rounded mt-2">
                             Only few seats left!
                           </div>
-                          {/* const enrollButtonClass = enrolling[course.id]
-                            ? "bg-green-600 text-white"
-                            : "bg-mainblue text-white hover:bg-blue-700"; */}
+                          </div>
+                          <div className="mt-2 sm:ml-4 text-center relative">
+                          <div className="relative">
 
                           <button
-                            onClick={toggleAdvisorModal}
-                            className={`px-6 py-2 rounded-lg font-medium ${toggleAdvisorModal}`}
-                          >
-                            {enrolling[course.id] ? "Enrolling..." : "Enroll"}
+                          onClick={openAdvisorModal}
+                            className={`px-6 py-2 rounded-lg font-medium relative bg-maincolor_1 text-white`}
+                          >Enroll
+                          
+                         
                           </button>
-                          {isAdvisorModalOpen && (
+                          {isAdvisorModalOpen &&(
+                            
                             <DwnldAdvisorModalForm
-                              imageSrc="/assets/images/advisor.png"
-                              key={modalKey}
-                              formName="Course"
-                              title="Discuss with an Expert"
-                              text="Provide your information below to get your course syllabus delivered through WhatsApp and Email"
-                              closeModal={handleModalClose}
-                              modalclassname=""
-                            />
-                          )}
+                                                imageSrc="/assets/images/advisor.png"
+                                                key={modalKey}
+                                                  formName="homepage/enroll"
+                                                  title="Launch Your Career Today"
+                                                  text="Provide your information below to get Kick-start your journey toward a bright future."
+                                                  closeModal={closeAdvisorModal} // Close modal using the same toggle function
+                                                  modalclassname=" md:max-w-4xl"
+                                                  downloadPdf={false}
+                                                />
+                      )}
+                        
+                      </div>
                           <p className="text-sm text-orange-500 mt-2 flex flex-col items-center">
                             <span className="text-yellow-500">
                               ⚡ Filling Fast
@@ -536,16 +498,19 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-  );
-};
 
+  
+  )
+)
+  }
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  </div>                  
+  )
+}
 export default SchedulePage;

@@ -9,8 +9,6 @@ import Search from "@/components/Search";
 import Image from "next/image";
 
 const DynamicMegaMenu = dynamic(() => import("@/components/Megamenu"), { ssr: false });
-import CorporateBanner from './CorporateBanner';
-
 function Header() {
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
@@ -166,6 +164,7 @@ function Header() {
             {/* More Dropdown */}
             <div className="relative group" ref={menuRef}>
               <button
+             
                 className="text-gray-700 flex items-center space-x-1 font-semibold"
                 aria-label="More Links"
                 onClick={handleMoreDropdownToggle}
@@ -176,7 +175,7 @@ function Header() {
               {moreDropdownVisible && (
                 <div
                   className="absolute right-0 top-full w-48 bg-white shadow-lg rounded-md font-semibold border-t-4 border-maincolor_1 mt-7"
-                 
+
                 >
                   {quickLinks.slice(4).map((item, index) => (
                     <Link
@@ -272,7 +271,8 @@ function Header() {
               showCourseList={true}
               courseListclassName="grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-2 gap-4"
               courseMainclassName="rounded-md max-h-[77vh] overflow-y-auto"
-              categotyclassName="lg:w-1/2 md:max-h-[77vh] max-h-full rounded-md text-nowrap lowercase"
+              categotyclassName="lg:w-1/2 md:max-h-[77vh] max-h-full rounded-md text-nowrap capitalize "
+              categmenu=" sticky top-0 bg-white p-0"
             />
           </div>
         )}
@@ -280,5 +280,4 @@ function Header() {
     </>
   );
 }
-
 export default Header;

@@ -34,7 +34,7 @@ const MentorShip = () => {
         titleSubContext={
           <>
             Become{" "}
-            <span className="glitter_text text-orange-500">Guide</span> at
+            <span className="glitter_text text-orange-500 ">Guide</span> at
             AchieversIT <br />
             Empower the Future with{" "}
             <span className="glitter_text text-mainblue">Your Knowledge</span>
@@ -52,13 +52,14 @@ const MentorShip = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             {/* Heading Section */}
             <div className="text-center md:text-left">
-              <h1 className="text-4xl font-bold mb-4 text-gray-900">
-                <span className="text-2xl">
+              <h1 className="text-xl md:text-4xl font-bold mb-4 text-gray-900">
+                <span className="text-xl md:text-2xl mb-5">
                   Welcome to{" "}
                   <span className="glitter_text">AchieversIT</span>
                 </span>
                 <br />
                 Cultivate Future Minds as an Instructor
+                <br/>
               </h1>
               <p className="text-gray-600 mb-6">
                 Join AchieversIT to share your wisdom, inspire learners globally,
@@ -136,11 +137,11 @@ const MentorShip = () => {
               <div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2 text-orange-500 uppercase"> How It Works</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  First step! Complete the application form. If you&apos;re selected, you will
+                First step! Complete the application form. If you&apos;re selected, you will
                   undergo a comprehensive training program based on AchieversIT&apos;s teaching
-                  approach.
-                </p>
-              </div>
+                  approach
+                  </p>
+             </div>
             </div>
           </div>
         </div>

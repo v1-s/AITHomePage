@@ -87,7 +87,7 @@ const Search = () => {
     <div className="search-container relative w-full">
       {/* Top Search Bar */}
       <div
-        className="flex items-center border border-maincolor_1 rounded overflow-hidden border-2"
+        className="flex items-center border border-maincolor_1 rounded overflow-hidden border-2 "
         onClick={handleOpenSearch}
       >
         <input
@@ -122,7 +122,7 @@ const Search = () => {
     value={filterQuery}
     onChange={handleFilterChange}
     placeholder="Search courses"
-    className="w-full px-4 py-2 pl-10 border rounded-full focus:outline-none focus:ring-2 focus:ring-maincolor_1 focus:border-transparent transition-all duration-300"
+    className="w-full px-4 py-2 pl-10 block border rounded-full focus:outline-none focus:ring-2 focus:ring-maincolor_1 focus:border-transparent transition-all duration-300"
   />
   <FontAwesomeIcon
     icon={faSearch}

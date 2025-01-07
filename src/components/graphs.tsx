@@ -87,19 +87,9 @@ const CircularGraphSection = () => {
       <h2 className="text-2xl font-bold text-maincolor_1 mb-4 text-center">
         A Customized Learning Experience
       </h2>
-      <div className="w-full">
-        <ReactEcharts option={chartOptions} style={{ height: "400px", width: "100%" }} />
-      </div>
+     
 
-      <div className="mt-4 text-center text-gray-700">
-        <p className="text-lg font-bold text-maincolor_1">
-          {data[activeIndex]?.label}
-        </p>
-        <p className="text-sm mt-2">
-          {data[activeIndex]?.text}
-        </p>
-      </div>
-
+     
       <div className="flex flex-wrap gap-4 mt-4 justify-center">
         {data.map((item, index) => (
           <button
@@ -114,6 +104,19 @@ const CircularGraphSection = () => {
             {item.label}
           </button>
         ))}
+      </div>
+      
+      <div className="w-full">
+        <ReactEcharts option={chartOptions} style={{ height: "400px", width: "100%" }} />
+      </div>
+      
+      <div className="mt-4 text-center text-gray-700">
+        <p className="text-lg font-bold text-maincolor_1">
+          {data[activeIndex]?.label}
+        </p>
+        <p className="text-sm mt-2">
+          {data[activeIndex]?.text}
+        </p>
       </div>
     </div>
   );

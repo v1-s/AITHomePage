@@ -61,7 +61,7 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full">
+      <div className="w-full max-w-5xl">
         {/* <h1 className="text-2xl font-bold mb-4">{courseDetails.title}</h1> */}
         <p className="mb-6">{courseDetails.description}</p>
         <div id="accordion">

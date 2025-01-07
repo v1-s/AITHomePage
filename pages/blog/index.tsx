@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import EnrollmentForm from "@/components/EnrollForm";
 import BannerPromo from "@/components/BannerPromotion";
 import { imageBasePath } from "@/utils/img.config";
-
+import StaticHeroComponent from "@/components/StaticHeroComponent";
 // Define interfaces for props and blog data
 interface Blog {
   id: number; // Change to number
@@ -49,7 +49,8 @@ const BlogPage = () => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true); // State for loading status
-
+  const [modalKey, setModalKey] = useState(0); // Key to force re-render
+  const [activeModal, setActiveModal] = useState<string | null>(null); 
   // Fetch blog details from the API
   useEffect(() => {
     const fetchBlogDetails = async () => {
@@ -80,7 +81,13 @@ const BlogPage = () => {
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(selectedCategory === category ? null : category);
   };
-
+  const openModal = (modalType: string) => {
+    setModalKey((prevKey) => prevKey + 1); // Increment key for re-render
+    setActiveModal(modalType); // Set the active modal
+  };
+  const closeModal = () => {
+    setActiveModal(null); // Close any active modal
+  };
   // Handle 'Read More' click to select the blog
   const handleReadMoreClick = (blog: Blog) => {
     setSelectedBlog(blog);
@@ -94,38 +101,19 @@ const BlogPage = () => {
       ) : (
         <div>
           {/* ------------------------------hero section -------------------------------------------- */}
-          <h2 className="mx-14 text-2xl md:text-4xl font-semibold my-10 text-center pb-2 glitter_text uppercase">
-            <span>Blogs</span>
-          </h2>
-
-          <div className="container mx-auto px-4">
-            <div className="flex flex-wrap items-center">
-              {/* Text Block */}
-              <div className="sm:w-full md:w-1/3 lg:w-1/2 xl:w-1/2 flex items-center">
-                <div className="home-marquee__text-block">
-                  <h1 className="text-xl md:text-3xl lg:text-5xl font-bold glitter_text">Where Opportunities Unfold</h1>
-                  <p className="hidden md:block text-lg">
-                    We are a premier platform for knowledge exchange and skill development. Discover some of our most popular resources and enhance your expertise in a variety of subjects
-                  </p>
-                </div>
-              </div>
-
-              {/* Image Block */}
-              <div className="sm:w-full md:w-1/2 xl:w-1/2 flex justify-end order-first sm:order-none">
-                <Image
-                  width={500}
-                  height={500}
-                  src="/assets/images/blogs.png"
-                  className="home-marquee__marquee-image"
-                  alt="Blogs"
-                  decoding="async"
-                  fetchPriority="high"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-
+          <StaticHeroComponent
+        titleSubContext={
+          <>
+            <span className="glitter_text text-orange-500">Blogs</span> 
+  
+          </>
+        }
+        onEnrollClick={() => openModal("advisor")} // Open advisor modal
+        modalTitle="Read Our Latest Blogs:Stay Updated with Insights and Trends"
+        modalText="Share your interests, and our team  will help you connect with the right insights and trends effortlessly."
+        modalform="blog/enroll"
+      />
+        
           <div className="grid md:grid lg:grid-cols-4 gap-6 m-4 md:mx-45  lg:mx-20 h-full">
             {/* Right Section: Carousel */}
             <div className="md:col-span-3 relative shadow-glassShadow lg:h-[480px]">
@@ -221,18 +209,18 @@ const BlogPage = () => {
                         <hr className="bg-gray-600 w-full mb-3" />
 
                         <div className="flex flex-col md:flex-row justify-between items-center">
-                          {/* Left Column: Author and Date */}
-                          <div className="flex gap-2 items-center">
-                            <span className="text-sm text-black font-bold"> by{" "}</span>
-                            <span className="text-maincolor_1 text-md font-bold capitalize text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
-                               {blog.blog_writter}
-                            </span>
-                            <span className="text-sm text-gray-500">
-                              on{" "}
-                              <span className="text-yellow-500 text-sm">
-                                {new Date(blog.created_at).toISOString().split('T')[0]}
+                        {/* Left Column: Author and Date */}
+                        <div>
+                          <span className="text-sm text-black font-bold"> by{" "}</span>
+                          <span className="text-maincolor_1 text-md font-bold capitalize text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
+                            {blog.blog_writter}
+                          </span>
+                          <p className="text-sm text-gray-500 flex flex-col">
+                            on{" "}
+                            <span className="text-yellow-500 text-sm">
+                              {new Date(blog.created_at).toISOString().split('T')[0]}
                               </span>
-                            </span>
+                            </p>
                           </div>
 
                           {/* Right Column: Read More Link */}

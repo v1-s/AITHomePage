@@ -226,7 +226,7 @@ const TrainingAdvisorForm = () => {
           className="w-full border p-2 rounded-lg border-gray-300"
         ></textarea>
       </div>
-
+      {errors.query && <p className="text-red-500 text-sm">{errors.query}</p>}
       {/* ... Add other form fields here ... */}
 
       <div>
