@@ -131,7 +131,7 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
   };
 
   return (
-    <div className="mx-12 bg-Bg2 bg-cover bg-no-repeat px-12 py-12 rounded-md shadow-glassShadow">
+    <div className="md:mx-12 bg-Bg2 bg-cover bg-no-repeat px-12 py-12 rounded-md shadow-glassShadow">
       <h3 className="text-lightgrey font-semibold text-2xl text-maincolor_1 mb-5">{contacttext}</h3>
 
       <form className="needs-validation" name="enrollmentForm" onSubmit={handleSubmit} noValidate>

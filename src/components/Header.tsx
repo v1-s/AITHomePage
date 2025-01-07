@@ -9,7 +9,7 @@ import Search from "@/components/Search";
 import Image from "next/image";
 
 const DynamicMegaMenu = dynamic(() => import("@/components/Megamenu"), { ssr: false });
-import CorporateBanner from './CorporateBanner';
+
 
 function Header() {
   const router = useRouter();

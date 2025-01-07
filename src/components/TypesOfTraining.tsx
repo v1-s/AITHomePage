@@ -140,8 +140,8 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
             </div>
 
             <div className="p-6">
-              <h2 className="text-2xl font-bold mb-2">{title}</h2>
-              <p className="text-sm text-gray-600 mb-4">{description}</p>
+              <h2 className="text-xl md:text-2xl font-bold mb-2">{title}</h2>
+              <p className="text-xs md:text-sm text-gray-600 mb-4">{description}</p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -157,15 +157,15 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
                     className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.name ? "border-maincolor_1" : "border-gray-300"}`}
                     placeholder="Enter your name"
                   />
-                  {errors.name && <p className="text-maincolor_1 text-sm">{errors.name}</p>}
+                  {errors.name && <p className="text-maincolor_1 text-xs md:text-sm">{errors.name}</p>}
                 </div>
 
                 <div>
-                  <label htmlFor=" phone" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor=" phone" className="block text-xs md:text-sm font-medium text-gray-700">
                     Phone Number
                   </label>
                   <div className="flex mt-1">
-                    <span className="inline-flex items-center px-3 bg-gray-100 border border-r-0 text-gray-500 text-sm rounded-l-md">
+                    <span className="inline-flex items-center px-3 bg-gray-100 border border-r-0 text-gray-500 text-xs md:text-sm rounded-l-md">
                       +91
                     </span>
                     <input
@@ -178,7 +178,7 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
                       placeholder="Phone Number"
                     />
                   </div>
-                  {errors.phone && <p className="text-maincolor_1 text-sm">{errors.phone}</p>}
+                  {errors.phone && <p className="text-maincolor_1 text-xs md:text-sm">{errors.phone}</p>}
                 </div>
 
                 <div>
@@ -194,7 +194,7 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
                     className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.email ? "border-maincolor_1" : "border-gray-300"}`}
                     placeholder="Email"
                   />
-                  {errors.email && <p className="text-maincolor_1 text-sm">{errors.email}</p>}
+                  {errors.email && <p className="text-maincolor_1 text-xs md:text-sm">{errors.email}</p>}
                 </div>
 
                 <div className="flex items-center">
@@ -210,7 +210,7 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
                     Receive WhatsApp Updates
                   </label>
                 </div>
-                {errors.whatsappUpdates && <p className="text-maincolor_1 text-sm">{errors.whatsappUpdates}</p>}
+                {errors.whatsappUpdates && <p className="text-maincolor_1 text-xs md:text-sm">{errors.whatsappUpdates}</p>}
 
                 <div className="flex items-center">
                   <input
@@ -327,7 +327,7 @@ const TypesOfTraining: React.FC = () => {
 
   return (
     <div className="w-full lg:w-4/5 mx-auto pb-12">
-      <h2 className="text-xl font-bold mb-12 text-center glitter_text">
+      <h2 className="text-lg md:text-xl font-bold mb-12 text-center glitter_text">
         Types of Training
       </h2>
 
@@ -345,12 +345,12 @@ const TypesOfTraining: React.FC = () => {
               className="w-full h-48 object-cover object-middle"
             />
 
-            <div className="bg-blue-500 text-white text-center text-lg font-bold py-3">
+            <div className="bg-blue-500 text-white text-center text-md md:text-lg font-bold py-3">
               <h1 className="m-0">{option.title}</h1>
             </div>
 
             <div className="bg-white p-4 flex flex-col flex-1">
-              <p className="text-gray-700 text-sm text-wrap">{option.description}</p>
+              <p className="text-gray-700 text-md md:text-sm text-wrap">{option.description}</p>
               <ul className="space-y-2 flex-1 mb-1">
                 {option.points.map((point, i) => (
                   <li key={i} className="flex items-center space-x-3 text-wrap">
@@ -358,7 +358,7 @@ const TypesOfTraining: React.FC = () => {
                       icon={faCanadianMapleLeaf}
                       className="text-blue-500 font-semibold"
                     />
-                    <span className="text-gray-700 text-sm">{point}</span>
+                    <span className="text-gray-700 text-xs md:text-sm">{point}</span>
                   </li>
                 ))}
               </ul>

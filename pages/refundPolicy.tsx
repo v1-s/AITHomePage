@@ -13,18 +13,18 @@ const RefundPolicy = () => (
       </p>
 
       <h4 className="font-semibold mt-2 text-mainblue">For Self-Paced Learning:</h4>
-      <p className="leading-custom">To qualify for a refund, you must:</p>
+      <p className="leading-custom md:text-sm text-xs">To qualify for a refund, you must:</p>
       <ul className="list-disc pl-6 mt-2">
-        <li>Submit your refund request within 7 days of purchasing a course.</li>
-        <li>Have consumed less than 25% of the video-learning content.</li>
-        <li>Not have requested any exam voucher or kit.</li>
+        <li className="text-xs md:text-sm">Submit your refund request within 7 days of purchasing a course.</li>
+        <li className="text-xs md:text-sm">Have consumed less than 25% of the video-learning content.</li>
+        <li className="text-xs md:text-sm">Not have requested any exam voucher or kit.</li>
       </ul>
-      <p className="leading-custom">
+      <p className="leading-custom md:text-sm text-xs">
         Any refund request failing to meet any of the requirements will not be accepted and no refund will be provided.
       </p>
 
       <h4 className="font-semibold mt-2 text-mainblue">For Instructor-Led Training:</h4>
-      <p className="leading-custom">To qualify for a refund, you must:</p>
+      <p className="leading-custom ">To qualify for a refund, you must:</p>
       <ul className="list-disc pl-6 mt-2">
         <li>Submit your refund request within 7 days of purchasing your course.</li>
         <li>Have consumed less than 25% of the video-learning content.</li>

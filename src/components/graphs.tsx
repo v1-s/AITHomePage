@@ -132,7 +132,7 @@ const CircularGraphSection = () => {
 
         {/* Central Text */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center -top-[45%] md:top-0">
-          <h2 className="text-maincolor_1 text-sm font-bold transition-transform duration-700 ease-in-out transform  md:text-lg">
+          <h2 className="text-maincolor_1 text-sm font-bold transition-transform duration-700 ease-in-out transform  md:text-lg text-wrap md:text-nowrap">
             Your Learning
           </h2>
           <h3 className="text-maincolor_1 text-sm font-bold transition-transform duration-700 ease-in-out transform  md:text-lg">
@@ -142,22 +142,23 @@ const CircularGraphSection = () => {
 
         {/* External Labels */}
         <div
-          className={`absolute top-[3%] md:-right-[50%] -right-[20%] text-center transition-all duration-700 max-w-10 md:w-full  ${
+          className={`absolute top-[10%] md:-right-[10%] -right-[20%] text-center transition-all duration-700 max-w-10 md:w-full  ${
     activeOption === options[0] ? 'font-bold uppercase' : 'font-normal'
   }`}
           style={{ color: activeData.colors[0] }}
         >
-          <p className="font-bold transition-transform duration-700 ease-in-out transform translate-x-0 text-wrap text-xs md:text-md">
+          <p className="font-bold transition-transform duration-700 ease-in-out transform translate-x-0 text-wrap md:text-lg text-wrap md:text-nowrap
+           text-xs md:text-md">
             {activeData.labels[0]}
           </p>
         </div>
         <div
-  className={`absolute  bottom-[20%] -right-[10%]  md:bottom-[10%] md:-right-[40%]  text-center transition-all duration-700 max-w-10 md:w-full  ${
+  className={`absolute  bottom-[20%] -right-[10%]  md:bottom-[10%] md:-right-[20%]  text-center transition-all duration-700 max-w-10 md:w-full   ${
     activeOption === options[1] ? 'font-bold uppercase' : 'font-normal'
   }`}
   style={{ color: activeData.colors[1] }}
 >
-          <p className="font-bold transition-transform duration-700 ease-in-out transform translate-y-0 text-xs md:text-md">
+          <p className="font-bold transition-transform duration-700 ease-in-out transform translate-y-0 text-xs md:text-lg text-wrap md:text-nowrap">
             {activeData.labels[1]}
           </p>
         </div>
@@ -167,7 +168,7 @@ const CircularGraphSection = () => {
   }`}
   style={{ color: activeData.colors[2] }}
 >
-          <p className="font-bold transition-transform duration-700 ease-in-out transform translate-y-0 text-xs md:text-md">
+          <p className="font-bold transition-transform duration-700 ease-in-out transform translate-y-0 text-xs  md:text-lg text-wrap md:text-nowrap">
             {activeData.labels[2]}
           </p>
         </div>
@@ -177,7 +178,7 @@ const CircularGraphSection = () => {
   }`}
   style={{ color: activeData.colors[3] }}
 >
-          <p className="font-bold transition-transform duration-700 ease-in-out transform translate-y-0 text-wrap text-xs md:text-md">
+          <p className="font-bold transition-transform duration-700 ease-in-out transform translate-y-0 text-wrap text-xs  md:text-lg text-wrap md:text-nowrap">
             {activeData.labels[3]}
           </p>
         </div>
@@ -188,7 +189,7 @@ const CircularGraphSection = () => {
         <h3 className="text-xl font-bold text-maincolor_1 mb-2 transition-transform duration-700 ease-in-out transform translate-x-0 uppercase">
           {activeOption}
         </h3>
-        <p className="text-gray-700 transition-transform duration-700 ease-in-out transform translate-x-0 text-xs md:text-md">
+        <p className="text-gray-700 transition-transform duration-700 ease-in-out transform translate-x-0 text-xs  md:text-lg text-wrap ">
           {activeData.text}
         </p>
       </div>
