@@ -386,7 +386,7 @@ const JobListingPage = () => {
 
       {/* Job Listings */}
       <div className="container mx-auto px-4 mt-8">
-        <h2 className="text-xl font-semibold mb-4 text-center md:text-left">
+        <h2 className="text-md md:text-xl font-semibold mb-4 text-center md:text-left">
           Current Openings
         </h2>
 

@@ -124,7 +124,7 @@ const Footer = () => {
 
     {/* Right Column: Social Media Icons */}
     <div className="flex justify-center md:justify-end w-full lg:w-1/2">
-      <ul className="flex flex-wrap justify-center lg:justify-end space-x-4">
+      <ul className="flex flex-wrap justify-center lg:justify-end gap-12 md:space-x-4">
         {/* Facebook */}
         <li>
           <a

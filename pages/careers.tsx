@@ -191,13 +191,13 @@ const Careers = () => {
               <h2 className="text-xl md:text-2xl font-bold relative elements pb-1 mb-8">
                 Join a World of Opportunities and Growth
               </h2>
-              <p className="text-gray-600 mb-4 text-sm md:tetx-base">
+              <p className="text-gray-600 mb-4 text-sm md:text-base">
                 Step into an environment where innovation meets ambition. Our organization is more than a workplace – it&apos;s a platform where your ideas are valued, your efforts are celebrated, and your career aspirations are nurtured. With a global footprint and a dynamic approach to problem-solving, we offer you the chance to work on impactful projects, expand your skillset across multiple domains, and collaborate with industry pioneers.
               </p>
-              <p className="text-gray-600 mb-4 text-sm md:tetx-base">
+              <p className="text-gray-600 mb-4 text-sm md:text-base">
                 Here, every team member is an integral part of our journey. We are committed to fostering an inclusive, supportive, and growth-oriented culture that empowers you to excel. With access to continuous learning, mentorship, and cutting-edge resources, you can carve a path toward unparalleled professional development.
               </p>
-              <p className="text-gray-600 mb-4 text-sm md:tetx-base">
+              <p className="text-gray-600 mb-4 text-sm md:text-base">
                 As we grow and redefine possibilities in our industry, we invite you to join a team that inspires innovation, fuels passion, and drives meaningful change. Be part of something bigger – be part of our success story. Together, we can achieve greatness!
               </p>
             </div>
@@ -233,7 +233,7 @@ const Careers = () => {
 
       {/* Inclusive Environment Section */}
       <section className="py-16 text-center">
-        <h2 className="text-3xl font-bold mb-12 glitter_text relative element pb-4">
+        <h2 className="text-xl md:text-3xl font-bold mb-12 glitter_text relative element pb-4">
           The Value of Being with AchieversIT
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">

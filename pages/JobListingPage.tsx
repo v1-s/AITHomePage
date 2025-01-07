@@ -66,7 +66,7 @@ const JobListingPage = () => {
       {/* Header Section */}
       <header className="bg-mainblue text-white py-4">
         <div className="container mx-auto px-4">
-          <h1 className="text-2xl font-bold text-center md:text-left text-white uppercase">
+          <h1 className="text-xl md:text-2xl font-bold text-center md:text-left text-white uppercase">
             Careers at AchieversIT
           </h1>
         </div>
@@ -146,7 +146,7 @@ const JobListingPage = () => {
 
       {/* Job Listings */}
       <div className="container mx-auto px-4 mt-8">
-        <h2 className="text-xl font-semibold mb-4 text-center md:text-left">
+        <h2 className="text-lg md:text-xl font-semibold mb-4 text-center md:text-left">
           Current Openings
         </h2>
 
