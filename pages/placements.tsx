@@ -49,7 +49,7 @@ const PlacementPage = () => {
                 with AchieversIT
               </span>
             </h1>
-            <p className="text-gray-600 mt-4">
+            <p className="text-xs md:text-md text-gray-600 mt-4">
               AchieversIT is your gateway to a successful career in IT. With
               expert-led training programs, hands-on projects, and
               industry-recognized certifications, we prepare you for high-paying
@@ -142,11 +142,11 @@ const PlacementPage = () => {
               key={idx}
               className={`flex flex-col items-start justify-center p-4 rounded-lg shadow-lg text-left hover:shadow-lg cursor-pointer ${stat.bg} hover:scale-105 transition-transform duration-300 ease-in-out`}
             >
-              <h4 className="text-3xl font-bold text-white">
+              <h4 className="text-xl md:text-3xl font-bold text-white">
                 {stat.value} <span className="text-sm">{stat.currency}</span>
               </h4>{" "}
               {/* Increased font size for the value */}
-              <p className="text-slate-300 text-sm mt-1">{stat.label}</p>{" "}
+              <p className="text-slate-300 text-xs  md:text-sm mt-1">{stat.label}</p>{" "}
               {/* Smaller font size for the label */}
             </div>
           ))}
