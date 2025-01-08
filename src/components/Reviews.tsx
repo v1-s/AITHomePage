@@ -108,7 +108,7 @@ const Reviews = () => {
   return (
     <div className="relative py-8 text-center">
       <div className="p-3">
-        <h1 className="text-2xl md:text-3xl font-bold text-center">Our Learners, Our Pride</h1>
+        <h1 className="text-xl md:text-3xl font-bold text-center">Our Learners, Our Pride</h1>
         <p className="text-center mb-20 text-sm md:text-base glitter_text inline-block element relative after:bottom-N20">
           &quot;Celebrating the brilliance and dedication of every learner.&quot;
         </p>

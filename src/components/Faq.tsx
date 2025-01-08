@@ -25,7 +25,7 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ faqData }) => {
   return (
     <div className="w-full lg:max-w-6xl mx-auto flex justify-center my-10 lg:my-20 p-2">
       <div className="w-full mt-2 mb-8 sm:p-4 p-1 shadow-card transition-all duration-200 p-4 bg-white">
-        <h1 className="mx-auto text-3xl font-bold mb-4 border-b pb-3 text-left border-b border-darkBlue">
+        <h1 className="mx-auto text-xl  md:text-3xl font-bold mb-4 border-b pb-3 text-left border-b border-darkBlue">
           Faq&apos;s
         </h1>
         <div id="accordion">

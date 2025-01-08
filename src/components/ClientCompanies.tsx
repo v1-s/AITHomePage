@@ -39,7 +39,7 @@ const LogoRow: React.FC<{ logos: Logo[] }> = ({ logos }) => {
               <Image
                 src={imageUrl}
                 alt={`Logo ${index}`}
-                className="object-contain shadow-card rounded cursor-pointer p-3"
+                className="object-contain shadow-card rounded p-3"
                 width={200}
                 height={80}
                 loading="lazy"

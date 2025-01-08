@@ -80,7 +80,7 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
                   height={100}
                 />
               </Link>
-              <p className="text-gray-400 mb-6 text-wrap font-bold">
+              <p className="text-gray-400 mb-6 text-wrap font-bold text-xs md:text-sm">
                 {locationData.description}
               </p>
 
@@ -99,7 +99,7 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
                       aria-label={`${detail.label}: ${detail.value}`}
                     >
                       <p className="font-bold text-blue-500">{detail.label}:</p>
-                      <p className="text-gray-600">{detail.value}</p>
+                      <p className="text-gray-600 text-xs md:text-sm">{detail.value}</p>
                     </a>
                   </div>
                 ))}

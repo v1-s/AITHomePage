@@ -72,7 +72,7 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                   className="w-full text-left p-4  font-medium flex justify-between items-center focus:outline-none bg-Bg1 no-repeat bg-cover shadow-soft"
                   onClick={() => toggleAccordion(index)}
                 >
-                  <h3 className="font-semibold uppercase text-lg text-cyan-950">
+                  <h3 className="font-semibold uppercase text-md md:text-lg text-cyan-950">
                     {item.question}
                   </h3>
                   <span className="accordion-icon transition-transform duration-200">

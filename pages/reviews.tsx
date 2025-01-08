@@ -235,7 +235,7 @@ const ReviewPage = () => {
       {/* Career Impacted Cards Section */}
       <div className="bg-gray-50 py-16 px-4 md:px-16" id="Careercard">
         <div className="container mx-auto text-center">
-          <h2 className="text-2xl md:text-2xl font-bold mb-20 relative elementl pb-2 uppercase">
+          <h2 className="text-xl md:text-2xl font-bold mb-20 relative elementl pb-2 uppercase">
             <span className="glitter_text">Uplifting careers and inspiring change</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto w-full md:w-4/5 lg:w-3/4">

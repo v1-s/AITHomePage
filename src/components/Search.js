@@ -18,7 +18,7 @@ const Search = () => {
   const [selectedCategory, setSelectedCategory] = useState(""); // Track selected category
   const [popularSearches, setPopularSearches] = useState([]); // Track last search inputs
   const [timeoutId, setTimeoutId] = useState(null); // Timer for popular searches
-
+  const [activeCategory, setActiveCategory] = useState(null);
   const dropdownRef = useRef(null);
 
   // Prevent SSR hydration issues
@@ -38,15 +38,17 @@ const Search = () => {
   // Handle inner search bar input change
   const handleFilterChange = (e) => {
     const value = e.target.value;
-    setFilterQuery(value);
-    setSelectedCategory("");
-    // Clear previous timeout and set a new one for popular searches
+    setFilterQuery(value); // Update raw query
+    setSelectedCategory(""); // Reset category selection
     if (timeoutId) clearTimeout(timeoutId);
+  
+    // Save normalized query in popular searches
     const newTimeoutId = setTimeout(() => {
-      if (value && !popularSearches.includes(value)) {
-        setPopularSearches((prev) => [value, ...prev].slice(0, 5)); // Limit to last 5 searches
+      const normalizedValue = normalizeString(value);
+      if (normalizedValue && !popularSearches.includes(normalizedValue)) {
+        setPopularSearches((prev) => [value, ...prev].slice(0, 5)); // Keep only the last 5 searches
       }
-    }, 2000); // Wait 5 seconds before adding to popular searches
+    }, 2000);
     setTimeoutId(newTimeoutId);
   };
 
@@ -67,19 +69,28 @@ const Search = () => {
 
   // Handle category click
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category); // Set selected category
-    setFilterQuery(""); // Clear query
-    setShowResults(true);
+    setActiveCategory(category);
+    setSelectedCategory(normalizeString(category)); // Normalize the selected category
+    setFilterQuery(""); // Clear the query
   };
+  
 
-  // Filter results based on query or selected category
+  const normalizeString = (str) => {
+    return str
+      .toLowerCase() // Convert to lowercase
+      .replace(/[^a-z0-9]/g, "") // Remove special characters
+      .replace(/\s+/g, ""); // Remove spaces
+  };
+  
+  // Filter results based on normalized query or selected category
   const filteredCourses = courses.filter((course) => {
     if (selectedCategory) {
-      return course.category?.toLowerCase() === selectedCategory.toLowerCase();
+      return normalizeString(course.category || "").includes(normalizeString(selectedCategory));
     }
-    return course.course_name.toLowerCase().includes(filterQuery.toLowerCase());
+    return normalizeString(course.course_name).includes(normalizeString(filterQuery));
   });
-
+    // Filter results based on query or selected category
+ 
   // Prevent rendering until hydration is complete
   if (!isHydrated) return null;
 
@@ -165,8 +176,11 @@ const Search = () => {
                       <button
                         key={index}
                         onClick={() => handleCategoryClick(category)}
-                        className="px-4 py-2 bg-white rounded-full border border-gray-300 text-sm hover:bg-gray-100 cursor-pointer"
-                      >
+                        className={`px-4 py-2 rounded-full border text-sm cursor-pointer transition-colors duration-300 ${
+                          activeCategory === category
+                            ? 'bg-maincolor_1 text-white'
+                            : 'bg-white border-gray-300 hover:bg-maincolor_1 hover:text-white'
+                        }`}>
                         {category}
                       </button>
                     ))

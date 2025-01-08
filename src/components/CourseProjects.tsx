@@ -73,13 +73,17 @@ const ProjectCards = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", captcha: "" });
   const [errors, setErrors] = useState({ name: "", email: "", phone: "", captcha: "" });
   const [captcha, setCaptcha] = useState<string>("");
-  useEffect(() => {
-    generateCaptcha();
-  }, []);
-  const generateCaptcha = () => {
-    const newCaptcha = Math.random().toString(36).substring(2, 8).toUpperCase();
-    setCaptcha(newCaptcha);
+  const [loading, setLoading] = useState(false);
+ 
+  
+  const generateCaptcha = (): string => {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
   };
+  
+  useEffect(() => {
+    setCaptcha(generateCaptcha());
+  }, []);
+  
   const validateField = (field: string, value: string): string => {
     switch (field) {
       case "name":
@@ -109,38 +113,61 @@ const ProjectCards = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: validateField(field, value) }));
   };
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+  
     if (validateForm()) {
-      const payload = {
+      setLoading(true);
+  
+      const payloadRequestCallBack = {
         myData: [
-          { lead: "right_sticky_contact_us" },
+          { lead: 'right_sticky_contact_us' },
           { name: formData.name },
           { email: formData.email },
           { phone: formData.phone },
-          { userMessage: "TESTING PLEASE IGNORE" },
           { page: window.location.href },
         ],
       };
-      fetch("https://achieversit.com/management/requestCallBack", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to submit form");
-          }
-          alert("Form submitted successfully!");
-        })
-        .catch((error) => {
-          alert(`Error: ${error.message}`);
+  
+      const payloadCaptureLeadRequest = {
+        myData: [
+          { email: formData.email },
+          { phone: formData.phone },
+          { source: 'right_sticky_contact_us' },
+          { page: window.location.href },
+        ],
+      };
+  
+      try {
+        const response = await fetch('/api/submitForm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            payloadRequestCallBack,
+            payloadCaptureLeadRequest,
+          }),
         });
-      setFormData({ name: "", email: "", phone: "", captcha: "" });
-      generateCaptcha();
-      setShowModal(false);
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          alert(result.message);
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            captcha: '',
+          });
+          setCaptcha(generateCaptcha());
+        } else {
+          alert(result.message || 'Form submission failed.');
+        }
+      } catch (error) {
+        console.error('Error during form submission:', error);
+        alert('An error occurred. Please try again.');
+      } finally {
+        setLoading(false);
+      }
     }
   };
   const openModal = (project: Project) => {
@@ -172,7 +199,7 @@ const ProjectCards = () => {
   };
   return (
     <div className="bg-gray-50 py-12 px-6">
-      <h2 className="text-3xl relative elementl text-center mx-auto capitalize mb-5 glitter_text font-bold">Professional Skills Workshops</h2>
+      <h2 className="text-xl  md:text-3xl relative elementl text-center mx-auto capitalize mb-5 glitter_text font-bold">Professional Skills Workshops</h2>
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project) => (
           <div
@@ -182,13 +209,13 @@ const ProjectCards = () => {
             <div className="w-12 h-12 mb-4 flex items-center justify-center bg-orange-100 rounded-full">
               <FontAwesomeIcon icon={project.icon} className="text-maincolor_1 text-2xl" />
             </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2"> {project.industry}</h3>
-            <p className="text-gray-500 line-clamp-3 ellipse">  {project.shortDescription}</p>
+            <h3 className="text-md md:text-xl font-bold text-gray-800 mb-2"> {project.industry}</h3>
+            <p className="text-sm text-gray-500 line-clamp-3 ellipse">  {project.shortDescription}</p>
             <button
               onClick={() => openModal(project)}
               className="btn-hover-bg-transition btn-hover-bg-transition-og px-7 text-black border border-gray-500 px-10"
             >
-          <span>   View Project Details</span> 
+          <span className="text-xs md:text-md">   View Project Details</span> 
             </button>
           </div>
         ))}
@@ -299,11 +326,13 @@ const ProjectCards = () => {
         </div>
       
         <button
-          type="submit"
-          className="bg-maincolor_1 text-white py-2 px-4 rounded-lg hover:bg-maincolor_2"
-        >
-          Enroll Now
-        </button>
+  type="submit"
+  className="bg-maincolor_1 text-white py-2 px-4 rounded-lg hover:bg-maincolor_2"
+  disabled={loading} // Disable the button when loading
+>
+  {loading ? 'Enrolling...' : 'Enroll Now'}
+</button>
+
       </form>
       </div>
       </div>

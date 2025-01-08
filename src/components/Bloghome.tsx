@@ -90,7 +90,7 @@ const BlogPage = () => {
 
   return (
     <div className="my-20">
-      <h1 className="text-3xl font-bold mb-12 w-full md:w-4/5 text-center mx-auto glitter_text elementl relative pb-4">Trending Blogs</h1>
+      <h1 className="font-bold mb-12 w-full md:w-4/5 text-center mx-auto glitter_text elementl relative pb-4 text-2xl md:text-3xl">Trending Blogs</h1>
       <div className="overflow-hidden relative w-full pb-12">
         <div
           className="flex animate-scroll whitespace-nowrap"
@@ -125,7 +125,7 @@ const BlogPage = () => {
                   <h2 className="text-lg font-bold text-gray-800 mb-2 lg:h-10 1024-1200:h-14 text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
                     {blog.blog_name}
                   </h2>
-                  <p className="text-gray-700 line-clamp-3 mb-3 text-wrap" dangerouslySetInnerHTML={{ __html: blog.blog_content }}></p>
+                  <p className="text-gray-700 line-clamp-3 mb-3 text-wrap text-sm md:text-xl" dangerouslySetInnerHTML={{ __html: blog.blog_content }}></p>
                 </div>
                 <hr className="bg-gray-600 w-full mb-0" />
                 <p className="text-sm mt-2 text-gray-500">

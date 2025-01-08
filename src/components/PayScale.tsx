@@ -171,10 +171,10 @@ const PayScale = ({ courseUrl }: { courseUrl: string }) => {
 
   return (
     <div className="w-full lg:max-w-6xl mx-auto my-20 mt-10 p-6 lg:p-0">
-      <h2 className="text-2xl font-bold text-center ">
+      <h2 className="text-lg md:text-2xl font-bold text-center ">
         In-Demand Roles - Salaries - Top Employers
       </h2>
-      <p className="text-gray-600 mb-10 text-center relative element after:bottom-N15 glitter_text">
+      <p className="text-gray-600 mb-10 text-center relative element after:bottom-N15 glitter_text text-md md:text-md">
         Explore the most popular courses, their salaries, and top employers.
       </p>
 
@@ -212,7 +212,7 @@ const PayScale = ({ courseUrl }: { courseUrl: string }) => {
         </div>
 
         <div className="col-span-1">
-          <h3 className="text-xl font-semibold mb-4">Hiring Companies</h3>
+          <h3 className="text-lg md:text-xl font-semibold mb-4">Hiring Companies</h3>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 md:gap-6">
             {popularCourses
               .find((course) => course.course === selectedDesignation)

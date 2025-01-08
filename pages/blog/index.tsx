@@ -211,7 +211,7 @@ const BlogPage = () => {
                         <div className="flex flex-col md:flex-row justify-between items-center">
                         {/* Left Column: Author and Date */}
                         <div>
-                          <span className="text-sm text-black font-bold"> by{" "}</span>
+                          <span className="text-sm text-black font-bold"> By{" "}</span>
                           <span className="text-maincolor_1 text-md font-bold capitalize text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
                             {blog.blog_writter}
                           </span>
