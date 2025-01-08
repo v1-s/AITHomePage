@@ -72,27 +72,9 @@ export default function DwnldAdvisorModalForm({
     }));
 
     // Validate input dynamically
-    if (name === "phone") {
-      // Allow only numbers and validate length for a 10-digit phone number
-      const numericValue = value.replace(/\D/g, ""); // Remove any non-numeric characters
-    
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: numericValue,
-      }));
-    
-      // Check if the input is a valid 10-digit phone number
-      if (/^[6-9]\d{9}$/.test(numericValue)) {
-        setErrors((prevErrors) => ({ ...prevErrors, phone: "" })); // Clear error if valid
-      } else {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          phone: "Enter a valid 10-digit phone number starting with 6-9",
-        }));
-      }
-      return;
+    if (name === "phone" && /^[6-9]\d{9}$/.test(value)) {
+      setErrors((prevErrors) => ({ ...prevErrors, phone: "" }));
     }
-    
     if (name === "email" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       setErrors((prevErrors) => ({ ...prevErrors, email: "" }));
     }
@@ -139,10 +121,10 @@ export default function DwnldAdvisorModalForm({
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
       setLoading(true);
-
+  
       const payloadRequestCallBack = {
         myData: [
           { lead: formData.formName },
@@ -153,7 +135,7 @@ export default function DwnldAdvisorModalForm({
           { page: formData.page },
         ],
       };
-
+  console.log(payloadRequestCallBack);
       const payloadCaptureLeadRequest = {
         myData: [
           { email: formData.email },
@@ -162,29 +144,24 @@ export default function DwnldAdvisorModalForm({
           { page: formData.page },
         ],
       };
-
+  
       try {
-        const responses = await Promise.all([
-          fetch("https://achieversit.com/management/requestCallBack", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payloadRequestCallBack),
-          }),
-          fetch("https://achieversit.com/management/captureLeadRequest", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payloadCaptureLeadRequest),
-          }),
-        ]);
-
-        if (responses.every((response) => response.ok)) {
-          alert("Form submitted successfully!");
+        const response = await fetch("/api/submitForm", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ payloadRequestCallBack, payloadCaptureLeadRequest }),
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          alert(result.message);
           if (downloadPdf) {
             triggerPDFDownload();
           }
           resetFormAndClose();
         } else {
-          alert("Form submission failed. Please try again.");
+          alert(result.message || "Form submission failed.");
         }
       } catch (error) {
         console.error("Error during form submission:", error);
@@ -194,6 +171,8 @@ export default function DwnldAdvisorModalForm({
       }
     }
   };
+  
+  
 
   const triggerPDFDownload = () => {
     const link = document.createElement("a");
@@ -231,13 +210,12 @@ export default function DwnldAdvisorModalForm({
     <div>
       {isOpen && (
         <div
-          className="z-[9999] fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-4 4 min-h-screen overflow-y-auto"
+          className="z-[9999] fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-4"
           style={{ zIndex: 9999 }}
           onClick={closeModal}
         >
           <div
             className={`bg-white rounded-lg shadow-lg w-full max-w-4xl md:max-w-5xl relative ${modalclassname}`}
-            style={{ zIndex: 10000 }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -261,7 +239,7 @@ export default function DwnldAdvisorModalForm({
               <div className="p-6">
                 <h2 className="text-xl text-black md:text-2xl font-bold mb-4 text-center">{title}</h2>
                 <p className="text-sm md:text-base text-gray-600 mb-4 text-wrap">{text}</p>
-                <form onSubmit={handleSubmit} className="space-y-3">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 text-start">
                       Full Name<span className="text-maincolor_1">*</span>
@@ -281,12 +259,11 @@ export default function DwnldAdvisorModalForm({
                       Phone Number<span className="text-maincolor_1">*</span>
                     </label>
                     <input
-                      type="tel"
+                      type="text"
                       id="phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      inputMode="numeric"
                       className="block w-full p-2 border rounded-md"
                     />
                     {errors.phone && <p className="text-maincolor_1 text-sm">{errors.phone}</p>}
@@ -329,7 +306,7 @@ export default function DwnldAdvisorModalForm({
                         onChange={handleInputChange}
                         className="mr-2"
                       />
-                      <span className="text-xs text-black text-wrap">I accept AchieversIT <Link href="/termsnCondition" className="text-blue-500"> Privacy Terms </Link> and <Link href="/termsnCondition" className="text-blue-500">Conditions.</Link></span>
+                      <span className="text-xs text-black">I accept AchieversIT <Link href="/termsnCondition" className="text-blue-500"> Privacy Terms </Link> and <Link href="/termsnCondition" className="text-blue-500">Conditions.</Link></span>
                     </label>
                     {errors.acceptTerms && (
                       <p className="text-maincolor_1 text-sm">{errors.acceptTerms}</p>

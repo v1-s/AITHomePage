@@ -105,7 +105,7 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
             {/* Left Column */}
             <div className="p-6 text-left md:mx-4 flex flex-col">
-              <h1 className="text-2xl lg:text-2xl font-bold mb-4">
+              <h1 className="text-xl lg:text-2xl font-bold mb-4">
                 Empower your team to excel in essential business skills and
                 drive success.
               </h1>
@@ -118,7 +118,7 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
                   "Access to expert instructors for live sessions and Q&A",
                   "Comprehensive learning paths to guide your team from beginner to expert",
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center">
+                  <li key={index} className="flex items-center text-sm md:text-md">
                     <FontAwesomeIcon
                       icon={faCanadianMapleLeaf}
                       className="mr-2 text-maincolor_1"
@@ -134,7 +134,7 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
                   className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10"
                   onClick={() => toggleForm("advisorForm")}
                 >
-                  <span> Enroll Now</span>
+                  <span className="text-md"> Enroll Now</span>
                 </button>
 
                 {activeForm === "advisorForm"  && (
@@ -154,7 +154,7 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
                   className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10"
                   onClick={() => toggleForm("brochureForm")}
                 >
-                  <span> Start 14-Day Free Trial</span>
+                  <span className="text-sm md:text-md"> Start 14-Day Free Trial</span>
                 </button>
                 {activeForm === "brochureForm" &&( // Prevent advisor modal from opening when brochure is active
                     <DwnldAdvisorModalForm
@@ -199,13 +199,13 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
       {/* FAQ Section */}
       <div className="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 my-10 ">
         <div className=" w-full md:w-4/5 mx-auto">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center glitter_text relative elementl pb-2 mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center glitter_text relative elementl pb-2 mb-8">
             Corporate Training
           </h1>
           <div className="space-y-8">
             {faq.map((item, index) => (
               <div key={index} className="bg-white shadow-md p-4 mb-4">
-                <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                <h2 className="text-lg md:text-xl font-semibold text-gray-700 mb-4">
                   {item.question}
                 </h2>
                 <p className="text-gray-600 text-xs md:text-md">{item.answer}</p>

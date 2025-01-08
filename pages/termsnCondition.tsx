@@ -50,7 +50,7 @@ const TermsPolicyModal = () => {
               onClick={() => setActiveIndex(index)}
               className={`cursor-pointer p-3 rounded-md ${
                 activeIndex === index
-                  ? "bg-mainblue text-white border-r-0 w-full"
+                  ? "bg-maincolor_1 text-white border-r-0 w-full"
                   : "text-gray-600 hover:text-gray-500 hover:bg-blue-200"
               }`}
               aria-label={`View ${item.title}`}

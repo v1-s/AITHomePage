@@ -200,7 +200,7 @@ const Footer = () => {
             {/* Request a Demo Section */}
             <div className="w-full lg:w-1/2 text-center space-y-3 sm:text-left lg:order-2">
               <h2 className="text-uppercase font-bold mb-3 text-xl text-white">Request a Demo</h2>
-              <p className="mt-4 text-gray-500">
+              <p className="text-sm md:text-md mt-4 text-gray-500">
                 Request a demo to explore how AchieversIT&apos;s solutions enhance success, efficiency, and growth opportunities.
               </p>
               <form className="mt-6 w-full" onSubmit={handleSubmit}>
@@ -300,7 +300,7 @@ const Footer = () => {
                     <Link
                    href={`/${link.name.replace(/\s+/g, '')}`} 
 
-                      className="text-gray-600 hover:text-maincolor_1 mb-1 sm:mb-0"
+                      className="text-md text-gray-600 hover:text-maincolor_1 mb-1 sm:mb-0"
                   >
                       {link.name}
                     </Link>
@@ -318,7 +318,7 @@ const Footer = () => {
         <div className="footer-end py-4 px-0 lg:mx-45">
           <div className="text-center">
             <h4 className="text-lg font-medium text-2xl text-white pb-2 ">Disclaimer</h4>
-            <p className="text-center text-md text-gray-700">
+            <p className="text-sm  text-center md:text-md text-gray-700">
               By visiting the website Achieversit, viewing, accessing, or
               otherwise using any of the information collected, created, or
               compiled by Achieversit, you agree to be bound to the terms and

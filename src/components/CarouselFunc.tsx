@@ -124,7 +124,7 @@ const Carousel: React.FC<CarouselProps> = ({
             {safeBlogs[currentSlide]?.blog_name}
           </h1>
           <p className="text-sm text-gray-500 mt-2">
-            by<span className="capitalize font-bold"> {safeBlogs[currentSlide]?.blog_writter}</span> on  {new Date(safeBlogs[currentSlide]?.created_at).toISOString().split('T')[0]}
+            By<span className="capitalize font-bold"> {safeBlogs[currentSlide]?.blog_writter}</span> on  {new Date(safeBlogs[currentSlide]?.created_at).toISOString().split('T')[0]}
           </p>
           <p className="text-gray-700 mt-3" dangerouslySetInnerHTML={{ __html: safeBlogs[currentSlide]?.blog_content.slice(0, 800) }} />
           <div className="flex justify-end mt-2">

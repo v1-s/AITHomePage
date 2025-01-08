@@ -95,61 +95,66 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
       <div className="w-full md:w-3/4 py-12 px-4">
         <h2 className="text-2xl font-semibold text-gray-900 ml-4 glitter_text">Course Enrollment</h2>
         <ul className="mt-4 space-y-4 px-4 cursor-pointer transform-scale-100">
-          {batches.length > 0 ? (
-            batches.map((batch,index) => (
-              <li
-                key={batch.link}
-                className={`border-b py-4 bg-gray-50 rounded-md px-3 relative  ${batch.status === "SOLD OUT" ? "border-maincolor_1" : "border-gray-300"} ${selectedBatchLink === batch.link ? "bg-blue-100" : ""} cursor-pointer transform transition-transform duration-200 hover:scale-105`}
-              >
-                {batch.status !== "SOLD OUT" && (
-                  <span
-                    className="absolute top-1 left-0 bg-maincolor_1 text-white text-xs font-semibold px-3 py-1 my-0"
-                    style={{
-                      clipPath: "polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%, 0% 50%)",
-                    }}
-                  >
-                    {batch.batchStatus}
-                  </span>
-                )}
+  {batches.length > 0 ? (
+    batches.map((batch, index) => (
+      <li
+        key={batch.link}
+        className={`border-b py-4 bg-gray-50 rounded-md px-3 relative ${
+          batch.status === "SOLD OUT" ? "border-maincolor_1" : "border-gray-300"
+        } ${selectedBatchLink === index.toString() ? "bg-blue-100" : ""} cursor-pointer transform transition-transform duration-200 hover:scale-105`}
+        onClick={() => setSelectedBatchLink(index.toString())} // Set selected batch when card is clicked
+      >
+        {batch.status !== "SOLD OUT" && (
+          <span
+            className="absolute top-1 left-0 bg-maincolor_1 text-white text-xs font-semibold px-3 py-1 my-0"
+            style={{
+              clipPath: "polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%, 0% 50%)",
+            }}
+          >
+            {batch.batchStatus}
+          </span>
+        )}
 
-<div className="flex flex-wrap gap-7 items-center pt-4">
-                  {batch.status === "SOLD OUT" && (
-                    <span className="text-maincolor_1 font-bold w-xs border border-maincolor_1 p-2 text-wrap rounded-md pointer-events-none">
-                      {batch.status.replace(" ", "\n")}
-                    </span>
-                  )}
-
-{batch.status !== "SOLD OUT" && (
-  <input
-    type="radio"
-    name="batchSelection" // All radio buttons share the same `name`
-    className="border border-gray-500 pointer"
-    checked={selectedBatchLink === index.toString()} // Use index as a unique identifier
-    onChange={() => setSelectedBatchLink(index.toString())} // Update selectedBatchLink based on the index
-  />
-)}
-
-                  <p className="text-gray-900 text-lg font-semibold">
-                    {batch.batchStartDate && format(new Date(batch.batchStartDate), 'dd-MM-yy')}
-                  </p>
-
-                  <p className="border border-gray-800 rounded-md p-2 text-sm cursor-pointer text-blue-800">
-                    {batch.batchMode}
-                  </p>
-                  <p className="text-gray-700">{batch.batchDays}</p>
-                  <div className="flex justify-center items-center flex-col">
-                    <p className="text-gray-700">{batch.batchTimings}</p>
-                    {batch.isOrientation && (
-                      <p className="text-cyan-800 mt-2 font-bold cursor-pointer">ORIENTATION CLASS</p>
-                    )}
-                  </div>
-                </div>
-              </li>
-            ))
-          ) : (
-            <li className="py-4 text-center text-gray-600">No batches available</li>
+        <div className="flex flex-wrap gap-7 items-center pt-4">
+          {batch.status === "SOLD OUT" && (
+            <span className="text-maincolor_1 font-bold w-xs border border-maincolor_1 p-2 text-wrap rounded-md pointer-events-none">
+              {batch.status.replace(" ", "\n")}
+            </span>
           )}
-        </ul>
+
+          {batch.status !== "SOLD OUT" && (
+            <input
+              type="radio"
+              name="batchSelection"
+              className="border border-gray-500 pointer"
+              checked={selectedBatchLink === index.toString()} // Check if the current batch is selected
+              onChange={() => setSelectedBatchLink(index.toString())} // Set selected batch when radio is clicked
+              onClick={(e) => e.stopPropagation()} // Prevent card click event
+            />
+          )}
+
+          <p className="text-gray-900 text-lg font-semibold">
+            {batch.batchStartDate && format(new Date(batch.batchStartDate), "dd-MM-yy")}
+          </p>
+
+          <p className="border border-gray-800 rounded-md p-2 text-sm cursor-pointer text-blue-800">
+            {batch.batchMode}
+          </p>
+          <p className="text-gray-700">{batch.batchDays}</p>
+          <div className="flex justify-center items-center flex-col">
+            <p className="text-gray-700">{batch.batchTimings}</p>
+            {batch.isOrientation && (
+              <p className="text-cyan-800 mt-2 font-bold cursor-pointer">ORIENTATION CLASS</p>
+            )}
+          </div>
+        </div>
+      </li>
+    ))
+  ) : (
+    <li className="py-4 text-center text-gray-600">No batches available</li>
+  )}
+</ul>
+
       </div>
 
       {/* Right Section */}

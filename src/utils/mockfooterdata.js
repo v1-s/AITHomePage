@@ -10,19 +10,19 @@
       { iconClass: "faLinkedin", color: "blue", url: "#" },
     ],
     companyLinks: [
-      { name: "About Us", url: "/AboutUsSection" },
+      { name: "About Us", url: "/aboutus" },
       { name: "Careers", url: "/careers" },
-      { name: "Blogs", url: "Blog" },
+      { name: "Blogs", url: "/blog" },
       { name: "Contact Us", url: "/contactus" },
     ],
     exploreLinks: [
       { name: "Corporate Training", url: "/corporateTraining" },
-      { name: "Hire From Us", url: "/hirefromus" },
+      { name: "Hire From Us", url: "/hirefromUS" },
       { name: "Existing Students", url: "/reviews" },
       { name: "Resources", url: "/services" },
     ],
     supportLinks: [
-      { name: "FAQ's", url: "/termsnCondition", id: "faq" },
+      { name: "FAQ's", url: "/", id: "faq" },
       { name: "Terms and Conditions", url: "/termsnCondition", id: "terms" },
       { name: "Privacy Policy",url: "/termsnCondition", id: "privacy" },
       { name: "Cancellation and Refund Policy",url: "/termsnCondition", id: "refund" },

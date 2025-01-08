@@ -161,16 +161,15 @@ const JobListingPage = () => {
       {/* Centered Search Button */}
       <div className="flex justify-center mt-4">
         <button
-          className="bg-mainblue text-white py-2 px-10 rounded hover:bg-blue-700 transition"
+          className="bg-maincolor_1 text-white py-2 px-10 rounded hover:bg-blue-700 transition"
           onClick={handleSearchClick}
         >
           Search
         </button>
       </div>
-
       {/* Job Listings */}
       <div className="container mx-auto px-4 mt-8">
-        <h2 className="text-xl font-semibold mb-4 text-center md:text-left">
+        <h2 className="text-md md:text-xl font-semibold mb-4 text-center md:text-left">
           Current Openings
         </h2>
 
@@ -181,7 +180,8 @@ const JobListingPage = () => {
           <div className="overflow-x-auto">
             <table className="w-full bg-white shadow-md rounded text-sm md:text-base">
               <thead>
-                <tr className="bg-mainblue text-white uppercase text-xs md:text-xl">
+                <tr className="bg-maincolor_1 text-white uppercase text-xs md:text-xl">
+            
                   <th className="text-left py-3 px-4">Job Title</th>
                   <th className="text-left py-3 px-4">Department</th>
                   <th className="text-left py-3 px-4">Location</th>
@@ -224,4 +224,3 @@ const JobListingPage = () => {
 };
 
 export default JobListingPage;
-

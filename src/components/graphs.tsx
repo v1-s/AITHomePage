@@ -84,7 +84,7 @@ const CircularGraphSection = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4 w-full md:w-4/5 lg:w-3/4 mx-auto">
-      <h2 className="text-2xl font-bold text-maincolor_1 mb-4 text-center">
+      <h2 className="text-xl md:text-2xl font-bold text-maincolor_1 mb-4 text-center">
         A Customized Learning Experience
       </h2>
      
@@ -114,7 +114,7 @@ const CircularGraphSection = () => {
         <p className="text-lg font-bold text-maincolor_1">
           {data[activeIndex]?.label}
         </p>
-        <p className="text-sm mt-2">
+        <p className="text-sm  md:text-md mt-2">
           {data[activeIndex]?.text}
         </p>
       </div>

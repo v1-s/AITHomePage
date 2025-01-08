@@ -46,11 +46,11 @@ const TrainingAdvisorForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
       setLoading(true);
-      setSubmissionStatus(null); 
-
+      setSubmissionStatus(null);
+  
       const payloadRequestCallBack = {
         myData: [
           { lead: "mentor_form_submission" },
@@ -61,7 +61,7 @@ const TrainingAdvisorForm = () => {
           { page: "Mentorship Program Page" },
         ],
       };
-
+  
       const payloadCaptureLeadRequest = {
         myData: [
           { email: formData.email },
@@ -70,31 +70,20 @@ const TrainingAdvisorForm = () => {
           { page: "Mentorship Program Page" },
         ],
       };
-
-      console.log("Submitting payloads:");
-      console.log("Payload 1:", payloadRequestCallBack);
-      console.log("Payload 2:", payloadCaptureLeadRequest);
-
+  
       try {
-        const responses = await Promise.all([
-          fetch("https://achieversit.com/management/requestCallBack", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payloadRequestCallBack),
+        const response = await fetch('/api/submitForm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            payloadRequestCallBack,
+            payloadCaptureLeadRequest,
           }),
-          fetch("https://achieversit.com/management/captureLeadRequest", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payloadCaptureLeadRequest),
-          }),
-        ]);
-
-        console.log("API Responses:", responses);
-
-        if (responses.every((response) => response.ok)) {
+        });
+  
+        if (response.ok) {
           setSubmissionStatus("success");
           window.alert("Form submitted successfully!");
-          console.log("Form submitted successfully!");
           setFormData({
             name: "",
             company: "",
@@ -113,13 +102,12 @@ const TrainingAdvisorForm = () => {
       } finally {
         setLoading(false);
       }
-      
     } else {
       setSubmissionStatus(null);
       console.log("Validation failed. Errors:", errors);
     }
   };
-
+  
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
       {/* Name Field */}

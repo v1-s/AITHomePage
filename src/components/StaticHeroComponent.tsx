@@ -60,7 +60,7 @@ const StaticHeroComponent: React.FC<StaticHeroComponentProps> = ({
       }
     }}
   >
-    <span>CALL US</span>
+    <span className="text-sm md:text-md">CALL US</span>
   </button>
 
             <button
@@ -71,7 +71,7 @@ const StaticHeroComponent: React.FC<StaticHeroComponentProps> = ({
               }}
               aria-label="Enquire Now"
             >
-              <span>ENQUIRE NOW!</span>
+              <span className="text-sm md:text-md">ENQUIRE NOW!</span>
             </button>
           </div>
 

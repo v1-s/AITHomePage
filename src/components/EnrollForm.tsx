@@ -66,33 +66,14 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
     setFormData((prevData) => ({ ...prevData, [id]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [id]: '' }));
   };
+// Inside your React component
+const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  e.preventDefault();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  if (validateForm()) {
+    setLoading(true);
 
-    setSubmitStatus('');
-    setErrors({ name: '', email: '', contact: '', message: '', captchaInput: '' });
-
-    if (validateForm()) {
-      setLoading(true);
-      setSubmitStatus('Submitting...');
-
-      try {
-        await submitForm();
-        setSubmitStatus('Form submitted successfully!');
-        setFormData({ name: '', email: '', contact: '', message: '', captchaInput: '' });
-        setCaptcha(generateCaptcha());
-      } catch (error) {
-        console.error("Submission error:", error);
-        setSubmitStatus('Failed to submit the form. Please try again.');
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
-  const submitForm = async () => {
-    const payload = {
+    const payloadRequestCallBack = {
       myData: [
         { lead: 'right_sticky_contact_us' },
         { name: formData.name },
@@ -103,27 +84,50 @@ const EnrollmentForm: React.FC<EnrollmentFormProps> = ({
       ],
     };
 
-    await fetch('https://achieversit.com/management/requestCallBack', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    const leadPayload = {
+    const payloadCaptureLeadRequest = {
       myData: [
         { email: formData.email },
         { phone: formData.contact },
-        { source: 'lovedReviews' },
-        { page: 'UI Development Course in Bangalore' },
+        { source: 'right_sticky_contact_us' },
+        { page: window.location.href },
       ],
     };
 
-    await fetch('https://achieversit.com/management/captureLeadRequest', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(leadPayload),
-    });
-  };
+    try {
+      const response = await fetch('/api/submitForm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          payloadRequestCallBack,
+          payloadCaptureLeadRequest,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(result.message);
+        setFormData({
+          name: '',
+          email: '',
+          contact: '',
+          message: '',
+          captchaInput: '',
+        });
+        setCaptcha(generateCaptcha());
+      } else {
+        alert(result.message || 'Form submission failed.');
+      }
+    } catch (error) {
+      console.error('Error during form submission:', error);
+      alert('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+};
+
+
 
   const handleCaptchaRefresh = () => {
     setCaptcha(generateCaptcha());

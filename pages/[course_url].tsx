@@ -210,7 +210,7 @@ const CourseDetails: React.FC = () => {
               </span>
             </div>
 
-            <p className="text-gray-700 mb-6 text-wrap">
+            <p className="text-gray-700 mb-6 text-wrap text-sm md:text-md">
               Become a Certified <strong>{course.title} </strong>Developer and
               boost your career with the <strong>{course.title}</strong> Course!
             </p>
@@ -233,7 +233,7 @@ const CourseDetails: React.FC = () => {
                     className="text-mainBlue font-semibold"
                   />
                 </span>
-                <p className="text-wrap" dangerouslySetInnerHTML={{ __html: course.highlights_1 }}></p>
+                <p className="text-wrap text-xs md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_1 }}></p>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">
@@ -242,7 +242,7 @@ const CourseDetails: React.FC = () => {
                     className="text-mainBlue font-semibold"
                   />
                 </span>
-                <p className="text-wrap" dangerouslySetInnerHTML={{ __html: course.highlights_2 }}></p>
+                <p className="text-wrap text-xs md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_2 }}></p>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">
@@ -251,7 +251,7 @@ const CourseDetails: React.FC = () => {
                     className="text-mainBlue font-semibold"
                   />
                 </span>
-                <p className="text-wrap" dangerouslySetInnerHTML={{ __html: course.highlights_3 }}></p>
+                <p className="text-wrap text-xs md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_3 }}></p>
               </li>
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -303,7 +303,7 @@ const CourseDetails: React.FC = () => {
       <TypesOfTraining />
       <div className="bg-gray-100 flex justify-center py-12">
         <div className="bg-white max-w-6xl w-full p-8 rounded-lg shadow-lg bg-Bg1 bg-cover">
-          <h2 className="text-2xl font-bold mb-8 relative elements ">Skills Covered In <span className="glitter_text">{course.title}</span></h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-8 relative elements ">Skills Covered In <span className="glitter_text">{course.title}</span></h2>
           <div className="flex flex-wrap gap-4">
             {courseSkills.length > 0 ? (
               courseSkills.map((skill, index) => (
@@ -324,7 +324,7 @@ const CourseDetails: React.FC = () => {
       <PayScale courseUrl={course_url as string} />
       <div className="bg-gray-100 flex justify-center py-12">
         <div className="w-full flex-col justify-center items-center bg-white max-w-6xl p-8 rounded-lg shadow-lg bg-Bg1 bg-cover mx-auto">
-          <h1 className="text-2xl font-bold mb-8 relative element text-center pb-2">
+          <h1 className="text-lg md:text-2xl font-bold mb-8 relative element text-center pb-2">
             <span className="glitter_text text-xl md:text-3xl ">{course.title}</span> Curriculum
           </h1>
           <CourseCurriculum courseUrl={course_url as string} courseDetails={course} />
@@ -333,7 +333,7 @@ const CourseDetails: React.FC = () => {
         <Certificate />
         <HiringPartners title={
           <>
-            <h2 className="text-2xl md:text-2xl font-bold">
+            <h2 className="text-xl md:text-2xl font-bold">
               Empowering Students with <span className="text-maincolor_1 text-lg md:text-3xl glitter_text"> Industry-Focused Training </span>
             </h2>
           </>

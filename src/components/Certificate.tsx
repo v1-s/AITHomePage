@@ -19,7 +19,7 @@ const Certificate: React.FC = () => {
       <div className="w-full lg:max-w-6xl mx-auto flex justify-center items-center flex-col md:flex-row p-10 ">
         <div className="w-full md:w-3/5 p-6 md:py-8 text-center">
           {/* Section Title */}
-          <h2 className="text-sm lg:text-xl p-3 text-white !leading-[3rem]">
+          <h2 className="text-md lg:text-xl p-3 text-white !leading-[3rem]">
             <FontAwesomeIcon
               icon={faQuoteLeft}
               className="text-maincolor_1 text-3xl mr-3 hover:scale-110 transition-transform duration-300"

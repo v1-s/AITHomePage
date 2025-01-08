@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Image from "next/image";
 
 interface ModalProps {
@@ -23,12 +23,24 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+ // Reset form fields whenever the modal is opened
+ useEffect(() => {
+  if (isOpen) {
+    setFormData({
+      name: "",
+      phone: "",
+      email: "",
+      whatsappUpdates: false,
+      whatsappTerms: false,
+    });
+    setErrors({});
+  }
+}, [isOpen]);
   if (!isOpen) return null;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
@@ -52,6 +64,7 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validate input fields
     const newErrors: Record<string, string> = {};
     if (!formData.name) newErrors.name = "Name is required.";
     if (!formData.phone) newErrors.phone = "Phone number is required.";
@@ -63,67 +76,50 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    const requestPayload = {
+    // Prepare payloads
+    const payloadRequestCallBack = {
       myData: [
         { lead: "right_sticky_contact_us" },
         { name: formData.name },
         { email: formData.email },
         { phone: formData.phone },
         { userMessage: formData.whatsappUpdates ? "User wants WhatsApp updates" : "" },
-        { page: window.location.href }
-      ]
+        { page: window.location.href },
+      ],
     };
-    console.log("payload status", requestPayload);
+
+    const payloadCaptureLeadRequest = {
+      myData: [
+        { email: formData.email },
+        { phone: formData.phone },
+        { source: "lovedReviews" },
+        { page: window.location.href },
+      ],
+    };
 
     try {
-      const response = await fetch("https://achieversit.com/management/requestCallBack", {
+      // Send data to the API endpoint
+      const response = await fetch("/api/submitForm", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestPayload),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ payloadRequestCallBack, payloadCaptureLeadRequest }),
       });
 
+      const result = await response.json();
+
       if (response.ok) {
-        alert("Form submitted successfully!");
+        alert(result.message);
         setFormData({ name: "", phone: "", email: "", whatsappUpdates: false, whatsappTerms: false });
         setErrors({});
         onClose();
       } else {
-        alert("There was an error submitting the form.");
-      }
-    } catch {
-      alert("please provide valid details");
-    }
-
-    try {
-      const leadPayload = {
-        myData: [
-          { email: formData.email },
-          { phone: formData.phone },
-          { source: "lovedReviews" },
-          { page: window.location.href }
-        ]
-      };
-
-      const leadResponse = await fetch("https://achieversit.com/management/captureLeadRequest", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(leadPayload),
-      });
-
-      if (leadResponse.ok) {
-        console.log("Lead captured successfully");
-      } else {
-        console.log("Error capturing lead");
+        alert(result.message || "Form submission failed.");
       }
     } catch (error) {
-      console.log("Error capturing lead", error);
+      console.error("Error during form submission:", error);
+      alert("An error occurred. Please try again.");
     }
   };
-
   return (
     <div className="relative">
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gray-500 bg-opacity-75">

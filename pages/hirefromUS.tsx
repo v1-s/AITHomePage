@@ -55,10 +55,10 @@ const HireFromUs = () => {
       <section className="w-full py-16 bg-flowGradientBottom">
         <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-between px-6 lg:px-12 mb-14">
           <div className="w-full lg:w-1/2 text-center lg:text-left">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 leading-snug">
+            <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 leading-snug">
               Access the Finest <span className="glitter_text"> Tech Talent</span> at <span className="glitter_text">Zero Cost</span>
             </h1>
-            <p className="mt-4 text-gray-600 text-base font-semibold">
+            <p className="text-xs mt-4 text-gray-600 md:text-base font-semibold">
               Connect with AchieversIT industry-ready professionals to drive your projects forward and achieve exceptional results effortlessly.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row items-center sm:items-start justify-center lg:justify-start">
