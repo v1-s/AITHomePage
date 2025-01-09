@@ -22,6 +22,11 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ faqData }) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
+  // Don't render anything if there's no FAQ data
+  if (!faqData || faqData.length === 0) {
+    return null;
+  }
+
   return (
     <div className="w-full lg:max-w-6xl mx-auto flex justify-center my-10 lg:my-20 p-2">
       <div className="w-full mt-2 mb-8 sm:p-4 p-1 shadow-card transition-all duration-200 p-4 bg-white">
@@ -29,47 +34,43 @@ const FAQComponent: React.FC<FAQComponentProps> = ({ faqData }) => {
           Faq&apos;s
         </h1>
         <div id="accordion">
-          {faqData && faqData.length > 0 ? (
-            faqData.map((item: FAQ, index: number) => (
-              <div
-                key={index}
-                className={`border-b my-2 accordion-item transition-all duration-200 ease-in-out`}
+          {faqData.map((item: FAQ, index: number) => (
+            <div
+              key={index}
+              className={`border-b my-2 accordion-item transition-all duration-200 ease-in-out`}
+            >
+              <button
+                className="w-full text-left p-4 text-gray-700 font-medium flex justify-between items-center focus:outline-none shadow bg-Bg1 bg-cover bg-bottom bg-no-repeat border-b"
+                onClick={() => toggleAccordion(index)}
+                aria-expanded={expandedIndex === index}
+                aria-controls={`faq-content-${index}`}
               >
-                <button
-                  className="w-full text-left p-4 text-gray-700 font-medium flex justify-between items-center focus:outline-none shadow bg-Bg1 bg-cover bg-bottom bg-no-repeat border-b"
-                  onClick={() => toggleAccordion(index)}
-                  aria-expanded={expandedIndex === index}
-                  aria-controls={`faq-content-${index}`}
-                >
-                  <h3 className="font-semibold text-sm md:text-base">
-                    {item.question}
-                  </h3>
-                  <span className="accordion-icon transition-transform duration-200">
-                    <FontAwesomeIcon
-                      icon={expandedIndex === index ? faMinus : faPlus}
-                      className="text-lg text-maincolor_1"
-                    />
-                  </span>
-                </button>
-                <div
-                  id={`faq-content-${index}`}
-                  className={`accordion-content overflow-hidden transition-all duration-200 ease-in-out ${
-                    expandedIndex === index
-                      ? "max-h-screen mt-2 bg-white bg-cover bg-bottom bg-no-repeat"
-                      : "max-h-0"
-                  }`}
-                  role="region"
-                  aria-labelledby={`faq-header-${index}`}
-                >
-                  <div className="p-4 text-gray-600 text-xs md:text-sm text-wrap">
-                    <p>{item.answer}</p>
-                  </div>
+                <h3 className="font-semibold text-sm md:text-base">
+                  {item.question}
+                </h3>
+                <span className="accordion-icon transition-transform duration-200">
+                  <FontAwesomeIcon
+                    icon={expandedIndex === index ? faMinus : faPlus}
+                    className="text-lg text-maincolor_1"
+                  />
+                </span>
+              </button>
+              <div
+                id={`faq-content-${index}`}
+                className={`accordion-content overflow-hidden transition-all duration-200 ease-in-out ${
+                  expandedIndex === index
+                    ? "max-h-screen mt-2 bg-white bg-cover bg-bottom bg-no-repeat"
+                    : "max-h-0"
+                }`}
+                role="region"
+                aria-labelledby={`faq-header-${index}`}
+              >
+                <div className="p-4 text-gray-600 text-xs md:text-sm text-wrap">
+                  <p>{item.answer}</p>
                 </div>
               </div>
-            ))
-          ) : (
-            <p className="text-gray-600 text-center">No FAQs available.</p>
-          )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

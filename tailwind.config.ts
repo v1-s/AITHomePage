@@ -82,6 +82,7 @@ const config: Config = {
         heroSecBg:
           "linear-gradient(to right, rgba(98, 110, 163, 0.72), hsl(339, 90%, 88%))",
         gradentBlue: "linear-gradient(to right, #0b82da, #1488CC)",
+        gradientBlue: "radial-gradient(73.81% 78.2% at 82.32% 85.58%, #0b82da,0%, #1e2d3e 100%)",
         gradientGrayToBeige:
           "linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996)",
         gradientWhiteOverlay:

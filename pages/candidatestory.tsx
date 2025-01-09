@@ -133,7 +133,7 @@ const CandidateStory: React.FC = () => {
             <div className="w-full sm:w-96 md:w-3/4 lg:w-full p-5 bg-gray-50 rounded-md shadow-card">
               <iframe
                 className="w-full h-64 sm:h-72 md:h-80 rounded-md"
-                src="https://www.youtube.com/embed/your-video-id"
+                src="https://www.youtube.com/channel/UCgXhUR82NKEMd3_ZZbefrdA"
                 title="Life at AchieversIT"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

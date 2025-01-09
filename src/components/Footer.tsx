@@ -262,30 +262,35 @@ const Footer = () => {
 
             {/* Company, Explore, Support Section */}
             <div className="w-full lg:w-1/2 flex flex-wrap justify-between text-center md:text-left lg:order-1 gap-y-6">
-              {[{ title: "Company", links: footerData.companyLinks }, { title: "Explore", links: footerData.exploreLinks }, { title: "Support", links: footerData.supportLinks }].map(
-                (section, index) => (
-                  <div key={index} className="w-full md:w-1/3 space-y-2">
-                    <h6 className="text-uppercase font-bold mb-3 text-xl text-white">{section.title}</h6>
-                    {section.links.map((link: FooterLink, i) => (
-                      <p key={i} className="py-1">
-                        {link.type === "course" && link.id ? (
-                          <Link
-                            href={`/${link.name}`}
-                            className="text-reset cursor-pointer"
-                          >
-                            {link.name}
-                          </Link>
-                        ) : (
-                          <Link href={link.url} className="text-reset cursor-pointer text-gray-600 hover:text-maincolor_1">
-                            {link.name}
-                          </Link>
-                        )}
-                      </p>
-                    ))}
-                  </div>
-                )
-              )}
-            </div>
+  {[
+    { title: "Company", links: footerData.companyLinks },
+    { title: "Explore", links: footerData.exploreLinks },
+    { title: "Support", links: footerData.supportLinks },
+  ].map((section, index) => (
+    <div key={index} className="w-full md:w-1/3 space-y-2">
+      <h6 className="text-uppercase font-bold mb-3 text-xl text-white">
+        {section.title}
+      </h6>
+      {section.links.map((link: FooterLink, i) => (
+        <p key={i} className="py-1">
+          {link.type === "course" && link.id ? (
+            <Link href={`/${link.name}`} className="text-reset cursor-pointer">
+              {link.name}
+            </Link>
+          ) : (
+            <Link
+              href={`${link.url}?id=${link.id}`} // Pass the id as a query parameter
+              className="text-reset cursor-pointer text-gray-600 hover:text-maincolor_1"
+            >
+              {link.name}
+            </Link>
+          )}
+        </p>
+      ))}
+    </div>
+  ))}
+</div>
+
           </div>
 
           {/* Trending Links */}
