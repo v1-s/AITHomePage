@@ -91,19 +91,29 @@ const Reviews = () => {
     }
   }, [isPausedTop, isPausedBottom]);
 
-  const ImageComponent = ({ imagePath, altText }: { imagePath: string, altText: string }) => {
-    const fullImagePath = imageBasePath + imagePath;
+  const ImageComponent = ({
+    imagePath,
+    altText,
+  }: {
+    imagePath: string;
+    altText: string;
+  }) => {
+    const fullImagePath = imagePath.startsWith("http")
+      ? imagePath // Use the full URL if it's already absolute
+      : `${imageBasePath}${imagePath}`; // Append base path for relative URLs
+  
     return (
       <Image
         src={fullImagePath}
         alt={altText}
-        width={400} // Add width and height for optimization
+        width={400}
         height={160}
         className="w-full h-full object-cover rounded-full shadow-hard"
         loading="lazy"
       />
     );
   };
+  
 
   return (
     <div className="relative py-8 text-center">

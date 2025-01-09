@@ -24,8 +24,8 @@
     supportLinks: [
       { name: "FAQ's", url: "/", id: "faq" },
       { name: "Terms and Conditions", url: "/termsnCondition", id: "terms" },
-      { name: "Privacy Policy",url: "/termsnCondition", id: "privacy" },
-      { name: "Cancellation and Refund Policy",url: "/termsnCondition", id: "refund" },
+      { name: "Privacy Policy", url: "/termsnCondition", id: "privacy" },
+      { name: "Cancellation and Refund Policy", url: "/termsnCondition", id: "refund" },
     ],
     trendingLinks: {
       postGraduate: [

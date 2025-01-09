@@ -108,6 +108,8 @@ function Header() {
     const formattedLink = link.replace(/\s+/g, "").toLowerCase();
     return linkMapping[formattedLink] || formattedLink;
   };
+  
+  
 
   return (
     <>
@@ -177,10 +179,11 @@ function Header() {
                   className="absolute right-0 top-full w-48 bg-white shadow-lg rounded-md font-semibold border-t-4 border-maincolor_1 mt-7"
 
                 >
+                
                   {quickLinks.slice(4).map((item, index) => (
                     <Link
                       key={index}
-                      href={`/${formatLink(item)}`}
+                      href={`/${formatLink(item)}`} prefetch
                       className="block px-4 py-2 text-gray-700 hover:text-maincolor_1 cursor-pointer"
                     >
                       {item}
@@ -244,15 +247,20 @@ function Header() {
                   </div>
                 </>
               )}
-              {quickLinks.map((item, index) => (
-                <Link
-                  key={index}
-                  href={`/${formatLink(item)}`}
-                  className="whitespace-nowrap text-gray-700 hover:text-maincolor_1 font-semibold w-full text-start"
-                >
-                  {item}
-                </Link>
-              ))}
+             {quickLinks.map((item, index) => (
+  <Link
+    key={index}
+    href={`/${formatLink(item)}`} // Dynamically map the links
+    prefetch={true} // Enable prefetching for faster navigation
+    className="whitespace-nowrap text-gray-700 hover:text-maincolor_1 font-semibold w-full text-start"
+    onClick={(e) => {
+      e.stopPropagation(); // Prevent interference with other event handlers
+    }}
+  >
+    {item}
+  </Link>
+))}
+
             </div>
           </div>
         )}

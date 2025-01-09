@@ -11,17 +11,19 @@ type CurriculumItem = {
 type CourseCurriculumProps = {
   courseUrl: string;
   courseDetails: { title: string; description: string };
+  onCurriculumDataCheck: (isEmpty: boolean) => void;
 };
 
 const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
   courseUrl,
   courseDetails,
+  onCurriculumDataCheck,
 }) => {
   // Remove unused effectiveCourseUrl variable
   // const effectiveCourseUrl = courseUrl || "angular-course";
   const [curriculumData, setCurriculumData] = useState<CurriculumItem[]>([]); // State to store fetched curriculum data
   const [expanded, setExpanded] = useState<number | null>(null); // State to track which accordion item is expanded
-
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   // Fetch the curriculum data from the API
   useEffect(() => {
     const fetchCurriculumData = async () => {
@@ -33,6 +35,15 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
           throw new Error("Failed to fetch curriculum data");
         }
         const data = await response.json();
+        setCurriculumData(data);
+
+        // Notify the parent component if the data is empty
+        onCurriculumDataCheck(Array.isArray(data) && data.length === 0);
+        if (Array.isArray(data) && data.length === 0) {
+          console.log("Curriculum data is empty.");
+          setIsDataLoaded(true); // Mark data as loaded but empty
+          return; // Exit early if data is empty
+        }
 
         // Define the type for the API response item
         type ApiResponseItem = {
@@ -49,15 +60,22 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
         setCurriculumData(mappedData);
       } catch (error) {
         console.error("Error fetching curriculum data:", error);
+      } finally {
+        setIsDataLoaded(true); // Mark data as loaded
       }
     };
 
     fetchCurriculumData();
-  }, [courseUrl]);
+  }, [courseUrl, onCurriculumDataCheck]);
 
   const toggleAccordion = (index: number) => {
     setExpanded(expanded === index ? null : index);
   };
+
+  // Don't render anything if data is not loaded or is empty
+  if (!isDataLoaded || curriculumData.length === 0) {
+    return null; // Render nothing
+  }
 
   return (
     <div className="w-full flex justify-center">
@@ -65,7 +83,7 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
         {/* <h1 className="text-2xl font-bold mb-4">{courseDetails.title}</h1> */}
         <p className="mb-6">{courseDetails.description}</p>
         <div id="accordion">
-          {curriculumData.length > 0 ? (
+          {curriculumData.length > 0 && (
             curriculumData.map((item, index) => (
               <div key={index} className="border-b my-2">
                 <button
@@ -120,9 +138,8 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                 )}
               </div>
             ))
-          ) : (
-            <p>Loading curriculum...</p>
-          )}
+          ) 
+        }
         </div>
       </div>
     </div>

@@ -23,6 +23,20 @@ export default function DwnldAdvisorModalForm({
   downloadPdf = false, // Default to false if not provided
 }: DwnldAdvisorModalFormProps) {
   const [isOpen, setIsOpen] = useState(true);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [loginInput, setLoginInput] = useState(""); // Store the input value in the login modal
+const [isValidLogin, setIsValidLogin] = useState(false); // Track if the input is valid
+
+  const openLoginModal = () => {
+    setIsLoginModalOpen(true);
+
+    setIsOpen(false);
+  };
+
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -62,7 +76,29 @@ export default function DwnldAdvisorModalForm({
       acceptTerms: "",
     });
   }, [formName]);
-
+    // Check submission status from sessionStorage
+    useEffect(() => {
+      
+      const checkForSubmission = () => {
+        const submittedEmails = JSON.parse(sessionStorage.getItem("submittedEmails") || "[]");
+        const submittedPhones = JSON.parse(sessionStorage.getItem("submittedPhones") || "[]");
+  
+        if (submittedEmails.includes(formData.email) || submittedPhones.includes(formData.phone)) {
+          setHasSubmitted(true);
+        } else {
+          setHasSubmitted(false); // Reset to false if no match is found
+        }
+      };
+  
+      checkForSubmission();
+    }, [formData.email, formData.phone]);
+    useEffect(() => {
+      const submittedEmails = JSON.parse(sessionStorage.getItem("submittedEmails") || "[]");
+      const submittedPhones = JSON.parse(sessionStorage.getItem("submittedPhones") || "[]");
+  
+      setIsValidLogin(submittedEmails.includes(loginInput) || submittedPhones.includes(loginInput));
+    }, [loginInput]);
+  
   // Handle input change and validation
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
@@ -155,6 +191,17 @@ export default function DwnldAdvisorModalForm({
         const result = await response.json();
   
         if (response.ok) {
+          const submittedEmails = JSON.parse(sessionStorage.getItem("submittedEmails") || "[]");
+          const submittedPhones = JSON.parse(sessionStorage.getItem("submittedPhones") || "[]");
+
+          submittedEmails.push(formData.email);
+          submittedPhones.push(formData.phone);
+
+          sessionStorage.setItem("submittedEmails", JSON.stringify(submittedEmails));
+          sessionStorage.setItem("submittedPhones", JSON.stringify(submittedPhones));
+
+          setHasSubmitted(true); // Prevent further submissions
+       
           alert(result.message);
           if (downloadPdf) {
             triggerPDFDownload();
@@ -171,7 +218,14 @@ export default function DwnldAdvisorModalForm({
       }
     }
   };
-  
+  const handleLoginContinue = () => {
+    if (isValidLogin) {
+      alert("Login successful!");
+      closeLoginModal();
+    } else {
+      alert("Invalid email or phone number.");
+    }
+  };
   
 
   const triggerPDFDownload = () => {
@@ -312,19 +366,105 @@ export default function DwnldAdvisorModalForm({
                       <p className="text-maincolor_1 text-sm">{errors.acceptTerms}</p>
                     )}
                   </div>
-                  <button
-                    type="submit"
-                    className="w-full px-4 py-2 bg-maincolor_1 uppercase  hover:bg-cyan-800 text-white rounded-md"
-                    disabled={loading}
-                  >
-                    {loading ? "Submitting..." : "Submit"}
-                  </button>
+                  <div className="flex justify-between items-center gap-4">
+  {/* Submit Button */}
+  <button
+    type="submit"
+    className={`px-4 py-2 bg-maincolor_1 uppercase hover:bg-cyan-800 text-white rounded-md ${hasSubmitted ? "w-1/2 bg-gray-400 cursor-not-allowed" : "w-full"}`}
+
+    disabled={loading || hasSubmitted}
+  >
+    {loading ? "Submitting..." : "Submit"}
+  </button>
+
+  {/* Already Submitted Button */}
+  {hasSubmitted && (
+    <button
+      type="button"
+      className="px-4 py-2 bg-blue-500 uppercase hover:bg-blue-700 text-white rounded-md"
+      onClick={openLoginModal}
+     
+    >
+      Already Submitted? Login
+    </button>
+  )}
+</div>
+
                 </form>
+
+
+              
               </div>
             </div>
           </div>
         </div>
       )}
+        {isLoginModalOpen && (
+  <div
+    className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
+    onClick={closeLoginModal} // Close the modal when clicking outside
+  >
+    <div
+      className="relative w-full max-w-md bg-white rounded-lg shadow-lg p-6"
+      onClick={(e) => e.stopPropagation()} // Prevent click events on the background from closing the modal
+    >
+      {/* Close Button */}
+      <button
+        onClick={closeLoginModal}
+        className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+      >
+        &times;
+      </button>
+
+      {/* Modal Content */}
+      <div className="text-center">
+        <h1 className="text-2xl font-bold mb-2">Welcome!</h1>
+        <p className="text-gray-500 mb-6">Sign up or Login to your account</p>
+
+        {/* Input Field */}
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Enter your phone number or email"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring focus:ring-indigo-300"
+            value={loginInput}
+            onChange={(e) => setLoginInput(e.target.value)}
+          />
+        </div>
+
+        {/* Validation Logic */}
+        <button
+          className={`w-full ${
+            isValidLogin ? "bg-blue-500 hover:bg-blue-700 text-white" : "bg-gray-200 text-gray-500 cursor-not-allowed"
+          } font-bold py-3 rounded-lg`}
+          disabled={!isValidLogin}
+          onClick={handleLoginContinue}
+        >
+          Continue
+        </button>
+
+        {/* Info Section */}
+        <p className="text-gray-400 text-sm mt-4">
+          <i className="fas fa-shield-alt"></i> We never post without your permission
+        </p>
+
+        {/* Terms and Conditions */}
+        <p className="text-gray-500 text-xs mt-6">
+          By Signing up, you agree to our{" "}
+          <a href="#" className="text-blue-500 hover:underline">
+            Terms & Conditions
+          </a>{" "}
+          and our{" "}
+          <a href="#" className="text-blue-500 hover:underline">
+            Privacy Policy
+          </a>
+          .
+        </p>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

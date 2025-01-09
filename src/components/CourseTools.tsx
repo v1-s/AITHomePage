@@ -17,6 +17,7 @@ interface CourseToolsProps {
 const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
   const router = useRouter();
   const [tools, setTools] = useState<Tool[]>([]);
+  const [isDataAvailable, setIsDataAvailable] = useState(true); // Tracks if data is available
 
   const ImageComponent = ({
     imagePath,
@@ -51,7 +52,20 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
         const response = await fetch(
           `http://13.232.95.229:3000/course/courseToolsTechnologies?courseUrl=${courseUrl}`
         );
+
+        if (!response.ok) {
+          console.error("Error fetching course tools:", response.statusText);
+          setIsDataAvailable(false); // Mark data as unavailable on error
+          return;
+        }
+
         const data = await response.json();
+
+        if (!data || data.length === 0) {
+          console.log("No course tools found.");
+          setIsDataAvailable(false); // Mark data as unavailable when empty
+          return;
+        }
 
         let parsedTools = [];
         try {
@@ -61,11 +75,15 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
           parsedTools = JSON.parse(cleanedJson);
         } catch (parseError) {
           console.error("Error parsing tools JSON:", parseError);
+          setIsDataAvailable(false); // Mark data as unavailable on parsing error
+          return;
         }
 
         setTools(parsedTools);
+        setIsDataAvailable(parsedTools.length > 0); // Update availability based on parsed data
       } catch (error) {
         console.error("Error fetching course tools:", error);
+        setIsDataAvailable(false); // Mark data as unavailable on fetch error
       }
     };
 
@@ -73,10 +91,15 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
   }, [courseUrl]);
 
   // Navigate to the course URL
-  const handleToCourse = () => {
-    console.log(courseUrl);
-    router.push(`/${courseUrl}`); // Directly use courseUrl for navigation
-  };
+  // const handleToCourse = () => {
+  //   console.log(courseUrl);
+  //   router.push(`/${courseUrl}`); // Directly use courseUrl for navigation
+  // };
+
+  // Return null if data is unavailable
+  if (!isDataAvailable) {
+    return null;
+  }
 
   return (
     <div className="bg-gray-100 flex justify-center py-12">
@@ -88,8 +111,8 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
           {tools.map((tool, index) => (
             <div
               key={index}
-              onClick={handleToCourse} // Navigate on click
-              className="flex flex-col items-center justify-center shadow-card rounded-lg p-6 bg-transmedium max-w-lg cursor-pointer"
+             
+              className="flex flex-col items-center justify-center shadow-card rounded-lg p-6 bg-transmedium max-w-lg"
             >
               <ImageComponent
                 imagePath={tool.image}
@@ -108,3 +131,4 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
 };
 
 export default CourseTools;
+

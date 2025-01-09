@@ -25,10 +25,10 @@ const ImageComponent = ({ imagePath }: { imagePath: string }) => {
     <Image
       src={fullImagePath}
       alt="Student"
-      className="h-full w-full object-cover"
+      className="h-full w-full object-contain absolute inset-0 rounded"
       loading="lazy"
-      width={200}
-      height={200}
+      width={1000}
+      height={500}
     />
   );
 };
@@ -112,7 +112,7 @@ const Carousel: React.FC<CarouselProps> = ({
     <div className="relative h-full w-full lg:overflow-hidden">
       {/* Image for main carousel */}
       {showImage && safeBlogs[currentSlide]?.baseurl && (
-        <div className="w-full h-64">
+        <div className="w-full h-64 relative ">
           <ImageComponent imagePath={`${safeBlogs[currentSlide]?.image}` || "assets/images/ai.jpg"} />
         </div>
       )}
@@ -164,13 +164,13 @@ const Carousel: React.FC<CarouselProps> = ({
             <div key={blog.baseurl} className="rounded-md px-0 w-full">
               <h1 className="text-sm font-semibold text-gray-800 text-wrap overflow-hidden text-ellipsis whitespace-nowrap">{blog.blog_name}</h1>
               <p className="text-xs text-maincolor_1 mt-2 capitalize font-bold text-wrap overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-black font-bold">  By {""}</span> {blog.blog_writter} on
-                <span className="text-yellow-500 text-sm">
+              <span className="text-black font-bold">  By {""} </span> {blog.blog_writter} on
+                     <span className="text-yellow-500 text-sm ml-1">
                   {new Date(blog.created_at).toISOString().split('T')[0]}
                 </span>
               </p>
               <button
-                className="text-maincolor_1 border border-black rounded-full px-3 hover:text-blue-700 hover:underline my-2"
+                className="text-maincolor_1 border border-black rounded-full px-3 hover:text-blue-700  my-2"
                 onClick={() => handleReadMoreClick(blog)}
               >
                 {blog.blog_category}

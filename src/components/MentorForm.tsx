@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   name: string;
@@ -23,7 +24,24 @@ const TrainingAdvisorForm = () => {
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [loading, setLoading] = useState(false);
-  const [submissionStatus, setSubmissionStatus] = useState<null | "success" | "failure">(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check for existing submissions in sessionStorage
+    const checkForSubmission = () => {
+      const submittedEmails = JSON.parse(sessionStorage.getItem("submittedEmails") || "[]");
+      const submittedPhones = JSON.parse(sessionStorage.getItem("submittedPhones") || "[]");
+
+      if (submittedEmails.includes(formData.email) || submittedPhones.includes(formData.phone)) {
+        setHasSubmitted(true);
+      } else {
+        setHasSubmitted(false); // Reset to false if no match is found
+      }
+    };
+
+    checkForSubmission();
+  }, [formData.email, formData.phone]);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
@@ -37,20 +55,25 @@ const TrainingAdvisorForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: undefined });
-    setSubmissionStatus(null);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
+    if (hasSubmitted) {
+      alert("You have already submitted this form.");
+      return;
+    }
+
     if (validateForm()) {
       setLoading(true);
-      setSubmissionStatus(null);
-  
+
       const payloadRequestCallBack = {
         myData: [
           { lead: "mentor_form_submission" },
@@ -61,7 +84,7 @@ const TrainingAdvisorForm = () => {
           { page: "Mentorship Program Page" },
         ],
       };
-  
+
       const payloadCaptureLeadRequest = {
         myData: [
           { email: formData.email },
@@ -70,20 +93,30 @@ const TrainingAdvisorForm = () => {
           { page: "Mentorship Program Page" },
         ],
       };
-  
+
       try {
-        const response = await fetch('/api/submitForm', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const response = await fetch("/api/submitForm", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             payloadRequestCallBack,
             payloadCaptureLeadRequest,
           }),
         });
-  
+
         if (response.ok) {
-          setSubmissionStatus("success");
-          window.alert("Form submitted successfully!");
+          // Save submission details in sessionStorage
+          const submittedEmails = JSON.parse(sessionStorage.getItem("submittedEmails") || "[]");
+          const submittedPhones = JSON.parse(sessionStorage.getItem("submittedPhones") || "[]");
+
+          submittedEmails.push(formData.email);
+          submittedPhones.push(formData.phone);
+
+          sessionStorage.setItem("submittedEmails", JSON.stringify(submittedEmails));
+          sessionStorage.setItem("submittedPhones", JSON.stringify(submittedPhones));
+
+          setHasSubmitted(true);
+          alert("Form submitted successfully!");
           setFormData({
             name: "",
             company: "",
@@ -93,21 +126,19 @@ const TrainingAdvisorForm = () => {
             query: "",
           });
         } else {
-          setSubmissionStatus("failure");
           console.error("Form submission failed. Response status not OK.");
         }
       } catch (error) {
         console.error("Error during form submission:", error);
-        setSubmissionStatus("failure");
       } finally {
         setLoading(false);
       }
-    } else {
-      setSubmissionStatus(null);
-      console.log("Validation failed. Errors:", errors);
     }
   };
-  
+
+  const handleLogin = () => {
+    router.push("/loginpage");
+  };
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
       {/* Name Field */}
@@ -218,18 +249,27 @@ const TrainingAdvisorForm = () => {
       {/* ... Add other form fields here ... */}
 
       <div>
-        <button
-          type="submit"
-          className="w-full bg-maincolor_1 text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-600 transition duration-300"
-          disabled={loading}
-        >
-          {loading ? "Submitting..." : "Submit"}
-        </button>
+        {hasSubmitted ? (
+          <button
+            type="button"
+            className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="w-full bg-maincolor_1 text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-600 transition duration-300"
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </button>
+        )}
       </div>
 
       {/* Submission Status Messages */}
-      {submissionStatus === "success" && <p className="text-green-500 text-center mt-4">Form submitted successfully!</p>}
-      {submissionStatus === "failure" && <p className="text-red-500 text-center mt-4">Form submission failed. Please try again.</p>}
+     
     </form>
   );
 };

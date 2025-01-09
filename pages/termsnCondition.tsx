@@ -1,42 +1,63 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import PrivacyPolicy from './privacyPolicy';
-import CareerBootcampTerms from './careerBootcampTerms';
-import TermsAndConditions from './termsdata';
-import AccessibilityPolicy from './accessibilityPolicy';
-import RefundPolicy from './refundPolicy';
-import CommunityGuidelines from './communityGuideLines';
-
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import PrivacyPolicy from "./privacyPolicy";
+import CareerBootcampTerms from "./careerBootcampTerms";
+import TermsAndConditions from "./termsdata";
+import AccessibilityPolicy from "./accessibilityPolicy";
+import RefundPolicy from "./refundPolicy";
+import CommunityGuidelines from "./communityGuideLines";
+import { useSearchParams } from "next/navigation";
 const TermsPolicyModal = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const searchParams = useSearchParams(); // Use useSearchParams
+  const id = searchParams.get("id"); // Get the "id" query parameter/ Extract the query parameter
+  
 
   const termsData = [
     {
+      id: "terms",
       title: "Terms and Conditions",
       component: TermsAndConditions,
     },
     {
+      id: "career",
       title: "Career Bootcamp Terms and Conditions",
       component: CareerBootcampTerms,
     },
     {
+      id: "accessibility",
       title: "Accessibility Policy",
       component: AccessibilityPolicy,
     },
     {
+      id: "privacy",
       title: "Privacy Policy",
       component: PrivacyPolicy,
     },
     {
+      id: "refund",
       title: "Refund Policy",
       component: RefundPolicy,
     },
     {
+      id: "community",
       title: "Community Guidelines & Terms",
       component: CommunityGuidelines,
     },
   ];
+
+  useEffect(() => {
+    // Find the index of the section to highlight based on the id
+    if (id) {
+      const index = termsData.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        setActiveIndex(index);
+      }
+    }
+  }, [id]); // Run this effect when the query parameter changes
+
   const ActiveComponent = termsData[activeIndex].component;
 
   return (

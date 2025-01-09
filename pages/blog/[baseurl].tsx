@@ -49,6 +49,7 @@ const BlogDetailsPage = () => {
   const { baseurl } = router.query;
   const { selectedBlog } = useBlogContext();
   const [blogDetails, setBlogDetails] = useState<Blog | null>(null);
+  const [activeSection, setActiveSection] = useState("section1");
   useEffect(() => {
  
     router.prefetch("/schedulePage");
@@ -56,7 +57,65 @@ const BlogDetailsPage = () => {
   const goToSchedulePage = () => {
     router.push("/schedulePage");
   };
+   // Smooth scrolling easing function
+   const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+  
+    const offset = 100; // Adjust for sticky headers
+    const startPosition = window.scrollY;
+    const targetPosition =
+      element.getBoundingClientRect().top + startPosition - offset;
+    const distance = targetPosition - startPosition;
+    const duration = 800; // Duration in milliseconds
+    let startTime: number | null = null;
+  
+    const easeInOutQuad = (t: number) =>
+      t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  
+    const animateScroll = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1); // Normalize time to 1
+      const ease = easeInOutQuad(progress);
+  
+      window.scrollTo(0, startPosition + distance * ease);
+  
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animateScroll);
+      }
+    };
+  
+    requestAnimationFrame(animateScroll);
+  
+    // Update active section state when link is clicked
+    setActiveSection(id);
+  };
+  
+  // Observer for active link highlighting
+  useEffect(() => {
+  
+    const sections = document.querySelectorAll("p[id]");
+    const navLinks = document.querySelectorAll(".quick-links a");
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute("id");
+          const link = document.querySelector(`.quick-links a[href="#${id}"]`);
+          if (entry.isIntersecting) {
+            navLinks.forEach((link) => link.classList.remove("active"));
+            link?.classList.add("active");
+          }
+        });
+      },
+      { rootMargin: "-120px 0px 0px 0px", threshold: 0.7 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     if (!selectedBlog) {
       const fetchBlogDetails = async () => {
@@ -146,7 +205,7 @@ const BlogDetailsPage = () => {
                   height={80}
                 />
                 <div>
-                  <p className="ml-2whitespace-nowrap font-bold text-maincolor_1">{blogDetails.blog_writter}</p>
+                  <p className="ml-2whitespace-nowrap font-bold text-maincolor_1 capitalize">{blogDetails.blog_writter}</p>
                   <small className="text-wrap  ">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium consectetur sint nulla optio quos labore saepe voluptatum consequatur deleniti tempore vitae ea quam voluptatem corporis at asperiores sunt, a illo?</small>
                 </div>
               </div>
@@ -172,29 +231,53 @@ const BlogDetailsPage = () => {
                 <li>
                   <a
                     href="#section1"
-                    className="flex items-center text-blue-500 p-1 hover:bg-maincolor_1 rounded hover:text-white group"
+                    className={`flex items-center  p-1 rounded  group ${
+                activeSection === "section1"
+                  ? "text-white bg-maincolor_1"
+                  : "text-maincolor_1"
+              }`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection("section1");
+                    }}
                   >
                     <div className="flex items-center text-md font-bold my-1">
                       <b>
                         <FontAwesomeIcon
                           icon={faChevronRight}
-                          className="mr-1 text-maincolor_1 group-hover:text-white"
+                          className={`mr-1 ${
+                            activeSection === "section1"
+                              ? "text-white"
+                              : "text-maincolor_1"
+                          }`}
                         />{" "}
                       </b>
-                      <span className="ml-2">Methodology</span>
+                      <span className="ml-2 ">Methodology</span>
                     </div></a>
                 </li>
 
                 <li>
                   <a
                     href="#section2"
-                    className="flex items-center text-maincolor_1 p-1 hover:bg-maincolor_1 rounded hover:text-white group"
+                    className={`flex items-center text-maincolor_1 p-1  rounded group ${
+                activeSection === "section2"
+                  ? "text-white bg-maincolor_1"
+                  : "text-maincolor_1"
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("section2");
+              }}
                   >
                     <div className="flex items-center text-md font-bold my-1">
                       <b>
                         <FontAwesomeIcon
                           icon={faChevronRight}
-                          className="mr-1 text-maincolor_1 group-hover:text-white"
+                          className={`mr-1 ${
+                            activeSection === "section2"
+                              ? "text-white"
+                              : "text-maincolor_1"
+                          }`}
                         />{" "}
                       </b>
                       <span className="ml-2">Methodology</span>
@@ -205,13 +288,25 @@ const BlogDetailsPage = () => {
                 <li>
                   <a
                     href="#section3"
-                    className="flex items-center text-maincolor_1 p-1 hover:bg-maincolor_1 rounded hover:text-white group"
-                  >
+                    className={`flex items-center p-1  rounded group  ${
+                activeSection === "section3"
+                  ? "text-white bg-maincolor_1"
+                  : "text-maincolor_1"
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("section3");
+              }}
+            >
                     <div className="flex items-center text-md font-bold my-1">
                       <b>
                         <FontAwesomeIcon
                           icon={faChevronRight}
-                          className="mr-1 text-maincolor_1 group-hover:text-white"
+                          className={`mr-1  ${
+                            activeSection === "section3"
+                              ? "text-white"
+                              : "text-maincolor_1"
+                          }`}
                         />{" "}
                       </b>
                       <span className="ml-2">Conclusion</span>
@@ -223,10 +318,10 @@ const BlogDetailsPage = () => {
           </div>
 
           <div className="blog-section col-span-2 mt-5 shadow-card p-4">
-            <h2 className="text-2xl font-semibold mb-4 text-maincolor_1">
+            <h2 className="text-2xl font-semibold mb-4 text-maincolor_1" id="section1">
               Main Content
             </h2>
-            <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+            <p className="mb-4"  dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
             <p className="text-lg font-medium" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
 
             <Image
@@ -237,7 +332,7 @@ const BlogDetailsPage = () => {
               alt="bannerimage"
               loading="lazy"
             />
-            <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+            <p className="mb-4" id="section2" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
             <p className="text-lg font-medium" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
             <Image
               width={500}
@@ -247,7 +342,7 @@ const BlogDetailsPage = () => {
               alt="bannerimage"
               loading="lazy"
             />
-            <p className="mb-4" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
+            <p className="mb-4" id="section3" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
             <p className="text-lg font-medium" dangerouslySetInnerHTML={{ __html: blogDetails.blog_content }}></p>
 
 

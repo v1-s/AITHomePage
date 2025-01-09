@@ -60,7 +60,11 @@ const CourseDetails: React.FC = () => {
   const [activeForm, setActiveForm] = useState<string | null>(null); // Track active form
   const [modalKey, setModalKey] = useState<number>(0); // Unique key to force re-render
 
+  const [isCurriculumEmpty, setIsCurriculumEmpty] = useState(false);
 
+  const handleCurriculumDataCheck = (isEmpty: boolean) => {
+    setIsCurriculumEmpty(isEmpty);
+  };
   const toggleForm = (formName: string) => {
     setActiveForm(formName);
     setModalKey((prevKey) => prevKey + 1); // Ensure the modal always re-renders
@@ -88,58 +92,80 @@ const CourseDetails: React.FC = () => {
 
   const fetchCourseData = useCallback(async () => {
     if (!course_url) return;
-
+  
+    setLoading(true); // Set loading state at the start
+    let courseData = null;
+    let skills: React.SetStateAction<string[]> = [];
+    let faqs = [];
+  
+    // Fetch course details
     try {
-      setLoading(true);
       const response = await fetch(
         `http://13.232.95.229:3000/course/basicInfo?courseUrl=${course_url}`
       );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch course details");
-      }
-
-      const data = await response.json();
-      if (Array.isArray(data) && data.length > 0) {
-        const courseData = data[0];
-        setCourse(courseData);
-
-        const skillsResponse = await fetch(
-          `http://13.232.95.229:3000/course/courseSkills?courseUrl=${course_url}`
-        );
-
-        if (!skillsResponse.ok) {
-          throw new Error("Failed to fetch course skills");
+  
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+          courseData = data[0];
         }
-
+      } else {
+        console.error("Failed to fetch course details");
+      }
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+    }
+  
+    // Fetch course skills
+    try {
+      const skillsResponse = await fetch(
+        `http://13.232.95.229:3000/course/courseSkills?courseUrl=${course_url}`
+      );
+  
+      if (skillsResponse.ok) {
         const skillsData = await skillsResponse.json();
-        const skills = Array.isArray(skillsData)
+        skills = Array.isArray(skillsData)
           ? skillsData.map((skill: { skills: string }) => skill.skills)
           : [];
-        setCourseSkills(skills);
       } else {
-        setCourse(null);
-        setCourseSkills([]);
+        console.error("Failed to fetch course skills");
       }
+    } catch (error) {
+      console.error("Error fetching course skills:", error);
+    }
+  
+    // Fetch FAQ data
+    try {
       const faqResponse = await fetch(
         `http://13.232.95.229:3000/course/courseFaq?courseUrl=${course_url}`
       );
-
-      if (!faqResponse.ok) {
-        throw new Error("Failed to fetch FAQ data");
-      }
-      const faqData = await faqResponse.json();
-      setFaqData(faqData);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setError(error.message);
+  
+      if (faqResponse.ok) {
+        const faqData = await faqResponse.json();
+        // Filter out FAQs with empty `faq_content`
+        faqs = faqData.filter(
+          (faq: { faq_content: string }) => faq.faq_content?.trim() !== ""
+        );
       } else {
-        setError("Error fetching course data");
+        console.error("Failed to fetch FAQ data");
       }
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching FAQ data:", error);
     }
+  
+  
+    // Update states
+    setCourse(courseData);
+    setCourseSkills(skills);
+    setFaqData(faqs);
+    setLoading(false); // Ensure loading is set to false
   }, [course_url]);
+  
+  useEffect(() => {
+    fetchCourseData();
+  }, [fetchCourseData]);
+  
+  
 
   useEffect(() => {
     fetchCourseData();
@@ -150,7 +176,7 @@ const CourseDetails: React.FC = () => {
   const seoDescription = useMemo(() => course?.description || '', [course]);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+ 
   if (!course) return <div>Course not found</div>;
 
   return (
@@ -233,7 +259,7 @@ const CourseDetails: React.FC = () => {
                     className="text-mainBlue font-semibold"
                   />
                 </span>
-                <p className="text-wrap text-xs md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_1 }}></p>
+                <p className="text-wrap text-sm md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_1 }}></p>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">
@@ -242,7 +268,7 @@ const CourseDetails: React.FC = () => {
                     className="text-mainBlue font-semibold"
                   />
                 </span>
-                <p className="text-wrap text-xs md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_2 }}></p>
+                <p className="text-wrap text-sm md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_2 }}></p>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">
@@ -251,7 +277,7 @@ const CourseDetails: React.FC = () => {
                     className="text-mainBlue font-semibold"
                   />
                 </span>
-                <p className="text-wrap text-xs md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_3 }}></p>
+                <p className="text-wrap text-sm md:text-md" dangerouslySetInnerHTML={{ __html: course.highlights_3 }}></p>
               </li>
             </ul>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -301,35 +327,47 @@ const CourseDetails: React.FC = () => {
       </div>
       <BatchDetails course_url={course_url as string} />
       <TypesOfTraining />
+      {courseSkills.length > 0 && (
       <div className="bg-gray-100 flex justify-center py-12">
         <div className="bg-white max-w-6xl w-full p-8 rounded-lg shadow-lg bg-Bg1 bg-cover">
           <h2 className="text-xl md:text-2xl font-bold mb-8 relative elements ">Skills Covered In <span className="glitter_text">{course.title}</span></h2>
           <div className="flex flex-wrap gap-4">
-            {courseSkills.length > 0 ? (
-              courseSkills.map((skill, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 flex items-center px-4 py-2 bg-gray-100 rounded-lg shadow md:whitespace-nowrap"
-                >
-                  <FontAwesomeIcon icon={faCheck} className="text-green-500 mr-2 text-xl" />
-                  <span className="text-gray-700 font-medium">{skill}</span>
-                </div>
-              ))
-            ) : (
-              <p>No skills available for this course.</p>
-            )}
+       
+  <div className="flex flex-wrap gap-4">
+    {courseSkills.map((skill, index) => (
+      <div
+        key={index}
+        className="flex-shrink-0 flex items-center px-4 py-2 bg-gray-100 rounded-lg shadow md:whitespace-nowrap"
+      >
+        <FontAwesomeIcon
+          icon={faCheck}
+          className="text-green-500 mr-2 text-xl"
+        />
+        <span className="text-gray-700 font-medium">{skill}</span>
+      </div>
+    ))}
+  </div>
+
+
           </div>
         </div>
       </div>
+      )}
       <PayScale courseUrl={course_url as string} />
-      <div className="bg-gray-100 flex justify-center py-12">
-        <div className="w-full flex-col justify-center items-center bg-white max-w-6xl p-8 rounded-lg shadow-lg bg-Bg1 bg-cover mx-auto">
-          <h1 className="text-lg md:text-2xl font-bold mb-8 relative element text-center pb-2">
-            <span className="glitter_text text-xl md:text-3xl ">{course.title}</span> Curriculum
-          </h1>
-          <CourseCurriculum courseUrl={course_url as string} courseDetails={course} />
+      {!isCurriculumEmpty && (
+        <div className="bg-gray-100 flex justify-center py-12">
+          <div className="w-full flex-col justify-center items-center bg-white max-w-6xl p-8 rounded-lg shadow-lg bg-Bg1 bg-cover mx-auto">
+            <h1 className="text-lg md:text-2xl font-bold mb-8 relative element text-center pb-2">
+              <span className="glitter_text text-xl md:text-3xl ">{course.title}</span> Curriculum
+            </h1>
+            <CourseCurriculum
+              courseUrl={course_url as string}
+              courseDetails={course}
+              onCurriculumDataCheck={handleCurriculumDataCheck} // Pass the callback
+            />
+          </div>
         </div>
-        </div>
+      )}
         <Certificate />
         <HiringPartners title={
           <>
@@ -341,7 +379,8 @@ const CourseDetails: React.FC = () => {
         <CourseTools courseUrl={course_url as string} />
         <TrendingCoursesInIT text="Popular Trending Courses in IT Companies" />
         <ProjectCards/>
-        <FAQComponent faqData={faqData} />
+      {faqData.length > 0 && <FAQComponent faqData={faqData} />}
+
         <Reviews />
       </div>
       );
