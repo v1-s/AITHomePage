@@ -205,10 +205,10 @@ const AlumniSection: React.FC = () => {
     
   return (
     <div className="py-12 bg-gray-50">
-      <h2 className="text-3xl font-bold text-center mb-12 elementl pb-2  relative glitter_text w-3/4  mx-auto">
+      <h2 className="text-xl md:text-3xl font-bold text-center mb-12 elementl pb-2  relative glitter_text w-3/4  mx-auto">
         Meet Our Alumni
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-24 w-3/4 mx-auto py-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-24 md:w-3/4 mx-auto py-12 justify-center">
         {alumni.slice(0, visibleCount).map((alum, index) => {
           const colorClass = borderColorClasses[index % borderColorClasses.length]; // Assign a color class to each alumni card
           return (
@@ -265,7 +265,7 @@ const AlumniSection: React.FC = () => {
             onClick={handleLoadMore}
             className="btn-solid-bg-transition btn-solid-bg-transition-orange px-6 py-2 rounded-md shadow-md hover:bg-blue-600 transition"
           >
-            <span>Load More</span>
+            <span className="text-sm md:text-md">Load More</span>
           </button>
         </div>
       )}

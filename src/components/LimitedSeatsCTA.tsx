@@ -18,7 +18,7 @@ const LimitedSeatsCTA: React.FC = () => {
 
   return (
     <div className="text-center relative bg-flowGradientTop  rounded-t-5xl py-6 px-4">
-      <p className="text-darkBlue font-bold text-lg leading-relaxed">
+      <p className="text-darkBlue font-bold text-md md:text-lg leading-relaxed">
         Discover <span className="glitter_text">Your Pathway</span> to a Brilliant Future with{" "}
         <span className="glitter_text">Our Diverse Course Selection!</span>
       </p>
@@ -27,7 +27,7 @@ const LimitedSeatsCTA: React.FC = () => {
         onClick={handleToSchedulePage}
         aria-label="Enroll Now Limited Seats"
       >
-        <span>LIMITED SEATS, ENROLL NOW!</span>
+        <span className="text-sm md:text-md">LIMITED SEATS, ENROLL NOW!</span>
       </button>
     </div>
   );

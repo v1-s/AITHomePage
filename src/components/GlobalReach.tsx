@@ -59,7 +59,7 @@ const Global = () => {
           <div className="flex flex-col items-center w-full">
             {/* Heading */}
             <div className="text-center mb-3 elementl relative after:bottom-N10 mb-10">
-              <h3 className="text-2xl font-bold text-maincolor_1 glitter_text pb-2">
+              <h3 className="text-xl md:text-2xl font-bold text-maincolor_1 glitter_text pb-2">
               Join Our Growing Worldwide Education Community
               </h3>
             </div>
@@ -72,12 +72,12 @@ const Global = () => {
                   <FontAwesomeIcon icon={faAward} className="text-3xl text-white" />
                 </div>
                 <h4
-                  className="text-3xl font-semibold growth-value bg-gradientRed bg-clip-text text-transparent"
+                  className="text-lg md:text-3xl font-semibold growth-value bg-gradientRed bg-clip-text text-transparent"
                   data-target="450000"
                 >
                   0+
                 </h4>
-                <p className="text-lg text-gray-700 font-semibold">
+                <p className="text-sm md:text-lg text-gray-700 font-semibold">
                   Professionals Trained
                 </p>
               </div>
@@ -88,12 +88,12 @@ const Global = () => {
                   <FontAwesomeIcon icon={faGlobe} className="text-3xl text-white" />
                 </div>
                 <h4
-                  className="text-3xl font-semibold growth-value bg-gradientGreen bg-clip-text text-transparent"
+                  className="text-lg md:text-3xl font-semibold growth-value bg-gradientGreen bg-clip-text text-transparent"
                   data-target="450000"
                 >
                   0+
                 </h4>
-                <p className="text-lg text-gray-700 font-semibold">
+                <p className="text-sm md:text-lg text-gray-700 font-semibold">
                   Enterprise Clients
                 </p>
               </div>
@@ -104,12 +104,12 @@ const Global = () => {
                   <FontAwesomeIcon icon={faGem} className="text-3xl text-white" />
                 </div>
                 <h4
-                  className="text-3xl font-semibold growth-value bg-gradientPurple bg-clip-text text-transparent"
+                  className="text-lg md:text-3xl font-semibold growth-value bg-gradientPurple bg-clip-text text-transparent"
                   data-target="100"
                 >
                   0+
                 </h4>
-                <p className="text-lg text-gray-700 font-semibold">
+                <p className="text-sm md:text-lg text-gray-700 font-semibold">
                   Countries and Counting
                 </p>
               </div>
@@ -120,12 +120,12 @@ const Global = () => {
                   <FontAwesomeIcon icon={faUsers} className="text-3xl text-white" />
                 </div>
                 <h4
-                  className="text-3xl font-semibold growth-value bg-gradientBlue bg-clip-text text-transparent"
+                  className="text-lg md:text-3xl font-semibold growth-value bg-gradientBlue bg-clip-text text-transparent"
                   data-target="5000"
                 >
                   0+
                 </h4>
-                <p className="text-lg text-gray-700 font-semibold">
+                <p className="text-sm md:text-lg text-gray-700 font-semibold">
                   Active Users
                 </p>
               </div>

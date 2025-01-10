@@ -29,7 +29,7 @@ const SpecialOffer = () => {
         onClick={openAdvisorModal}
         aria-label="Enroll Now"
       >
-        <span>Enroll Now</span>
+        <span className='text-md'>Enroll Now</span>
       </button>
       {isAdvisorModalOpen && (
         <DwnldAdvisorModalForm

@@ -19,8 +19,8 @@ const CEOSection = () => {
 
         {/* CEO Content Column */}
         <div className="flex flex-col justify-center">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4 glitter_text">Meet Our CEO</h2>
-          <p className="text-lg text-gray-600">
+          <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-4 glitter_text">Meet Our CEO</h2>
+          <p className="text-sm md:text-lg text-gray-600">
             Our CEO is passionate about driving innovation and leading the company towards a brighter future. With years of experience in the industry, they have successfully guided the company through various challenges and milestones.
           </p>
         </div>

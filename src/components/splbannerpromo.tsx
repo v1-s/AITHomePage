@@ -36,7 +36,7 @@ const BannerSplPromo = () => {
         <h2 className="text-base md:text-lg sm:text-xl font-semibold text-gray-900 mb-4">Have More Questions?</h2>
         <p className="text-sm sm:text-lg text-gray-700 mb-4">
           Don&apos;t hesitate to ask! <br />
-          <strong className="text-black text-bold text-xs md:text-xl">
+          <strong className="text-black text-bold text-sm md:text-xl">
             Book a free consultation with us today and get the clarity you&apos;re looking for.
           </strong>
         </p>
@@ -49,7 +49,7 @@ const BannerSplPromo = () => {
           onClick={openAdvisorModal}
           aria-label="Reach Out Now"
         >
-          <span className="flex items-center">
+          <span className="flex items-center text-md">
             Reach Out Now
             <FontAwesomeIcon icon={faChevronRight} className="ml-2" />
           </span>

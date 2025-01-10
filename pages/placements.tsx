@@ -43,25 +43,25 @@ const PlacementPage = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between">
           {/* Left Content */}
           <div className="md:w-1/2 text-center md:text-left">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 leading-tight">
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-800 leading-tight">
               Empower Your Future <br />
               <span className="text-mainblue glitter_text">
                 with AchieversIT
               </span>
             </h1>
-            <p className="text-gray-600 mt-4 text-xs md:text-md">
+            <p className="text-gray-600 mt-4 text-sm md:text-lg">
               AchieversIT is your gateway to a successful career in IT. With
               expert-led training programs, hands-on projects, and
               industry-recognized certifications, we prepare you for high-paying
               roles in top companies. Join us today to unlock your potential and
               achieve your career goals!
             </p>
-            <div className="mt-6 flex flex-col md:flex-row justify-center md:justify-start space-x-4 gap-4">
+            <div className="mt-6 flex flex-col md:flex-row justify-center md:justify-start md:space-x-4 gap-4">
               <button
                 className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10"
                 onClick={openAdvisorModal}
               >
-                <span> ENROLL NOW</span>
+                <span className="text-sm md:text-base"> Enroll Now</span>
               </button>
               {isAdvisorModalOpen && (
                 <DwnldAdvisorModalForm
@@ -80,7 +80,7 @@ const PlacementPage = () => {
                 className="btn-hover-bg-transition btn-hover-bg-transition-og px-14 text-black border border-orange-500 b-5 shadow-glassShadow border-12"
                 onClick={toggleBrochureModal}
               >
-                <span>Explore Opportunities</span>
+                <span className="text-sm md:text-base">Explore Opportunities</span>
               </button>
             </div>
           </div>
@@ -114,7 +114,7 @@ const PlacementPage = () => {
         </div>
         {/* Stats Section */}
         <div className="flex items-center justify-center py-16"></div>
-        <div className="max-w-4xl grid grid-cols-2 lg:grid-cols-4 gap-6 mx-auto">
+        <div className="max-w-4xl grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mx-auto">
           {[
             {
               label: "Placement rates over the years.",

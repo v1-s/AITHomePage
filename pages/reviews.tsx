@@ -206,13 +206,13 @@ const ReviewPage = () => {
         <div className="w-full md:w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Text Section */}
           <div className="text-center md:text-left">
-            <h1 className="text-xl mb-5 relative element md:elements after:bottom-N10">AchieversIT Testimonials</h1>
-            <span className="md:text-3xl font-bold mb-4">Authentic Experiences, Remarkable Journeys</span>
+            <h1 className="text-md md:text-xl mb-5 relative element md:elements after:bottom-N10">AchieversIT Testimonials</h1>
+            <span className="text-xl md:text-3xl font-bold mb-4">Authentic Experiences, Remarkable Journeys</span>
             <p className="text-sm md:text-base mb-6">
               Explore candid testimonials from students who have completed our programs—from AI specialists to digital marketing professionals, our diverse offerings have empowered individuals worldwide to realize their full potential and fulfill their career ambitions.
             </p>
             <button className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10" onClick={scrollToFeaturedStory}>
-              <span>Discover Success Stories</span>
+              <span className="text-md md:text-xl">Discover Success Stories</span>
             </button>
           </div>
 
@@ -260,7 +260,7 @@ const ReviewPage = () => {
                 onClick={loadMoreCareers}
                 className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10"
               >
-                <span>Load More</span>
+                <span className="text-sm md:text-md">Load More</span>
               </button>
             </div>
           )}

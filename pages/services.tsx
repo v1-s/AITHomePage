@@ -167,7 +167,7 @@ const Services: React.FC = () => {
         modalText="Our experts are available to guide you every step of the way. Let’s start the conversation now!"
         modalform="services/enroll"
       />
-      <h2 className="text-3xl font-semibold text-center text-maincolor_1 uppercase glitter-text pb-1 my-10 mb-14 element relative">
+      <h2 className="text-xl md:text-3xl font-semibold text-center text-maincolor_1 uppercase glitter-text pb-1 my-10 mb-14 element relative">
         Our Services
       </h2>
       <div className="w-full md:w-4/5 lg:w-3/4 grid grid-cols-1 gap-12 mx-auto md:grid-cols-2 lg:grid-cols-2">
@@ -186,12 +186,12 @@ const Services: React.FC = () => {
             />
             <div className="flex-1">
               <p
-                className="font-semibold text-lg pl-5"
+                className="font-semibold text-md md:text-lg pl-5"
                 style={{ color: service.color }}
               >
                 {service.title}
               </p>
-              <ul className="text-gray-700 text-sm list-disc pl-5">
+              <ul className="text-gray-700 text-xs md:text-sm list-disc pl-5">
                 {service.description.map((point, index) => (
                 <li key={index} className="flex items-start space-x-2" style={{ listStyleType: "none" }}>
                 <FontAwesomeIcon

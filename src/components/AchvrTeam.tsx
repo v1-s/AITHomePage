@@ -64,7 +64,7 @@ const DynamicTeam = () => {
   return (
     <section className="bg-gray-100 py-12" id="alumini">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 glitter_text elementl relative pb-2">Our Dynamic Team</h2>
+        <h2 className="text-xl md:text-3xl font-bold text-center text-gray-800 mb-12 glitter_text elementl relative pb-2">Our Dynamic Team</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {displayedMembers.map((member, index) => (
             <div
@@ -83,8 +83,8 @@ const DynamicTeam = () => {
                 <div className="absolute inset-0 bg-blue-500 opacity-0 group-hover:opacity-20 transition cursor-pointer"></div>
               </div>
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800">{member.name}</h3>
-                <p className="text-sm text-gray-600">{member.role}</p>
+                <h3 className="text-sm md:text-lg font-semibold text-gray-800">{member.name}</h3>
+                <p className="text-xs md:text-sm text-gray-600">{member.role}</p>
               </div>
               <div className="absolute top-0 left-0 w-4 h-4 bg-blue-500"></div>
               <div className="absolute bottom-0 right-0 w-4 h-4 bg-orange-500"></div>
@@ -95,7 +95,7 @@ const DynamicTeam = () => {
           <div className="text-center mt-6">
             <button
               onClick={loadMoreMembers}
-              className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+              className="md:text-md bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
               disabled={loading}
               aria-label="Load more team members"
             >
