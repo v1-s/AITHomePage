@@ -90,7 +90,7 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
   const [selectedBatchLink, setSelectedBatchLink] = useState<string | null>(null); // Track selected batch by link
 
   return (
-    <div className="max-w-6xl mx-auto bg-flowGradientBottom shadow-lg rounded-lg overflow-hidden flex flex-wrap my-12">
+    <div className="max-w-6xl mx-auto bg-flowGradientBottom shadow-lg rounded-lg lg:overflow-hidden flex flex-wrap my-12  md:justify-between">
       {/* Left Section */}
       <div className="w-full md:w-3/4 py-12 px-4">
         <h2 className="text-2xl font-semibold text-gray-900 ml-4 glitter_text">Course Enrollment</h2>
@@ -158,16 +158,16 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
       </div>
 
       {/* Right Section */}
-      <div className="w-full md:w-1/4 shadow-glassShadow">
-        <div className="mt-4 flex flex-col justify-center items-center p-4 gap-5">
-          <p className="text-lg text-gray-600">
+      <div className="w-full md:w-1/4 shadow-card p-6">
+        <div className=" flex flex-col justify-center items-center gap-5">
+          <p className="text-lg text-gray-600 text-wrap">
             Price: <span className="line-through">₹17,795</span>
             <span className="text-green-600 ml-3 font-bold text-3xl pb-4">₹12,456</span>
           </p>
           <p className="text-sm text-gray-600 font-bold border border-maincolor_1 border-2 px-4">
             <FontAwesomeIcon icon={faClock} className="text-maincolor_1" /> Ends in {timeLeft}
           </p>
-          <p className="text-sm text-gray-600 font-bold text-xl">Starts at ₹4,152 / month</p>
+          <p className="text-sm text-gray-600 font-bold text-xl text-wrap">Starts at ₹4,152 / month</p>
           <p className="text-sm text-gray-600 font-semi-bold">With No Cost EMI</p>
         </div>
         <div className="mt-4 px-6">

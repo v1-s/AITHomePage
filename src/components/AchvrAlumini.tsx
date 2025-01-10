@@ -181,7 +181,6 @@ const fallbackImage = "/assets/images/banner-img2.png";
 const AlumniSection: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(6);
 
-  const [hasError, setHasError] = useState(false);
   const handleLoadMore = () => {
     setVisibleCount((prevCount) => prevCount + 3); // Load 3 more cards
   };

@@ -127,6 +127,7 @@ function Header() {
                 alt="AchieversIT Logo"
                 width={300}
                 height={60}
+                quality={75}
                 priority
                 className="w-full min-w-[250px]"
               />
