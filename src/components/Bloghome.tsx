@@ -6,6 +6,7 @@ import { useBlogContext } from "@/utils/BlogContext";
 import { useRouter } from "next/navigation";
 import { imageBasePath } from "@/utils/img.config";
 import Image from "next/image";
+import { transform } from "next/dist/build/swc/generated-native";
 
 interface Blog {
   id: number;
@@ -96,6 +97,7 @@ const BlogPage = () => {
           className="flex animate-scroll whitespace-nowrap"
           style={{
             animation: "scroll 20s linear infinite", // infinite scroll animation
+            willChange: "transform",
           }}
         >
           {blogs.map((blog, index) => (

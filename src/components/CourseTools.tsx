@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { imageBasePath } from "@/utils/img.config";
-import { useRouter } from "next/navigation";
+
 
 interface Tool {
   name: string;
@@ -15,7 +15,7 @@ interface CourseToolsProps {
 }
 
 const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
-  const router = useRouter();
+
   const [tools, setTools] = useState<Tool[]>([]);
   const [isDataAvailable, setIsDataAvailable] = useState(true); // Tracks if data is available
 

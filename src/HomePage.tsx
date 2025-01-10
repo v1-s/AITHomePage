@@ -23,7 +23,6 @@ const ClientSlider = dynamic(() => import("./components/ClientSlider"));
 const StatsCounterComponent = dynamic(() => import("./components/StatsCounterComponent"));
 const BlogPage = dynamic(() => import("./components/Bloghome"));
 
-import LimitedSeatsCTA from "./components/LimitedSeatsCTA";
 export default function HomePage() {
   return (
     <>

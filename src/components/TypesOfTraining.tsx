@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCanadianMapleLeaf } from "@fortawesome/free-brands-svg-icons";
 import { useState,useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface ModalProps {
   isOpen: boolean;
@@ -23,19 +24,42 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+    const [loading, setLoading] = useState(false);
+    const [hasSubmitted, setHasSubmitted] = useState(false);
+    const router = useRouter();
+  
  // Reset form fields whenever the modal is opened
- useEffect(() => {
-  if (isOpen) {
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      whatsappUpdates: false,
-      whatsappTerms: false,
-    });
-    setErrors({});
-  }
-}, [isOpen]);
+ 
+   useEffect(() => {
+     // Check for existing submissions in sessionStorage
+     const checkForSubmission = () => {
+       const submittedEmails = JSON.parse(sessionStorage.getItem("submittedEmails") || "[]");
+       const submittedPhones = JSON.parse(sessionStorage.getItem("submittedPhones") || "[]");
+ 
+       if (submittedEmails.includes(formData.email) || submittedPhones.includes(formData.phone)) {
+         setHasSubmitted(true);
+       } else {
+         setHasSubmitted(false); // Reset to false if no match is found
+       }
+     };
+ 
+     checkForSubmission();
+   }, [formData.email, formData.phone]);
+   useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        whatsappUpdates: false,
+        whatsappTerms: false,
+      });
+      setErrors({});
+      setLoading(false);
+      setHasSubmitted(false);
+    }
+  }, [isOpen]);
   if (!isOpen) return null;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,80 +70,92 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
       [name]: type === "checkbox" ? checked : value,
     }));
 
-    if (value.trim() !== "") {
-      setErrors((prevErrors: Record<string, string>) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
-    }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
 
-    if (name === "whatsappUpdates" || name === "whatsappTerms") {
-      setErrors((prevErrors: Record<string, string>) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
-    }
+    // Revert to submit if user modifies fields
+    setHasSubmitted(false);
   };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Validate input fields
+  const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
-    if (!formData.name) newErrors.name = "Name is required.";
-    if (!formData.phone) newErrors.phone = "Phone number is required.";
-    if (!formData.email) newErrors.email = "Email is required.";
+
+    if (!formData.name.trim()) newErrors.name = "Name is required.";
+    if (!formData.phone.trim() || !/^\d{10}$/.test(formData.phone)) newErrors.phone = "Valid phone number is required.";
+    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Valid email is required.";
     if (!formData.whatsappUpdates) newErrors.whatsappUpdates = "You must agree to receive WhatsApp updates.";
     if (!formData.whatsappTerms) newErrors.whatsappTerms = "You must agree to the terms and conditions.";
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length > 0) return;
+    return Object.keys(newErrors).length === 0;
+  };
 
-    // Prepare payloads
-    const payloadRequestCallBack = {
-      myData: [
-        { lead: "right_sticky_contact_us" },
-        { name: formData.name },
-        { email: formData.email },
-        { phone: formData.phone },
-        { userMessage: formData.whatsappUpdates ? "User wants WhatsApp updates" : "" },
-        { page: window.location.href },
-      ],
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const payloadCaptureLeadRequest = {
-      myData: [
-        { email: formData.email },
-        { phone: formData.phone },
-        { source: "lovedReviews" },
-        { page: window.location.href },
-      ],
-    };
+    if (!validateForm()) return;
+
+    setLoading(true);
 
     try {
-      // Send data to the API endpoint
+      // Check if user already submitted
+      const submittedEmails = JSON.parse(sessionStorage.getItem("submittedEmails") || "[]");
+      const submittedPhones = JSON.parse(sessionStorage.getItem("submittedPhones") || "[]");
+
+      if (submittedEmails.includes(formData.email) || submittedPhones.includes(formData.phone)) {
+        alert("User already registered. Redirecting to login...");
+        setHasSubmitted(true);
+        router.push("/loginpage");
+        return;
+      }
+
+      // Simulated API payload
+      const payloadRequestCallBack = {
+        myData: [
+          { lead: "right_sticky_contact_us" },
+          { name: formData.name },
+          { email: formData.email },
+          { phone: formData.phone },
+          { userMessage: formData.whatsappUpdates ? "User wants WhatsApp updates" : "" },
+          { page: window.location.href },
+        ],
+      };
+
       const response = await fetch("/api/submitForm", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ payloadRequestCallBack, payloadCaptureLeadRequest }),
+        body: JSON.stringify(payloadRequestCallBack),
       });
 
-      const result = await response.json();
-
       if (response.ok) {
-        alert(result.message);
+        // Store in sessionStorage
+        submittedEmails.push(formData.email);
+        submittedPhones.push(formData.phone);
+
+        sessionStorage.setItem("submittedEmails", JSON.stringify(submittedEmails));
+        sessionStorage.setItem("submittedPhones", JSON.stringify(submittedPhones));
+
+        alert("Form submitted successfully!");
         setFormData({ name: "", phone: "", email: "", whatsappUpdates: false, whatsappTerms: false });
         setErrors({});
+        setHasSubmitted(true);
         onClose();
       } else {
-        alert(result.message || "Form submission failed.");
+        alert("Form submission failed. Please try again.");
       }
     } catch (error) {
       console.error("Error during form submission:", error);
       alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
+
+const handleLogin = () => {
+  router.push("/loginpage");
+};
   return (
     <div className="relative">
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gray-500 bg-opacity-75">
@@ -239,12 +275,25 @@ const Modal = ({ isOpen, onClose, title, description, image }: ModalProps) => {
                   >
                     Close
                   </button>
-                  <button
-                    type="submit"
-                    className="bg-green-500 text-white py-2 px-4 rounded ml-2"
-                  >
-                    Submit
-                  </button>
+                  <div>
+        {hasSubmitted ? (
+          <button
+            type="button"
+            className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="w-full bg-maincolor_1 text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-600 transition duration-300"
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </button>
+        )}
+      </div>
                 </div>
               </form>
             </div>

@@ -4,9 +4,8 @@ import { useBlogContext } from "@/utils/BlogContext";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import { faThumbTack, faChevronRight, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import BannerPromo from "@/components/BannerPromotion";
 // import EnrollmentForm from "@/components/EnrollForm";
 
 import { imageBasePath } from "@/utils/img.config";

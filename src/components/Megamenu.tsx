@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown, faChevronUp,faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -65,8 +65,6 @@ const DynamicMegaMenu: React.FC<DynamicMegaMenuProps> = ({
     const [visibleCategory, setVisibleCategory] = useState<Category>("");
     const [hoveredCourse, setHoveredCourse] = useState<Course | null>(null);
     const [hoveredCourseImage, setHoveredCourseImage] = useState<string | null>(null);
-
-    const router = useRouter();
     const menuRef = useRef<HTMLDivElement>(null);
     const baseUrl = 'http://13.232.95.229:3000/';
 
