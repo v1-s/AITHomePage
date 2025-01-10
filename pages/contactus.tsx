@@ -47,15 +47,15 @@ const GetInTouch = () => {
 
         <div className="relative z-10 max-w-7xl flex flex-col md:flex-row items-center justify-between h-[75vh]">
           {/* Left Column: Heading */}
-          <div className="md:w-1/2 text-center md:text-left">
-            <h1 className="text-4xl font-bold text-white">Connect with Us</h1>
-            <p className="mt-4 text-xl text-slate-100">
-              We’re excited to demonstrate our unwavering dedication to excellence in education.
+          <div className="md:w-1/2 text-center md:text-left py-12 md:py-0">
+            <h1 className="text-xl md:text-4xl font-bold text-white glitter_text uppercase">Connect with Us</h1>
+            <p className="mt-4 text-md md:text-xl text-slate-100">
+              We are excited to demonstrate our unwavering dedication to excellence in education.
             </p>
           </div>
 
           {/* Right Column: Image */}
-          <div className="md:w-1/2 flex justify-start">
+          <div className="md:w-1/2 flex justify-start hidden md:block">
             <Image
               src="/assets/images/contactusfrmbg.png" // Replace with your image path
               alt="Contact Icon"
@@ -86,10 +86,10 @@ const GetInTouch = () => {
 
         {/* Contact Details */}
         <div className="mt-12 md:mt-0 text-center md:text-left">
-          <p className="font-semibold text-md text-cyan-950 text-lg md:text-md ">
+          <p className="font-semibold text-cyan-950 text-md ">
             ACHIEVERSIT STUDENTS, NEED ASSISTANCE?
           </p>
-          <p className="text-center font-semibold text-md md:text-xl glitter_text">
+          <p className="text-center font-semibold text-lg md:text-xl glitter_text">
             CONTACT US At
           </p>
           <p className="mt-2 text-xs md:text-sm">

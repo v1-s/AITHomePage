@@ -62,10 +62,10 @@ const StudentBackgrounds = () => {
     <section className="bg-blue-50 py-12 px-6">
       <div className="max-w-7xl mx-auto text-center">
         <h3 className="text-sm font-semibold tracking-wide text-gray-800">STUDENT BACKGROUNDS</h3>
-        <h2 className="text-3xl font-bold text-gray-800 mt-2 glitter_text">
+        <h2 className="text-xl md:text-3xl font-bold text-gray-800 mt-2 glitter_text">
           Our Students Thrive Across Diverse <br /> Backgrounds and Opportunities
         </h2>
-        <p className="text-gray-600 mt-4">
+        <p className="text-gray-600 mt-4 text-sm md:text-base">
           At AchieversIT, our diverse students transform into skilled professionals from various backgrounds. With industry-relevant training, we empower individuals to excel in their chosen fields and achieve career success.
         </p>
 

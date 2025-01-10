@@ -25,10 +25,10 @@ const Banner = () => {
     <div className="w-full lg:max-w-6xl mx-auto relative flex flex-col md:flex-row items-center justify-between bg-Bg2 bg-no-repeat bg-cover text-black p-4 md:px-8 overflow-hidden">
       {/* Text Section */}
       <div className="w-full md:w-3/4 text-center md:text-left mb-4 md:mb-0 text-white">
-        <h2 className="text-black text-2xl md:text-3xl font-semibold mb-8 relative elements after:bottom-N10 glitter_text">
+        <h2 className="text-black text-xl  md:text-2xl  font-semibold mb-8 relative elements after:translate-x-[100%]  md:after:bottom-N10 glitter_text text-wrap">
           Interested in Joining a Training Session?
         </h2> 
-        <p className="text-black text-wrap text-base md:text-lg mb-4">
+        <p className="text-black text-wrap text-sm md:text-lg mb-4">
           Reach out to AchieversIT for details about upcoming training programs, session schedules, and registration support.
         </p>
         <button

@@ -160,7 +160,7 @@ const CandidateStory: React.FC = () => {
             <p className="text-sm text-gray-600 mt-2">
               {presentrole} for Business Transformation
             </p>
-            <button className="mt-4 bg-maincolor_1 text-white py-2 px-4 rounded-lg" onClick={toggleAdvisorModal}>
+            <button className="mt-4 bg-maincolor_1 text-white py-2 px-4 rounded-lg text-md" onClick={toggleAdvisorModal}>
               Enroll Now
             </button>
             {isAdvisorModalOpen && (

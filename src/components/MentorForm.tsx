@@ -143,7 +143,7 @@ const TrainingAdvisorForm = () => {
     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
       {/* Name Field */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="name" className="block text-xs md:text-sm  font-medium text-gray-700">
           Name*
         </label>
         <input
@@ -152,15 +152,15 @@ const TrainingAdvisorForm = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className={`w-full border p-2 rounded-lg ${errors.name ? "border-red-500" : "border-gray-300"}`}
+          className={`w-full border p-2 rounded-lg  ${errors.name ? "border-red-500" : "border-gray-300"}`}
         />
-        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+        {errors.name && <p className="text-red-500 text-xs md:text-sm ">{errors.name}</p>}
       </div>
 
       {/* Company Name and Training Need */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="company" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="company" className="block text-xs md:text-sm font-medium text-gray-700">
             Company Name*
           </label>
           <input
@@ -171,10 +171,10 @@ const TrainingAdvisorForm = () => {
             onChange={handleChange}
             className={`w-full border p-2 rounded-lg ${errors.company ? "border-red-500" : "border-gray-300"}`}
           />
-          {errors.company && <p className="text-red-500 text-sm">{errors.company}</p>}
+          {errors.company && <p className="text-red-500 text-xs md:text-sm ">{errors.company}</p>}
         </div>
         <div>
-          <label htmlFor="training" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="training" className="block text-xs md:text-sm  font-medium text-gray-700">
             Training Need*
           </label>
           <select
@@ -182,22 +182,22 @@ const TrainingAdvisorForm = () => {
             name="training"
             value={formData.training}
             onChange={handleChange}
-            className={`w-full border p-2 rounded-lg ${errors.training ? "border-red-500" : "border-gray-300"}`}
+            className={`w-full border p-2 rounded-lg text-xs md:text-sm  ${errors.training ? "border-red-500" : "border-gray-300"}`}
           >
-            <option value="" disabled>
+            <option value=""  className="text-xs md:text-sm" disabled>
               Select an Option
             </option>
-            <option value="frontend">Frontend Development</option>
-            <option value="backend">Backend Development</option>
+            <option value="frontend" className="text-xs md:text-sm ">Frontend Development</option>
+            <option value="backend" className="text-xs md:text-sm ">Backend Development</option>
           </select>
-          {errors.training && <p className="text-red-500 text-sm">{errors.training}</p>}
+          {errors.training && <p className="text-red-500 text-xs md:text-sm ">{errors.training}</p>}
         </div>
       </div>
 
       {/* Email and Phone Number */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="email" className="block text-xs md:text-sm  font-medium text-gray-700">
             Email ID*
           </label>
           <input
@@ -206,16 +206,16 @@ const TrainingAdvisorForm = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className={`w-full border p-2 rounded-lg ${errors.email ? "border-red-500" : "border-gray-300"}`}
+            className={`w-full border p-2 rounded-lg text-xs md:text-sm  ${errors.email ? "border-red-500" : "border-gray-300"}`}
           />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+          {errors.email && <p className="text-red-500 text-xs md:text-sm ">{errors.email}</p>}
         </div>
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="phone" className="block text-xs md:text-sm  font-medium text-gray-700">
             Phone Number*
           </label>
           <div className="grid grid-cols-4">
-            <span className="inline-flex items-center px-3 bg-gray-200 border border-gray-300 text-gray-700 rounded-l-lg">
+            <span className="inline-flex items-center px-3 bg-gray-200 border border-gray-300 text-gray-700 rounded-l-lg text-xs md:text-sm ">
               +91
             </span>
             <input
@@ -228,13 +228,13 @@ const TrainingAdvisorForm = () => {
               pattern="^\d{10}$"
             />
           </div>
-          {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+          {errors.phone && <p className="text-red-500 text-xs md:text-sm ">{errors.phone}</p>}
         </div>
       </div>
 
       {/* Query Field */}
       <div>
-        <label htmlFor="query" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="query" className="block text-xs md:text-sm  font-medium text-gray-700">
           Query
         </label>
         <textarea
@@ -245,14 +245,14 @@ const TrainingAdvisorForm = () => {
           className="w-full border p-2 rounded-lg border-gray-300"
         ></textarea>
       </div>
-      {errors.query && <p className="text-red-500 text-sm">{errors.query}</p>}
+      {errors.query && <p className="text-red-500 text-xs md:text-sm ">{errors.query}</p>}
       {/* ... Add other form fields here ... */}
 
       <div>
         {hasSubmitted ? (
           <button
             type="button"
-            className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
+            className="w-full bg-blue-500 text-xs md:text-sm  text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
             onClick={handleLogin}
           >
             Login
@@ -260,7 +260,7 @@ const TrainingAdvisorForm = () => {
         ) : (
           <button
             type="submit"
-            className="w-full bg-maincolor_1 text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-600 transition duration-300"
+            className="w-full bg-maincolor_1 text-white py-3 text-xs md:text-sm   px-4 rounded-lg font-semibold hover:bg-orange-600 transition duration-300"
             disabled={loading}
           >
             {loading ? "Submitting..." : "Submit"}

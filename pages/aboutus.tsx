@@ -72,13 +72,13 @@ const AboutUsSection = () => {
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-6">
         {/* Left Content */}
         <div>
-        <span className="text-mainblue font-semibold  text-xs md:text-sm uppercase mb-2">
+        <span className="text-mainblue font-semibold  text-sm md:text-sm uppercase mb-2">
             LET&apos;S CONNECT
           </span>
-          <h1 className="text-xl md:text-4xl font-extrabold text-gray-900 mb-4">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-4">
             AchieversIT
           </h1>
-          <p className="text-xs md:text-lg text-gray-700 mb-6">
+          <p className="text-sm md:text-lg text-gray-700 mb-6">
             AchieversIT stands as India&apos;s Foremost and Most Esteemed Software Training Institution. We offer unparalleled and globally esteemed software education and professional development programs tailored for aspiring learners.
           </p>
           <div className="flex items-center mb-6">
@@ -95,16 +95,16 @@ const AboutUsSection = () => {
                 </svg>
               ))}
             </div>
-            <span className="text-gray-700 font-semibold ml-2">
+            <span className="text-gray-700 font-semibold ml-2  text-sm  md:text-base ">
               4.9 out of 5 based on 20,839 Reviews
             </span>
           </div>
-          <div className="flex space-x-4">
+          <div className="flex  flex-col md:flex-row  md:space-x-4 gap-4">
             <button className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10" onClick={scrollToFeaturedAlumini}>
-              <span> Meet Our Team</span>
+              <span className="text-sm md:text-md"> Meet Our Team</span>
             </button>
             <button className="btn-hover-bg-transition btn-hover-bg-transition-og px-14 text-black border border-gray-500 px-10" onClick={() => toggleForm("advisorForm")}>
-              <span>Join AchieversIT</span>
+              <span className="text-sm md:text-md">Join AchieversIT</span>
             </button>
             {activeForm ==="advisorForm" && (
               <DwnldAdvisorModalForm
@@ -136,10 +136,10 @@ const AboutUsSection = () => {
       {/* Why AIT Section */}
       <div className="bg-white py-12">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-800">
+          <h2 className="text-xl md:text-3xl font-bold text-gray-800">
             Why <span className="text-mainblue glitter_text">AchieversIT</span> is the Leading Choice?
           </h2>
-          <p className="text-xs md:text-md text-gray-600 mt-4">
+          <p className="text-sm md:text-md text-gray-600 mt-4">
             AchieversIT is the premier destination in India for outstanding training and career enhancement.
           </p>
           <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mx-auto mt-8">
@@ -187,9 +187,9 @@ const AboutUsSection = () => {
       <HowItStarted />
       <PieChartSection />
 
-      <h2 className="text-sm md:text-xl font-bold text-mainblue text-center">
+      <h2 className="text-md md:text-xl font-bold text-mainblue text-center">
         Discover AchieversIT<br />
-        <span className="text-mainblue glitter_text text-lg md:text-3xl">
+        <span className="text-mainblue glitter_text text-xl md:text-3xl">
           Empowering Careers with Industry-Ready Skills
         </span>
       </h2>
@@ -200,14 +200,14 @@ const AboutUsSection = () => {
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="w-full w-4/5 mx-auto bg-white p-8">
-          <h2 className="text-xl md:text-3xl font-bold text-center text-white element relative pb-2 mb-8">
+          <h2 className="text-lg md:text-3xl font-bold text-center text-white element relative pb-2 mb-8">
               <span className="text-black">Reach Out to Us – We&apos;re Ready to Assist!</span>
             </h2>
             <TrainingAdvisorForm />
           </div>
           <div className="text-center mt-8">
             <button className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10 tracking-widest uppercase" onClick={() => toggleForm("brochureForm")}>
-              <span>Explore Opportunities</span>
+              <span className="text-sm md:text-md">Explore Opportunities</span>
             </button>
             {activeForm ==="brochureForm" && (
               <DwnldAdvisorModalForm

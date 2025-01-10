@@ -61,8 +61,8 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
   return (
     <div className="relative w-full pb-20">
       <div className="relative z-10 w-full lg:max-w-7xl mx-auto my-5 p-2">
-        <h1 className="text-center text-3xl font-bold mb-12">
-          <span className="glitter_text element relative">Get in Touch & Visit Us</span>
+        <h1 className="text-center text-xl  md:text-3xl font-bold mb-12">
+          <span className="glitter_text element relative   md:after:-translate-x-1/2 ">Get in Touch & Visit Us</span>
         </h1>
 
         <div className="flex flex-col lg:flex-row bg-white shadow-card rounded-lg overflow-hidden w-full mx-auto relative">
@@ -98,7 +98,7 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
                       className="text-blue-500"
                       aria-label={`${detail.label}: ${detail.value}`}
                     >
-                      <p className="font-bold text-blue-500">{detail.label}:</p>
+                      <p className="font-bold text-blue-500 text-md md:text-xl">{detail.label}:</p>
                       <p className="text-gray-600 text-xs md:text-sm">{detail.value}</p>
                     </a>
                   </div>

@@ -35,10 +35,10 @@ A dedicated placement support team at AchieversIT ensures that students not only
       <div className="max-w-7xl mx-auto">
         {sections.map((section, index) => (
           <div key={index} className="mb-12">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-4">
               <span className='glitter_text'>{section.title}</span>
             </h3>
-            <p className="text-gray-800">{section.content}</p>
+            <p className="text-sm md:text-base text-gray-800">{section.content}</p>
           </div>
         ))}
       </div>

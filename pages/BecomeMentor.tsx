@@ -61,7 +61,7 @@ const MentorShip = () => {
                 Cultivate Future Minds as an Instructor
                 <br/>
               </h1>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 mb-6 text-sm md:text-base">
                 Join AchieversIT to share your wisdom, inspire learners globally,
                 and shape the future of tech education. Be part of a network devoted to
                 excellence and innovation.
@@ -71,7 +71,7 @@ const MentorShip = () => {
                   className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10 tracking-widest uppercase"
                   onClick={() => openModal("guideModal")}
                 >
-                  <span>Mentor and Motivate as a Guide</span>
+                  <span className="text-sm md:text-md">Mentor and Motivate as a Guide</span>
                 </button>
                 {activeModal === "guideModal" && (
                   <DwnldAdvisorModalForm
@@ -116,8 +116,8 @@ const MentorShip = () => {
       <div className="flex items-center justify-center h-full py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-7xl p-8">
           <div className="bg-white p-8 rounded shadow-lg w-full max-w-lg mx-auto">
-            <h2 className="text-2xl font-semibold mb-6 text-center relative elementl pb-2 glitter_text uppercase">
-              <span>Join the Mentoring Community</span>
+            <h2 className=" font-semibold mb-6 text-center relative elementl pb-2 glitter_text uppercase">
+              <span className="text-lg md:text-2xl">Join the Mentoring Community</span>
             </h2>
             <TrainingAdvisorForm/>
           </div>
@@ -125,8 +125,8 @@ const MentorShip = () => {
             <div className="text-center md:text-left">
               {/* Content Sections */}
               <div className="mb-2">
-                <h3 className="text-xl font-bold text-gray-800 mb-2 text-orange-500 uppercase"> Who can Lead?</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="text-md md:text-xl font-bold text-gray-800 mb-2 text-orange-500 uppercase"> Who can Lead?</h3>
+                <p className="text-gray-600 leading-relaxed text-sm md:text-md">
                   Anyone who possesses profound expertise in a specific field and is
                   passionate about educating and imparting their knowledge to students
                   and professionals can lead at AchieversIT. Excellent communication skills
@@ -135,8 +135,8 @@ const MentorShip = () => {
               </div>
               {/* Process Section */}
               <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2 text-orange-500 uppercase"> How It Works</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="text-md md:text-xl font-bold text-gray-800 mb-2 text-orange-500 uppercase"> How It Works</h3>
+                <p className="text-gray-600 leading-relaxed text-sm md:text-md">
                 First step! Complete the application form. If you&apos;re selected, you will
                   undergo a comprehensive training program based on AchieversIT&apos;s teaching
                   approach

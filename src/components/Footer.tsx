@@ -22,15 +22,23 @@ interface FooterLink {
 }
 
 const Footer = () => {
-  
   const [phone, setPhone] = useState<string>(""); // Holds the phone number input
   const [captcha, setCaptcha] = useState<string>(""); // Holds the generated CAPTCHA
   const [captchaInput, setCaptchaInput] = useState<string>(""); // Holds the user-entered CAPTCHA
   const [error, setError] = useState<string>(""); // Error message
   const [loading, setLoading] = useState<boolean>(false); // Loading state
+  const [alreadySubmitted, setAlreadySubmitted] = useState<boolean>(false); // Tracks if the user already submitted
+
   useEffect(() => {
     generateCaptcha(); // Generate CAPTCHA when the component mounts
+
+    // Check if the phone number has already been submitted in sessionStorage
+    const submittedPhone = sessionStorage.getItem("submittedPhone");
+    if (submittedPhone) {
+      setAlreadySubmitted(true);
+    }
   }, []);
+
   const generateCaptcha = () => {
     const newCaptcha = Math.random().toString(36).substring(2, 8).toUpperCase(); // Generate a random CAPTCHA
     setCaptcha(newCaptcha);
@@ -42,55 +50,58 @@ const Footer = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Validate phone number
-     // Validate the phone number
-     if (!validatePhone(phone)) {
+    e.preventDefault(); // Prevent default form submission
+  
+    if (alreadySubmitted) {
+      setError("Already submitted, please log in.");
+      return;
+    }
+  
+    if (!validatePhone(phone)) {
       setError("Please enter a valid 10-digit phone number.");
       return;
     }
+  
     if (captcha !== captchaInput) {
       setError("Invalid CAPTCHA. Please try again.");
-      generateCaptcha(); // Regenerate CAPTCHA on failure
+      generateCaptcha(); // Reset CAPTCHA on failure
       return;
     }
-    // Clear errors and start loading state
-    setError("");
-    setLoading(true);
-    // Payload for the API request
-    const payload = {
-      myData: [
-        { phone: phone },
-        { source: "phone_submission_form" },
-      ],
-    };
-
+  
+    setError(""); // Clear any previous errors
+    setLoading(true); // Start loading state
+  
     try {
-      const response = await fetch("https://achieversit.com/management/captureLeadRequest", {
+      const response = await fetch("/api/submit-form", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          payloadRequestCallBack: { phone, source: "Request CallBack Form" },
+          payloadCaptureLeadRequest: { phone, source: "Lead Capture Form" },
+        }),
       });
-
+  
       if (response.ok) {
+        sessionStorage.setItem("submittedPhone", phone); // Save submitted phone to session storage
         alert("Phone number submitted successfully!");
-        setPhone(""); // Clear the input field
-        setCaptchaInput(""); // Clear CAPTCHA input
-        generateCaptcha(); //
+        setPhone(""); // Clear inputs
+        setCaptchaInput("");
+        generateCaptcha();
+        setAlreadySubmitted(true); // Update submission state
       } else {
-        // Show error if submission fails
-        setError("Submission failed. Please try again.");
+        const errorResponse = await response.json();
+        setError(errorResponse.message || "Submission failed. Please try again.");
       }
     } catch (error) {
       console.error("Error during submission:", error);
       setError("An error occurred while submitting the phone number.");
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false); // End loading state
     }
   };
+  
+  
+
 
   return (
     <>
@@ -108,7 +119,7 @@ const Footer = () => {
           className="ait-logo w-[280px] mb-4"
         />
       </Link>
-      <p className="text-gray-500 text-sm text-start">
+      <p className="text-gray-500 text-xs md:text-sm text-start">
         AchieversIT - Provides a wide group of opportunities for freshers and experienced candidates who can develop their skills and build their career opportunities across multiple Companies.
       </p>
     </div>
@@ -198,8 +209,8 @@ const Footer = () => {
           <div className="flex flex-wrap justify-between lg:mx-[13px] gap-y-8">
             {/* Request a Demo Section */}
             <div className="w-full lg:w-1/2 text-center space-y-3 sm:text-left lg:order-2">
-              <h2 className="text-uppercase font-bold mb-3 text-xl text-white">Request a Demo</h2>
-              <p className="text-sm md:text-md mt-4 text-gray-500">
+              <h2 className="text-uppercase font-bold mb-3 text-lg md:text-xl text-white">Request a Demo</h2>
+              <p className="text-xs md:text-md mt-4 text-gray-500">
                 Request a demo to explore how AchieversIT&apos;s solutions enhance success, efficiency, and growth opportunities.
               </p>
               <form className="mt-6 w-full" onSubmit={handleSubmit}>
@@ -247,12 +258,18 @@ const Footer = () => {
     {/* Subscribe Button */}
     <div className="mt-4">
     <button
-      type="submit"
-      className="w-full sm:w-auto rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
-      disabled={loading}
-    >
-      {loading ? "Submitting..." : "Subscribe"}
-    </button>
+                  type="submit"
+                  className={`w-full sm:w-auto rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-white hover:text-black ${
+                    alreadySubmitted ? "cursor-not-allowed opacity-50" : ""
+                  }`}
+                  disabled={loading || alreadySubmitted}
+                >
+                  {loading
+                    ? "Submitting..."
+                    : alreadySubmitted
+                    ? "Already Submitted"
+                    : "Subscribe"}
+                </button>
   </div>
   {/* Error Message */}
   {error && <p className="mt-2 text-sm text-maincolor_1">{error}</p>}
@@ -267,19 +284,19 @@ const Footer = () => {
     { title: "Support", links: footerData.supportLinks },
   ].map((section, index) => (
     <div key={index} className="w-full md:w-1/3 space-y-2">
-      <h6 className="text-uppercase font-bold mb-3 text-xl text-white">
+      <h6 className="text-uppercase font-bold mb-3 text-lg md:text-xl text-white">
         {section.title}
       </h6>
       {section.links.map((link: FooterLink, i) => (
         <p key={i} className="py-1">
           {link.type === "course" && link.id ? (
-            <Link href={`/${link.name}`} className="text-reset cursor-pointer">
+            <Link href={`/${link.name}`} className="text-reset  cursor-pointer">
               {link.name}
             </Link>
           ) : (
             <Link
               href={`${link.url}?id=${link.id}`} // Pass the id as a query parameter
-              className="text-reset cursor-pointer text-gray-600 hover:text-maincolor_1"
+              className="text-reset cursor-pointer text-sm md:text-md text-gray-600 hover:text-maincolor_1"
             >
               {link.name}
             </Link>
@@ -295,7 +312,7 @@ const Footer = () => {
           {/* Trending Links */}
           {Object.entries(footerData.trendingLinks).map(([section, links], index) => (
             <div key={index} className=" pb-3 mt-5">
-              <p className="text-xl font-medium text-center md:text-left mb-3 text-white">
+              <p className="text-lg md:text-xl font-medium text-center md:text-left mb-3 text-white">
                 Trending {section.replace(/([A-Z])/g, " $1").trim()}
               </p>
               <div className="flex flex-wrap lg:gap-2 sm:gap-2 gap-1 justify-center md:justify-start md:text-left text-center">
@@ -304,7 +321,7 @@ const Footer = () => {
                     <Link
                    href={`/${link.name.replace(/\s+/g, '')}`} 
 
-                      className="text-md text-gray-600 hover:text-maincolor_1 mb-1 sm:mb-0"
+                      className="md:text-reset text-gray-600 hover:text-maincolor_1 mb-1 sm:mb-0"
                   >
                       {link.name}
                     </Link>
@@ -321,8 +338,8 @@ const Footer = () => {
     
         <div className="footer-end py-4 px-0 lg:mx-45">
           <div className="text-center">
-            <h4 className="text-lg font-medium text-2xl text-white pb-2 ">Disclaimer</h4>
-            <p className="text-sm  text-center md:text-md text-gray-700">
+            <h4 className="text-lg font-medium md:text-2xl text-white pb-2 ">Disclaimer</h4>
+            <p className="text-center text-md text-gray-700">
               By visiting the website Achieversit, viewing, accessing, or
               otherwise using any of the information collected, created, or
               compiled by Achieversit, you agree to be bound to the terms and
@@ -332,7 +349,7 @@ const Footer = () => {
         </div>
       </footer>
 
-      <div className="text-center p-4 bg-black footer-end py-8 border-t border-gray-600 px-0 text-gray-600">
+      <div className="text-md text-center p-4 bg-black footer-end py-8 border-t border-gray-600 px-0 text-gray-600">
         © 2024 Copyright:
         <Link href="#" className="text-reset font-bold">
           Achieversit

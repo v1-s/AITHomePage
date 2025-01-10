@@ -110,13 +110,13 @@ const CareerCard: React.FC<CareerCardProps> = ({
           className="btn-hover-bg-transition btn-hover-bg-transition-og px-14 py-2 text-black border-slate-950"
           aria-label="View Story"
         >
-          <span className="flex items-center justify-between">
+          <span className="text-sm md:text-md flex items-center justify-between">
             View Story{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth="1.5"
+              strokeWidth="2.5"
               stroke="currentColor"
               className="w-4 h-4 ml-1"
             >

@@ -33,7 +33,7 @@ const BannerPromo = () => {
             aria-label="Enroll now and get 20% off on all courses"
             onClick={openAdvisorModal}
           >
-            <span>Enroll Now</span>
+            <span className='text-md'>Enroll Now</span>
           </button>
     
           {isAdvisorModalOpen && (

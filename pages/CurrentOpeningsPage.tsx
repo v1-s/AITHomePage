@@ -120,7 +120,7 @@ const JobOpeningsPage = () => {
         <StaticHeroComponent
           titleSubContext={
             <>
-              <span className="glitter_text text-orange-500">
+              <span className="glitter_text text-orange-500 ">
                 Career opportunity
               </span>{" "}
               at AchieversIT <br />

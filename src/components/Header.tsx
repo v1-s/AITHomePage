@@ -231,7 +231,7 @@ function Header() {
         {/* Mobile Menu */}
         {menuVisible && (
           <div ref={menuRef} className="md:block bg-gray-50 pb-12">
-            <div className="flex flex-col items-center space-y-4 mt-4 text-left px-4">
+            <div className="flex flex-col items-center space-y-4 mt-4 text-left px-4 overflow-y-auto max-h-[80vh] sm:max-h-[70vh] md:max-h-[60vh] ">
               {isExtraSmallScreen && (
                 <>
                   {/* All Courses Button */}

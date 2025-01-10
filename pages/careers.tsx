@@ -208,7 +208,7 @@ const Careers = () => {
 
           <div className="col-span-1 md:col-span-2 flex justify-center items-center">
             <button  className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10 tracking-widest uppercase" onClick={() => toggleForm("opportunityForm")}>
-              <span>  Explore Job Openings</span>
+              <span className="text-sm md:text-md">  Explore Job Openings</span>
             </button>
             
              {activeForm ==="opportunityForm" && (
@@ -233,7 +233,7 @@ const Careers = () => {
 
       {/* Inclusive Environment Section */}
       <section className="py-16 text-center">
-        <h2 className="text-xl md:text-3xl font-bold mb-12 glitter_text relative element pb-4">
+        <h2 className="text-xl md:text-3xl font-bold mb-12 glitter_text relative element pb-4 ">
           The Value of Being with AchieversIT
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 p-4 max-w-6xl mx-auto">
@@ -261,7 +261,7 @@ const Careers = () => {
         <div className="relative max-w-7xl mx-auto px-6 ">
           {/* Title Section */}
           <h2 className="text-3xl font-bold text-center text-white element relative pb-2 mb-8">
-            <span className="text-white">What Awaits You Here?</span>
+            <span className="text-white text-md md:text-md">What Awaits You Here?</span>
           </h2>
 
           {/* Grid Section */}
@@ -277,10 +277,10 @@ const Careers = () => {
                   height={100}
                 />
                 <div>
-                  <h1 className="font-bold text-2xl text-mainBlue mb-2 text-left glitter_text">
+                  <h1 className="font-bold text-lg md:text-2xl text-mainBlue mb-2 text-left glitter_text">
                     Chart Your Own Career
                   </h1>
-                  <p className="text-gray-600 text-left font-semibold">
+                  <p className="text-gray-600 text-left font-semibold text-sm  md:text-base">
                     Take control of your professional journey. We provide the tools,
                     support, and opportunities to help you shape your career path,
                     explore new possibilities, and define your role within a dynamic
@@ -301,10 +301,10 @@ const Careers = () => {
                   height={100}
                 />
                 <div>
-                  <h1 className="font-bold text-2xl text-mainBlue mb-2 text-left glitter_text">
+                  <h1 className="font-bold text-lg md:text-2xl text-mainBlue mb-2 text-left glitter_text">
                     Collaborative Work Culture
                   </h1>
-                  <p className="text-gray-600 text-left font-semibold">
+                  <p className="text-gray-600 text-left font-semibold text-sm  md:text-base">
                     Experience the freedom to grow and innovate in a culture that
                     values openness and collaboration. Our team fosters inclusivity,
                     encourages diverse ideas, and ensures every voice is heard,
@@ -325,10 +325,10 @@ const Careers = () => {
                   height={100}
                 />
                 <div>
-                  <h1 className="font-bold text-2xl text-mainBlue mb-2 text-left glitter_text">
+                  <h1 className="font-bold text-lg md:text-2xl text-mainBlue mb-2 text-left glitter_text">
                     Upskill and Evolve
                   </h1>
-                  <p className="text-gray-600 text-left font-semibold">
+                  <p className="text-gray-600 text-left font-semibold text-sm  md:text-base">
                     Enhance your expertise and grow continuously with access to
                     cutting-edge learning opportunities. From specialized training to
                     hands-on projects, we support your journey toward skill mastery
@@ -349,10 +349,10 @@ const Careers = () => {
                   height={100}
                 />
                 <div>
-                  <h1 className="font-bold text-2xl text-mainBlue mb-2 text-left glitter_text">
+                  <h1 className="font-bold text-lg md:text-2xl text-mainBlue mb-2 text-left glitter_text">
                     World-Class Facilities
                   </h1>
-                  <p className="text-gray-600 text-left font-semibold">
+                  <p className="text-gray-600 text-left font-semibold text-sm  md:text-base">
                     Work in a space designed to inspire and empower. Our top-tier
                     facilities are crafted to provide comfort, convenience, and
                     productivity, ensuring you have everything you need to excel at
@@ -367,7 +367,7 @@ const Careers = () => {
           <div className="text-center mt-8">
             <button  className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10 tracking-widest uppercase "  onClick={() => toggleForm("jobopprForm")}>
              
-              <span>Explore Opportunities</span>
+              <span className="text-sm md:text-md">Explore Opportunities</span>
             </button>
             {activeForm === "jobopprForm"  && (
                      <DwnldAdvisorModalForm
@@ -391,7 +391,7 @@ const Careers = () => {
         <div className="w-full md:w-3/4 mx-auto">
           <div className="p-8">
             <div className="flex flex-col items-center">
-              <h3 className="text-3xl font-semibold text-maincolor_1 uppercase glitter_text relative elementl pb-2 mb-8">
+              <h3 className="text-xl md:text-3xl font-semibold text-maincolor_1 uppercase glitter_text relative elementl pb-2 mb-8">
                 Our Culture at AchieversIT
               </h3>
               <div className="w-full p-5 bg-gray-50 rounded-md shadow-card">
@@ -424,7 +424,7 @@ const Careers = () => {
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Title Section */}
           <div className="w-full w-4/5 mx-auto bg-white p-8">
-            <h2 className="text-3xl font-bold text-center text-white element relative pb-2 mb-8">
+            <h2 className="text-xl md:text-3xl font-bold text-center text-white element relative pb-2 mb-8">
               <span className="text-black">Talk to our training advisor</span>
             </h2>
 
@@ -436,7 +436,7 @@ const Careers = () => {
           <div className="text-center mt-8">
             <button className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10 tracking-widest uppercase"
       onClick={() => toggleForm("jobForm")}>
-              <span>Explore Opportunities</span>
+              <span className="text-sm md:text-md">Explore Opportunities</span>
             </button>
             { activeForm === "jobForm" && (
                      <DwnldAdvisorModalForm
