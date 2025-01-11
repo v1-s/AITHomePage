@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +9,7 @@ import Image from "next/image";
 
 const DynamicMegaMenu = dynamic(() => import("@/components/Megamenu"), { ssr: false });
 function Header() {
-  const router = useRouter();
+
   const [menuVisible, setMenuVisible] = useState(false);
   const [megaMenuVisible, setMegaMenuVisible] = useState(false);
   const [isMediumScreen, setIsMediumScreen] = useState(false);
@@ -18,7 +17,7 @@ function Header() {
   const [isExtraSmallScreen, setIsExtraSmallScreen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [moreDropdownVisible, setMoreDropdownVisible] = useState(false);
-  const [isFocused, setIsFocused] = useState(true);
+
 
   const handleMenuToggle = () => {
     setMenuVisible((prev) => !prev);
@@ -35,10 +34,7 @@ function Header() {
     setMegaMenuVisible(false);
   };
 
-  const handleBlur = () => {
-    setIsFocused(false);
-    console.log("Input lost focus");
-  };
+ 
 
   const handleMoreDropdownToggle = () => {
     setMoreDropdownVisible((prev) => !prev);

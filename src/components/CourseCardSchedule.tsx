@@ -75,10 +75,10 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
     return () => clearInterval(timer);
   }, [course_url]); // Re-run when course_url changes
 
-  const handleBatchSelect = (batchLink: string) => {
-    // Set the selected batch link when a batch is clicked
-    setSelectedBatchLink(batchLink);
-  };
+  // const handleBatchSelect = (batchLink: string) => {
+  //   // Set the selected batch link when a batch is clicked
+  //   setSelectedBatchLink(batchLink);
+  // };
   const openAdvisorModal = () => {
     setModalKey((prevKey) => prevKey + 1); // Increment key to force re-render
     setIsAdvisorModalOpen(true);

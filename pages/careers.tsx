@@ -5,9 +5,7 @@ import React from "react";
 import StatsSection from "@/components/AchvStatsSection";
 import Image from "next/image";
 import TrainingAdvisorForm from "@/components/MentorForm";
-import { useRouter } from 'next/navigation';
 import AlumniSection from "@/components/AchvrAlumini";
-import Link from "next/link";
 import { useState } from "react";
 import DwnldAdvisorModalForm from "./forms/advisorfrm";
 interface InclusiveEnvironmentCard {
@@ -90,12 +88,11 @@ const dynamicCards: DynamicCards[] = [
 
 
 const Careers = () => {
-  const router = useRouter(); // Initialize the router
 
   // Function to handle the button click
-  const handleExploreClick = () => {
-    router.push('/JobListingPage'); // Navigate to the jobListing page
-  };
+  // const handleExploreClick = () => {
+  //   router.push('/JobListingPage'); // Navigate to the jobListing page
+  // };
   const inclusiveEnvironment = dynamicCards.find(
     (card) => card.section === "inclusiveEnvironment"
   )?.cards as InclusiveEnvironmentCard[];

@@ -8,44 +8,45 @@ import AccessibilityPolicy from "./accessibilityPolicy";
 import RefundPolicy from "./refundPolicy";
 import CommunityGuidelines from "./communityGuideLines";
 import { useSearchParams } from "next/navigation";
+
+const termsData = [
+  {
+    id: "terms",
+    title: "Terms and Conditions",
+    component: TermsAndConditions,
+  },
+  {
+    id: "career",
+    title: "Career Bootcamp Terms and Conditions",
+    component: CareerBootcampTerms,
+  },
+  {
+    id: "accessibility",
+    title: "Accessibility Policy",
+    component: AccessibilityPolicy,
+  },
+  {
+    id: "privacy",
+    title: "Privacy Policy",
+    component: PrivacyPolicy,
+  },
+  {
+    id: "refund",
+    title: "Refund Policy",
+    component: RefundPolicy,
+  },
+  {
+    id: "community",
+    title: "Community Guidelines & Terms",
+    component: CommunityGuidelines,
+  },
+];
 const TermsPolicyModal = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const searchParams = useSearchParams(); // Use useSearchParams
   const id = searchParams.get("id"); // Get the "id" query parameter/ Extract the query parameter
   
 
-  const termsData = [
-    {
-      id: "terms",
-      title: "Terms and Conditions",
-      component: TermsAndConditions,
-    },
-    {
-      id: "career",
-      title: "Career Bootcamp Terms and Conditions",
-      component: CareerBootcampTerms,
-    },
-    {
-      id: "accessibility",
-      title: "Accessibility Policy",
-      component: AccessibilityPolicy,
-    },
-    {
-      id: "privacy",
-      title: "Privacy Policy",
-      component: PrivacyPolicy,
-    },
-    {
-      id: "refund",
-      title: "Refund Policy",
-      component: RefundPolicy,
-    },
-    {
-      id: "community",
-      title: "Community Guidelines & Terms",
-      component: CommunityGuidelines,
-    },
-  ];
 
   useEffect(() => {
     // Find the index of the section to highlight based on the id
