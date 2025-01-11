@@ -59,7 +59,7 @@ const CareerCard: React.FC<CareerCardProps> = ({
       {/* Name */}
       <h2 className="mt-4 text-lg font-semibold text-gray-900">{name}</h2>
       {/* Roles */}
-   <div className="flex  justify-center">
+   <div className="flex  justify-center h-[180px]">
    <div className="mt-4 w-full space-y-4">
         {/* Previous Role */}
         <div className="flex items-center">

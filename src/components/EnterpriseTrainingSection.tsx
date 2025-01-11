@@ -34,7 +34,7 @@ const EnterpriseTrainingSection = () => {
       <div className="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-8 mx-auto">
         {/* Left Section */}
         <div className="text-center md:text-left space-y-6">
-          <h2 className="text-2xl md:text-4xl font-bold leading-tight glitter_text2">
+          <h2 className="text-2xl  md:text-2xl lg:text-3xl  lg:text-4xl font-bold leading-tight glitter_text2">
             Corporate Training & Team Building Initiatives
           </h2>
           <p className="text-sm md:text-lg text-gray-600">

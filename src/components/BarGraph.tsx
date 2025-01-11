@@ -165,7 +165,7 @@ const BarGraph: React.FC = () => {
 
   return (
     <div className="mx-auto w-full lg:w-4/5 px-2 my-20 text-center">
-      <h3 className="text-2xl md:text-3xl font-bold text-center mb-6 font-bold text-center relative element inline-block mx-auto after:bottom-N20">IT Industry Trends (2020-2024)</h3>
+      <h3 className="text-xl md:text-2xl font-bold text-center mb-6 font-bold text-center relative element inline-block mx-auto after:bottom-N20">IT Industry Trends (2020-2024)</h3>
       <div className="flex flex-col lg:flex-row lg:items-center gap-4 mt-5">
         {/* Left Options */}
         <div className="flex lg:flex-col flex-wrap gap-4 justify-center items-center lg:items-start mb-6 lg:mb-0">

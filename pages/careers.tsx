@@ -173,7 +173,7 @@ const Careers = () => {
 
           </h1> */}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch px-6 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch px-6 py-12">
 
             {/* Image Section */}
             <div className="flex justify-center h-full">
@@ -182,7 +182,7 @@ const Careers = () => {
                 width={500}
                 height={200}
                 alt="Team working"
-                className=" h-full object-cover"
+                className="h-full object-cover"
               />
             </div>
 
@@ -268,7 +268,7 @@ const Careers = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Card 1 */}
             <div className="bg-white shadow-lg rounded-lg p-8 transform transition-transform duration-300 hover:scale-105">
-              <div className="flex flex-col md:flex-row  items-center gap-8">
+              <div className="flex flex-col lg:flex-row  items-center gap-8">
               <Image
                   src="/assets/images/own_Career.png"
                   alt="Career Icon"

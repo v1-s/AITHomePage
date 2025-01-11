@@ -70,7 +70,7 @@ const StatsSection: React.FC = () => {
 
   return (
     <div className="container mx-auto pb-5 text-center my-10 p-3" id="stats-section">
-      <h1 className="stat-heading text-center text-2xl md:text-3xl font-bold my-8 mb-10 leading-snug inline-block element relative after:bottom-N20 mx-auto">
+      <h1 className="stat-heading text-center text-xl md:text-2xl lg:text-3xl font-bold my-8 mb-10 leading-snug inline-block element relative after:bottom-N20 mx-auto">
         Achieve success with industry-driven learning
       </h1>
       <div

@@ -45,10 +45,10 @@ const GetInTouch = () => {
         {/* Background */}
         <div className="absolute bg-black inset-0 z-0 opacity-50 bg-cover bg-center bg-no-repeat"></div>
 
-        <div className="relative z-10 max-w-7xl flex flex-col md:flex-row items-center justify-between h-[75vh]">
+        <div className="relative z-10 max-w-7xl flex flex-col md:flex-row items-center justify-between lg:h-[75vh]">
           {/* Left Column: Heading */}
           <div className="md:w-1/2 text-center md:text-left py-12 md:py-0">
-            <h1 className="text-xl md:text-4xl font-bold text-white glitter_text uppercase">Connect with Us</h1>
+            <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-white glitter_text uppercase">Connect with Us</h1>
             <p className="mt-4 text-md md:text-xl text-slate-100">
               We are excited to demonstrate our unwavering dedication to excellence in education.
             </p>
@@ -69,7 +69,7 @@ const GetInTouch = () => {
       </section>
 
       {/* Contact Info Card */}
-      <div className="shadow-glassShadow bg-white text-gray-800 rounded-lg mx-auto max-w-md p-4 flex flex-col md:flex-row items-center justify-between relative -mt-20 z-20">
+      <div className="shadow-glassShadow bg-white text-gray-800 rounded-lg mx-auto max-w-md p-4 flex flex-col md:flex-row items-center justify-between relative md:-mt-10 lg:-mt-20 z-20">
         {/* Icon */}
         <div className="flex-shrink-0">
           <div className="w-16 h-16 rounded-full flex items-center justify-center">
@@ -85,7 +85,7 @@ const GetInTouch = () => {
         </div>
 
         {/* Contact Details */}
-        <div className="mt-12 md:mt-0 text-center md:text-left">
+        <div className="md:mt-0 text-center md:text-left">
           <p className="font-semibold text-cyan-950 text-md ">
             ACHIEVERSIT STUDENTS, NEED ASSISTANCE?
           </p>

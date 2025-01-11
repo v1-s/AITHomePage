@@ -94,7 +94,7 @@ const StatCard = ({
 
   return (
     <div className="w-1/2 sm:w-auto text-center p-4">
-      <h3 className="text-xl md:text-4xl font-bold glitter_text mb-2">
+      <h3 className="text-xl md:text-3xl lg:text-4xl font-bold glitter_text mb-2">
         {count >= value ? displayValue : formatNumber(count)}
       </h3>
       <p className="text-white text-md md:text-xl uppercase font-bold">{label}</p>

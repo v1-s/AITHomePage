@@ -68,70 +68,77 @@ const AboutUsSection = () => {
   };
 
   return (
-    <section className="py-12">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-6">
-        {/* Left Content */}
-        <div>
-        <span className="text-mainblue font-semibold  text-sm md:text-sm uppercase mb-2">
-            LET&apos;S CONNECT
-          </span>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-4">
-            AchieversIT
-          </h1>
-          <p className="text-sm md:text-lg text-gray-700 mb-6">
-            AchieversIT stands as India&apos;s Foremost and Most Esteemed Software Training Institution. We offer unparalleled and globally esteemed software education and professional development programs tailored for aspiring learners.
-          </p>
-          <div className="flex items-center mb-6">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, idx) => (
-                <svg
-                  key={idx}
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-green-500"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-              ))}
-            </div>
-            <span className="text-gray-700 font-semibold ml-2  text-sm  md:text-base ">
-              4.9 out of 5 based on 20,839 Reviews
-            </span>
-          </div>
-          <div className="flex  flex-col md:flex-row  md:space-x-4 gap-4">
-            <button className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10" onClick={scrollToFeaturedAlumini}>
-              <span className="text-sm md:text-md"> Meet Our Team</span>
-            </button>
-            <button className="btn-hover-bg-transition btn-hover-bg-transition-og px-14 text-black border border-gray-500 px-10" onClick={() => toggleForm("advisorForm")}>
-              <span className="text-sm md:text-md">Join AchieversIT</span>
-            </button>
-            {activeForm ==="advisorForm" && (
-              <DwnldAdvisorModalForm
-                imageSrc="/assets/images/advisor.png"
-                key={modalKey}
-                formName="blog/enroll"
-                title="Achieve Your Career Goals with AchieversIT"
-                text="Provide your information below to get Kick-start your journey toward a bright future."
-                closeModal={handleModalClose}
-                modalclassname="md:max-w-4xl text-black"
-                downloadPdf={false}
-              />
-            )}
-          </div>
-        </div>
+    <section className="lg:py-12">
+    <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-6">
+  {/* Right Content (Image Section) */}
+  <div className="relative flex justify-center items-center order-1 lg:order-2 mt-8 lg:mt-0">
+    <Image
+      src="/assets/images/abtus4.png"
+      alt="Trainer"
+      className="w-full z-10"
+      width={500}
+      height={200}
+    />
+  </div>
 
-        {/* Right Content */}
-        <div className="relative flex justify-center items-center mt-8 lg:mt-0">
-          <Image
-            src="/assets/images/abtus4.png"
-            alt="Trainer"
-            className="w-full z-10"
-            width={200}
-            height={200}
-          />
-        </div>
+  {/* Left Content */}
+  <div className="order-2 lg:order-1">
+    <span className="text-mainblue font-semibold text-sm md:text-sm uppercase mb-2">
+      LET&apos;S CONNECT
+    </span>
+    <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-4">
+      AchieversIT
+    </h1>
+    <p className="text-sm md:text-md lg:text-lg text-gray-700 mb-6">
+      AchieversIT stands as India&apos;s Foremost and Most Esteemed Software Training Institution. We offer unparalleled and globally esteemed software education and professional development programs tailored for aspiring learners.
+    </p>
+    <div className="flex items-center mb-6">
+      <div className="flex items-center">
+        {[...Array(5)].map((_, idx) => (
+          <svg
+            key={idx}
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-green-500"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          </svg>
+        ))}
       </div>
+      <span className="text-gray-700 font-semibold ml-2 text-sm md:text-base">
+        4.9 out of 5 based on 20,839 Reviews
+      </span>
+    </div>
+    <div className="flex flex-col md:flex-row md:space-x-4 gap-4">
+      <button
+        className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10"
+        onClick={scrollToFeaturedAlumini}
+      >
+        <span className="text-sm md:text-md"> Meet Our Team</span>
+      </button>
+      <button
+        className="btn-hover-bg-transition btn-hover-bg-transition-og px-14 text-black border border-gray-500 px-10"
+        onClick={() => toggleForm("advisorForm")}
+      >
+        <span className="text-sm md:text-md">Join AchieversIT</span>
+      </button>
+      {activeForm === "advisorForm" && (
+        <DwnldAdvisorModalForm
+          imageSrc="/assets/images/advisor.png"
+          key={modalKey}
+          formName="blog/enroll"
+          title="Achieve Your Career Goals with AchieversIT"
+          text="Provide your information below to get Kick-start your journey toward a bright future."
+          closeModal={handleModalClose}
+          modalclassname="md:max-w-4xl text-black"
+          downloadPdf={false}
+        />
+      )}
+    </div>
+  </div>
+</div>
+
 
       {/* Why AIT Section */}
       <div className="bg-white py-12">
@@ -142,7 +149,7 @@ const AboutUsSection = () => {
           <p className="text-sm md:text-md text-gray-600 mt-4">
             AchieversIT is the premier destination in India for outstanding training and career enhancement.
           </p>
-          <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mx-auto mt-8">
+          <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mx-4 lg:mx-auto mt-8">
             {[
               {
                 title: "Experienced Expert Instructors",

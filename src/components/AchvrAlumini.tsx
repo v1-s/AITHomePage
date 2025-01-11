@@ -43,13 +43,48 @@ const alumni = [
     image: "/assets/images/review-pic-2.jpg", // Replace with your image path
     logoimg: "/assets/images/companylogo/Cisco.webp",
   },
-  { name: "Suruchi Singh", company: "Publicis Sapient", image: "/assets/images/review-pic-2.jpg", logoimg: "/assets/images/companylogo/Cisco.webp" },
-  { name: "Dummy Alumni 1", company: "Company A", image: "/assets/images/review-pic-2.jpg", logoimg: "/assets/images/companylogo/Cisco.webp" },
-  { name: "Dummy Alumni 2", company: "Company B", image: "/assets/images/review-pic-2.jpg", logoimg: "/assets/images/companylogo/Cisco.webp" },
-  { name: "Dummy Alumni 3", company: "Company C", image: "/assets/images/review-pic-2.jpg", logoimg: "/assets/images/companylogo/Cisco.webp" },
-  { name: "Dummy Alumni 4", company: "Company D", image: "/assets/images/review-pic-2.jpg", logoimg: "/assets/images/companylogo/Cisco.webp" },
-  { name: "Dummy Alumni 5", company: "Company E", image: "/assets/images/review-pic-2.jpg", logoimg: "/assets/images/companylogo/Cisco.webp" },
-  { name: "Dummy Alumni 6", company: "Company F", image: "/assets/images/review-pic-2.jpg", logoimg: "/assets/images/companylogo/Cisco.webp" },
+  {
+    name: "Suruchi Singh",
+    company: "Publicis Sapient",
+    image: "/assets/images/review-pic-2.jpg",
+    logoimg: "/assets/images/companylogo/Cisco.webp",
+  },
+  {
+    name: "Dummy Alumni 1",
+    company: "Company A",
+    image: "/assets/images/review-pic-2.jpg",
+    logoimg: "/assets/images/companylogo/Cisco.webp",
+  },
+  {
+    name: "Dummy Alumni 2",
+    company: "Company B",
+    image: "/assets/images/review-pic-2.jpg",
+    logoimg: "/assets/images/companylogo/Cisco.webp",
+  },
+  {
+    name: "Dummy Alumni 3",
+    company: "Company C",
+    image: "/assets/images/review-pic-2.jpg",
+    logoimg: "/assets/images/companylogo/Cisco.webp",
+  },
+  {
+    name: "Dummy Alumni 4",
+    company: "Company D",
+    image: "/assets/images/review-pic-2.jpg",
+    logoimg: "/assets/images/companylogo/Cisco.webp",
+  },
+  {
+    name: "Dummy Alumni 5",
+    company: "Company E",
+    image: "/assets/images/review-pic-2.jpg",
+    logoimg: "/assets/images/companylogo/Cisco.webp",
+  },
+  {
+    name: "Dummy Alumni 6",
+    company: "Company F",
+    image: "/assets/images/review-pic-2.jpg",
+    logoimg: "/assets/images/companylogo/Cisco.webp",
+  },
   {
     name: "Akshhat Srivastava",
     company: "Google",
@@ -159,7 +194,6 @@ const alumni = [
     logoimg: "/assets/images/companylogo/Cisco.webp",
   },
 ];
-
 
 export const borderColorClasses = [
   "border-maincolor_1",
@@ -173,7 +207,7 @@ export const borderColorClasses = [
   "border-orange-500",
   "border-gray-500",
 ];
-const fallbackImage = "/assets/images/banner-img2.png"; 
+const fallbackImage = "/assets/images/banner-img2.png";
 /**
  * AlumniSection component displays a list of alumni with their details.
  * It includes functionality to load more alumni profiles on button click.
@@ -198,66 +232,73 @@ const AlumniSection: React.FC = () => {
         loading="lazy"
         width={300}
         height={200}
-        onError={handleError} 
+        onError={handleError}
       />
     );
   };
-    
+
   return (
     <div className="py-12 bg-gray-50">
       <h2 className="text-xl md:text-3xl font-bold text-center mb-12 elementl pb-2  relative glitter_text w-3/4  mx-auto">
         Meet Our Alumni
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-24 md:w-3/4 mx-auto py-12 justify-center">
-        {alumni.slice(0, visibleCount).map((alum, index) => {
-          const colorClass = borderColorClasses[index % borderColorClasses.length]; // Assign a color class to each alumni card
-          return (
-              <div
-              key={index}
-              className={`relative bg-white shadow-card md:h-35 mx-4 flex-shrink-0 w-64 md:w-80 p-2 rounded-lg border-b-8 ${colorClass} relative overflow-visible`}
-            >
-              {/* Image Section */}
-              <div
-  className={`absolute left-1/2 transform -translate-x-1/2 -top-10 md:-top-14 w-16 md:w-24 h-16 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-white border-4 ${colorClass} z-10`}
->
-  <ImageComponent imagePath={alum.image} />
-</div>
+      <div className="flex justify-center items-center min-h-screen">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-24 w-full md:w-3/4  py-12">
+    {alumni.slice(0, visibleCount).map((alum, index) => {
+      const colorClass =
+        borderColorClasses[index % borderColorClasses.length]; // Assign a color class to each alumni card
+      return (
+        <div
+          key={index}
+          className={`relative bg-white shadow-card md:h-35 mx-4 flex-shrink-0 w-64 lg:w-80 p-2 rounded-lg border-b-8 ${colorClass} relative overflow-visible`}
+        >
+          {/* Image Section */}
+          <div
+            className={`absolute left-1/2 transform -translate-x-1/2 -top-10 md:-top-14 w-16 md:w-24 h-16 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-white border-4 ${colorClass} z-10`}
+          >
+            <ImageComponent imagePath={alum.image} />
+          </div>
 
+          <div className="text-center mt-10">
+            <p className="text-gray-600 italic break-words text-pretty text-center text-sm md:text-base">
+              {alum.name}
+            </p>
+            <div className="flex justify-center items-center gap-3">
+              <h3 className="font-bold text-base my-4 text-gray-800">
+                {alum.name}
+              </h3>
 
-              <div className="text-center mt-10">
-                <p className="text-gray-600 italic break-words text-pretty text-center text-sm md:text-base">
-                  {alum.name}
-                </p>
-                <div className="flex justify-center items-center gap-3">
-                  <h3 className="font-bold text-base my-4 text-gray-800">
-                    {alum.name}
-                  </h3>
-
-                  <a
-                    href={`https://www.linkedin.com/in/${alum.name}`}
-                    className="inline-block text-mainBlue cursor-pointer"
-                    aria-label={`LinkedIn profile of ${alum.name}`}
-                  >
-                    <FontAwesomeIcon icon={faLinkedin} className="text-2xl md:text-3xl" />
-                  </a>
-                </div>
-
-                <p className="text-blue-500 font-medium text-sm md:text-base">{alum.company}</p>
-              </div>
-              <div className="flex justify-center my-4">
-  {[...Array(5)].map((_, index) => (
-    <FontAwesomeIcon
-      key={index}
-      icon={faStar}
-      className="text-yellow-400 text-lg mx-1"
-    />
-  ))}
-</div>
-
+              <a
+                href={`https://www.linkedin.com/in/${alum.name}`}
+                className="inline-block text-mainBlue cursor-pointer"
+                aria-label={`LinkedIn profile of ${alum.name}`}
+              >
+                <FontAwesomeIcon
+                  icon={faLinkedin}
+                  className="text-2xl md:text-3xl"
+                />
+              </a>
             </div>
-          );
-        })}
-      </div>
+
+            <p className="text-blue-500 font-medium text-sm md:text-base">
+              {alum.company}
+            </p>
+          </div>
+          <div className="flex justify-center my-4">
+            {[...Array(5)].map((_, index) => (
+              <FontAwesomeIcon
+                key={index}
+                icon={faStar}
+                className="text-yellow-400 text-lg mx-1"
+              />
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
 
       {visibleCount < alumni.length && (
         <div className="flex justify-center mt-8">
