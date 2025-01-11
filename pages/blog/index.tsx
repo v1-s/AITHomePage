@@ -50,7 +50,7 @@ const BlogPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true); // State for loading status
   const [modalKey, setModalKey] = useState(0); // Key to force re-render
-  const [activeModal, setActiveModal] = useState<string | null>(null); 
+
   // Fetch blog details from the API
   useEffect(() => {
     const fetchBlogDetails = async () => {
@@ -81,13 +81,11 @@ const BlogPage = () => {
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(selectedCategory === category ? null : category);
   };
-  const openModal = (modalType: string) => {
+  const openModal = () => {
     setModalKey((prevKey) => prevKey + 1); // Increment key for re-render
-    setActiveModal(modalType); // Set the active modal
+   
   };
-  const closeModal = () => {
-    setActiveModal(null); // Close any active modal
-  };
+
   // Handle 'Read More' click to select the blog
   const handleReadMoreClick = (blog: Blog) => {
     setSelectedBlog(blog);
@@ -108,11 +106,14 @@ const BlogPage = () => {
   
           </>
         }
-        onEnrollClick={() => openModal("advisor")} // Open advisor modal
+       
+        onEnrollClick={openModal} 
+        key={modalKey}// Open advisor modal
         modalTitle="Read Our Latest Blogs:Stay Updated with Insights and Trends"
         modalText="Share your interests, and our team  will help you connect with the right insights and trends effortlessly."
         modalform="blog/enroll"
       />
+ 
         
           <div className="grid md:grid lg:grid-cols-4 gap-6 m-4 md:mx-45  lg:mx-20 h-full">
             {/* Right Section: Carousel */}

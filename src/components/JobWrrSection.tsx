@@ -1,10 +1,16 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
+type TrendCourse = {
+  course_name: string;
+  courseShortDesc: string;
+  course_url: string;
+};
 
 function WorriedSection() {
   const [currentActiveIndex, setCurrentActiveIndex] = useState(0);
   const [isSmallMediumScreen, setIsSmallMediumScreen] = useState(false);
-  const [trendCourses, setTrendCourses] = useState<any[]>([]);
+  const [trendCourses, setTrendCourses] = useState<TrendCourse[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [visibleOptions, setVisibleOptions] = useState<

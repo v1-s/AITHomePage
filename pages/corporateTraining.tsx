@@ -12,12 +12,8 @@ import ClientSlider from "@/components/ClientSlider";
 import TrainingAdvisorForm from "@/components/MentorForm";
 
 
-interface CorporateTrainingProps {
-  title: string;
-  description: string;
-}
 
-const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, description }) => {
+const CorporateTraining: React.FC = () => {
   const [activeForm, setActiveForm] = useState<string | null>(null); // Track active form
   const [modalKey, setModalKey] = useState<number>(0); // Unique key to force re-render
 
@@ -75,13 +71,13 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
         "We employ diverse methods such as workshops, interactive e-learning sessions, and on-the-job coaching to deliver engaging and effective training. These approaches ensure employees apply newly acquired skills directly in their roles.",
     },
   ];
-  function closeMenu(): void {
-    // Implementation to close the menu
-    const menu = document.querySelector('.menuclassName');
-    if (menu) {
-      menu.classList.remove('open');
-    }
-  }
+  // function closeMenu(): void {
+  //   // Implementation to close the menu
+  //   const menu = document.querySelector('.menuclassName');
+  //   if (menu) {
+  //     menu.classList.remove('open');
+  //   }
+  // }
 
   return (
     <>

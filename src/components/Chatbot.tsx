@@ -13,7 +13,7 @@ const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false); // Toggle visibility
-  const [isInactive, setIsInactive] = useState<boolean>(false); // Track inactivity
+
   const [isBottom, setIsBottom] = useState<boolean>(true);
   // Function to toggle chatbox and reset messages
   const toggleChatbox = (visible: boolean) => {
@@ -52,15 +52,14 @@ const Chatbot: React.FC = () => {
 
   // Monitor user inactivity
   useEffect(() => {
-    const handleActivity = () => setIsInactive(false); // Reset inactivity when user interacts
     const inactivityTimer = setTimeout(() => {
       if (!isVisible) {
-        // Reset messages and show the inactivity message
         toggleChatbox(true);
         const inactiveMessage: Message = { sender: "bot", text: "Need any help? I'm here!" };
         setMessages([inactiveMessage]);
       }
-    }, 15000); // 15 seconds of inactivity
+    }, 15000);
+    const handleActivity = () => clearTimeout(inactivityTimer);
 
     // Add event listeners for user activity
     window.addEventListener("mousemove", handleActivity);

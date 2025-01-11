@@ -54,7 +54,6 @@ const CourseDetails: React.FC = () => {
   const course_url = params?.course_url || '';
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [courseSkills, setCourseSkills] = useState<string[]>([]);
   const [faqData, setFaqData] = useState<FAQ[]>([]);
   const [activeForm, setActiveForm] = useState<string | null>(null); // Track active form

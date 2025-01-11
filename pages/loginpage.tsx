@@ -49,6 +49,8 @@ export default function LoginPage() {
                 placeholder="Enter your email or phone number"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
               />
+          
+            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
             {/* <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">

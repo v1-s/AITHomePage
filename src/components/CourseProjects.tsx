@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faBriefcase, faCode, faHome, IconDefinition,faSync,faTimes } from "@fortawesome/free-solid-svg-icons";
 // Define Project type
@@ -69,7 +69,7 @@ const ProjectCards = () => {
   ];
   const [showModal, setShowModal] = useState(false);
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
-  const [currentStageIndex, setCurrentStageIndex] = useState(0);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", captcha: "" });
   const [errors, setErrors] = useState({ name: "", email: "", phone: "", captcha: "" });
   const [captcha, setCaptcha] = useState<string>("");
@@ -173,24 +173,23 @@ const ProjectCards = () => {
   const openModal = (project: Project) => {
     setCurrentProject(project);
     setShowModal(true);
-    setCurrentStageIndex(0);
     setAutoSlide(true);
   };
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [autoSlide, setAutoSlide] = useState(true);
+  const handleNextSlide = useCallback(() => {
+    setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % projects.length);
+  }, [projects.length]);
+  const handlePrevSlide = () => {
+    setCurrentSlideIndex((prevIndex) => (prevIndex - 1 + projects.length) % projects.length);
+  };
   useEffect(() => {
     if (!autoSlide) return;
     const timer = setInterval(() => {
       handleNextSlide();
     }, 5000); // Auto-slide every 5 seconds
     return () => clearInterval(timer);
-  }, [currentSlideIndex, autoSlide]);
-  const handleNextSlide = () => {
-    setCurrentSlideIndex((prevIndex) => (prevIndex + 1) % projects.length);
-  };
-  const handlePrevSlide = () => {
-    setCurrentSlideIndex((prevIndex) => (prevIndex - 1 + projects.length) % projects.length);
-  };
+  }, [handleNextSlide, autoSlide]);
+
   const handleMouseEnter = () => {
     setAutoSlide(false); // Pause on hover
   };

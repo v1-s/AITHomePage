@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+
 
 const StatsCounterComponent = dynamic(() => import("@/components/StatsCounterComponent"), { ssr: false });
 const StaticHeroComponent = dynamic(() => import("@/components/StaticHeroComponent"), { ssr: false });
@@ -17,7 +17,6 @@ const SliderTestimonial = dynamic(() => import("@/components/ResponsiveHire"), {
 const DwnldAdvisorModalForm = dynamic(() => import("./forms/advisorfrm"), { ssr: false });
 
 const HireFromUs = () => {
-  const router = useRouter();
   const [modalKey, setModalKey] = useState(0); // Key to force re-render
   const [activeModal, setActiveModal] = useState<string | null>(null); // Manage active modal state
 
@@ -31,9 +30,9 @@ const HireFromUs = () => {
     setActiveModal(null); // Close any active modal
   };
 
-  const handleAboutUS = () => {
-    router.push("/AboutUsSection");
-  };
+  // const handleAboutUS = () => {
+  //   router.push("/AboutUsSection");
+  // };
 
   return (
     <>

@@ -27,15 +27,14 @@ const JobListingPage = () => {
   const [loading, setLoading] = useState(false);
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(dummyJobs); // State for filtered jobs
   const [modalKey, setModalKey] = useState(0); // Key to force re-render
-  const [activeModal, setActiveModal] = useState<string | null>(null); // Manage active modal state
   // Handlers to open specific modals
-  const openModal = (modalType: string) => {
+  const openModal = () => {
     setModalKey((prevKey) => prevKey + 1); // Increment key for re-render
-    setActiveModal(modalType); // Set the active modal
+  
   };
-  const closeModal = () => {
-    setActiveModal(null); // Close any active modal
-  };
+  // const closeModal = () => {
+  //   setActiveModal(null); // Close any active modal
+  // };
 
 
   // Search filter states
@@ -84,7 +83,8 @@ const JobListingPage = () => {
             Build Your Dream with  <span className="glitter_text text-mainblue">Expert Talent</span>
           </>
         }
-        onEnrollClick={() => openModal("advisor")} // Open advisor modal
+        onEnrollClick={ openModal} // Open advisor modal
+        key={modalKey}
         modalTitle="Unlock Expert Talent with AchieversIT"
         modalText="Share your details so we can match your requirements and reach out to you in the future"
         modalform="currentopenings/enroll"

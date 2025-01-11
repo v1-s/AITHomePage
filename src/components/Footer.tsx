@@ -5,7 +5,6 @@ import Image from "next/image";
 import { footerData } from "../utils/mockfooterdata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation";
 import {
   faFacebookF,
   faInstagram,
@@ -29,7 +28,6 @@ const Footer = () => {
   const [error, setError] = useState<string>(""); // Error message
   const [loading, setLoading] = useState<boolean>(false); // Loading state
   const [buttonState, setButtonState] = useState<"submit" | "login">("submit"); // Dynamic button state
-  const router = useRouter();
 
   useEffect(() => {
     generateCaptcha(); // Generate CAPTCHA when the component mounts
@@ -45,10 +43,10 @@ const Footer = () => {
     return phoneRegex.test(phone);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
-    setButtonState("submit");
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPhone(e.target.value);
+  //   setButtonState("submit");
+  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
