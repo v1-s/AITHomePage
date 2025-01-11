@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Layout>
       <Component {...pageProps} />
-      {/* <Chatbot/> */}
+      <Chatbot/>
     </Layout>
   );
 }
