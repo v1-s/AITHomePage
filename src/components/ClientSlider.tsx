@@ -34,7 +34,7 @@ const ClientSlider = () => {
 
   return (
     <div className="my-12">
-      <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-4 glitter_text text-center elementl relative pb-3 mb-10">Recruitment Ecosystem Partners</h2>
+      <h2 className="text-xl md:text-2xl  lg:text-3xl font-bold text-gray-800 mb-4 glitter_text text-center elementl relative pb-3 mb-10">Recruitment Ecosystem Partners</h2>
       <div className="w-full flex justify-center mt-8">
         <ReusableSlider data={logos} interval={2000} renderItem={renderLogo} />
       </div>

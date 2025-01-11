@@ -56,13 +56,13 @@ const ScrollSections: React.FC = () => {
   return (
     <div className="w-full md:w-4/5 mx-auto ">
       <div className="z-10 p-4 text-center relative">
-        <h1 className="text-2xl md:text-3xl text-maincolor_1 font-bold glitter_text inline-block elementl relative after:bottom-N20">
+        <h1 className="text-2xl  md:text-2xl lg:text-3xl text-maincolor_1 font-bold glitter_text inline-block elementl relative after:bottom-N20">
           Experience the AchieversIT Advantage
         </h1>
 
       </div>
 
-      <div className="relative h-[500px] md:h-[500px] my-14">
+      <div className="relative h-[500px] md:h-[500px]">
         {phases.map((phase, idx) => (
           <div
             key={phase.id}
@@ -70,9 +70,16 @@ const ScrollSections: React.FC = () => {
               }`}
           >
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 px-4 overflow-hidden">
-              <div className={`w-full lg:w-1/2 ${idx === currentSlide ? "animate-fade-in-left" : ""}`}>
-                <ImageComponent imagePath={phase.image} />
-              </div>
+             <div 
+    className={`w-full lg:w-1/2 ${
+      idx === currentSlide ? "animate-fade-in-left" : ""
+    }`}
+  >
+    <ImageComponent 
+      imagePath={phase.image} 
+    
+    />
+  </div>
               <div className={`w-full lg:w-1/2 ${idx === currentSlide ? "animate-fade-in-right" : ""}`}>
                 <p className="text-base md:text-2xl text-darkBlue mb-4 text-left text-wrap">{phase.title}</p>
                 <p className="text-justify text-wrap text-sm md:text-base">{phase.description}</p>
@@ -135,7 +142,7 @@ const ImageComponent = ({ imagePath }: { imagePath: string }) => {
       src={imagePath.startsWith("/") ? imagePath : `/${imagePath}`}
       alt="Slide"
       loading="lazy"
-      className="w-full h-auto object-contain"
+        className="w-full h-64  lg:h-auto object-cover"
     />
   );
 };

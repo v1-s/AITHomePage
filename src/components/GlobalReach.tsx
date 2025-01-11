@@ -65,9 +65,9 @@ const Global = () => {
             </div>
 
             {/* Statistics */}
-            <div className="flex flex-wrap justify-center lg:justify-between w-full my-8">
+            <div className="flex flex-wrap justify-center md:justify-evenly w-full my-8 lg:justify-between items-center">
               {/* Statistic 1 */}
-              <div className="flex flex-col items-center text-center space-y-2 mb-6 md:mb-0 w-full md:w-auto">
+              <div className="flex flex-col items-center md:items-start  lg:items-center justify-center space-y-2 mb-6 md:mb-0 w-full md:w-auto">
                 <div className="bg-maincolor_1 rounded-full p-4 w-16 h-16 text-center">
                   <FontAwesomeIcon icon={faAward} className="text-3xl text-white" />
                 </div>
@@ -77,13 +77,14 @@ const Global = () => {
                 >
                   0+
                 </h4>
-                <p className="text-sm md:text-lg text-gray-700 font-semibold">
-                  Professionals Trained
-                </p>
+                <p className="text-sm md:text-lg text-gray-700 font-semibold text-wrap md:max-w-[4rem] lg:max-w-full">
+  Professionals Trained
+</p>
+
               </div>
 
               {/* Statistic 2 */}
-              <div className="flex flex-col items-center text-center space-y-2 mb-6 md:mb-0 w-full md:w-auto">
+              <div className="flex flex-col items-center md:items-start  lg:items-center space-y-2 mb-6 md:mb-0 w-full md:w-auto">
                 <div className="bg-green-600 rounded-full p-4 w-16 h-16 text-center">
                   <FontAwesomeIcon icon={faGlobe} className="text-3xl text-white" />
                 </div>
@@ -93,13 +94,13 @@ const Global = () => {
                 >
                   0+
                 </h4>
-                <p className="text-sm md:text-lg text-gray-700 font-semibold">
+                <p className="text-sm md:text-lg text-gray-700 font-semibold text-wrap md:max-w-[4rem] lg:max-w-full">
                   Enterprise Clients
                 </p>
               </div>
 
               {/* Statistic 3 */}
-              <div className="flex flex-col items-center text-center space-y-2 mb-6 md:mb-0 w-full md:w-auto">
+              <div className="flex flex-col items-center md:items-start  lg:items-center  space-y-2 mb-6 md:mb-0 w-full md:w-auto">
                 <div className="bg-purple-600 rounded-full p-4 w-16 h-16 text-center">
                   <FontAwesomeIcon icon={faGem} className="text-3xl text-white" />
                 </div>
@@ -109,13 +110,13 @@ const Global = () => {
                 >
                   0+
                 </h4>
-                <p className="text-sm md:text-lg text-gray-700 font-semibold">
+                <p className="text-sm md:text-lg text-gray-700 font-semibold text-wrap md:max-w-[4rem] lg:max-w-full">
                   Countries and Counting
                 </p>
               </div>
 
               {/* Statistic 4 */}
-              <div className="flex flex-col items-center text-center space-y-2 mb-6 md:mb-0 w-full md:w-auto">
+              <div className="flex flex-col items-center md:items-start  lg:items-center space-y-2 mb-6 md:mb-0 w-full md:w-auto">
                 <div className="bg-blue-600 rounded-full p-4 w-16 h-16 text-center">
                   <FontAwesomeIcon icon={faUsers} className="text-3xl text-white" />
                 </div>
@@ -125,7 +126,7 @@ const Global = () => {
                 >
                   0+
                 </h4>
-                <p className="text-sm md:text-lg text-gray-700 font-semibold">
+                <p className="text-sm md:text-lg text-gray-700 font-semibold text-wrap md:max-w-[4rem] lg:max-w-full">
                   Active Users
                 </p>
               </div>

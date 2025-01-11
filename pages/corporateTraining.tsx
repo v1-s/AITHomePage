@@ -151,7 +151,7 @@ const CorporateTraining: React.FC<CorporateTrainingProps> = ({ title, descriptio
 
                 <span className="text-gray-600 hidden sm:block mx-3">or</span>
                 <button
-                  className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10"
+                  className="btn-solid-bg-transition btn-solid-bg-transition-orange lg:px-10"
                   onClick={() => toggleForm("brochureForm")}
                 >
                   <span className="text-sm md:text-md"> Start 14-Day Free Trial</span>

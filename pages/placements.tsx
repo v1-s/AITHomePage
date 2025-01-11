@@ -40,10 +40,10 @@ const PlacementPage = () => {
     <>
       <section className="bg-gradient-to-b from-blue-50 via-white to-white py-12">
         {/* Container */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col-reverse lg:flex-row items-center justify-between order:2 lg:order:1">
           {/* Left Content */}
-          <div className="md:w-1/2 text-center md:text-left">
-            <h1 className="text-2xl md:text-4xl font-bold text-gray-800 leading-tight">
+          <div className="lg:w-1/2 text-center md:text-left">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 leading-tight">
               Empower Your Future <br />
               <span className="text-mainblue glitter_text">
                 with AchieversIT
@@ -102,19 +102,19 @@ const PlacementPage = () => {
       
 
         {/* Right Illustration */}
-        <div className="md:w-1/2 mt-8 md:mt-0 flex justify-center md:justify-end">
+        <div className="lg:w-1/2 mt-8 md:mt-0 flex justify-center  order-1 lg:order-2">
           <Image
             src="/assets/images/placementsbg3.png" // Replace with your actual image path
             alt="Student Illustration"
-            className="w-64 lg:w-full"
-            width={200}
+            className="w-64  md:w-full"
+            width={500}
             height={300}
           />
         </div>
         </div>
         {/* Stats Section */}
         <div className="flex items-center justify-center py-16"></div>
-        <div className="max-w-4xl grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mx-auto">
+        <div className="lg:max-w-4xl grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:mx-auto md:mx-24">
           {[
             {
               label: "Placement rates over the years.",

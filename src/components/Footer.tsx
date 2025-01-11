@@ -5,6 +5,7 @@ import Image from "next/image";
 import { footerData } from "../utils/mockfooterdata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 import {
   faFacebookF,
   faInstagram,
@@ -27,81 +28,78 @@ const Footer = () => {
   const [captchaInput, setCaptchaInput] = useState<string>(""); // Holds the user-entered CAPTCHA
   const [error, setError] = useState<string>(""); // Error message
   const [loading, setLoading] = useState<boolean>(false); // Loading state
-  const [alreadySubmitted, setAlreadySubmitted] = useState<boolean>(false); // Tracks if the user already submitted
+  const [buttonState, setButtonState] = useState<"submit" | "login">("submit"); // Dynamic button state
+  const router = useRouter();
 
   useEffect(() => {
     generateCaptcha(); // Generate CAPTCHA when the component mounts
-
-    // Check if the phone number has already been submitted in sessionStorage
-    const submittedPhone = sessionStorage.getItem("submittedPhone");
-    if (submittedPhone) {
-      setAlreadySubmitted(true);
-    }
   }, []);
 
   const generateCaptcha = () => {
-    const newCaptcha = Math.random().toString(36).substring(2, 8).toUpperCase(); // Generate a random CAPTCHA
+    const newCaptcha = Math.random().toString(36).substring(2, 8).toUpperCase();
     setCaptcha(newCaptcha);
   };
 
   const validatePhone = (phone: string): boolean => {
-    const phoneRegex = /^\d{10}$/; // Ensures only valid 10-digit numbers
+    const phoneRegex = /^\d{10}$/;
     return phoneRegex.test(phone);
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+    setButtonState("submit");
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form submission
-  
-    if (alreadySubmitted) {
-      setError("Already submitted, please log in.");
-      return;
-    }
-  
+    e.preventDefault();
+
     if (!validatePhone(phone)) {
       setError("Please enter a valid 10-digit phone number.");
       return;
     }
-  
+
     if (captcha !== captchaInput) {
       setError("Invalid CAPTCHA. Please try again.");
-      generateCaptcha(); // Reset CAPTCHA on failure
+      generateCaptcha();
       return;
     }
-  
-    setError(""); // Clear any previous errors
-    setLoading(true); // Start loading state
-  
+
+    setError("");
+    setLoading(true);
+
     try {
       const response = await fetch("/api/submit-form", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          phone,
           payloadRequestCallBack: { phone, source: "Request CallBack Form" },
           payloadCaptureLeadRequest: { phone, source: "Lead Capture Form" },
         }),
       });
-  
+
+      const data = await response.json();
+
       if (response.ok) {
-        sessionStorage.setItem("submittedPhone", phone); // Save submitted phone to session storage
-        alert("Phone number submitted successfully!");
-        setPhone(""); // Clear inputs
-        setCaptchaInput("");
-        generateCaptcha();
-        setAlreadySubmitted(true); // Update submission state
+        if (data.exists) {
+          setButtonState("login");
+          alert("User already exists. Redirecting to login page...");
+        } else {
+          alert("Form submitted successfully!");
+          setPhone("");
+          setCaptchaInput("");
+          generateCaptcha();
+        }
       } else {
-        const errorResponse = await response.json();
-        setError(errorResponse.message || "Submission failed. Please try again.");
+        setError(data.message || "Submission failed. Please try again.");
       }
     } catch (error) {
       console.error("Error during submission:", error);
-      setError("An error occurred while submitting the phone number.");
+      setError("An error occurred while processing your request.");
     } finally {
-      setLoading(false); // End loading state
+      setLoading(false);
     }
   };
-  
-  
-
 
   return (
     <>
@@ -258,22 +256,18 @@ const Footer = () => {
     {/* Subscribe Button */}
     <div className="mt-4">
     <button
-                  type="submit"
-                  className={`w-full sm:w-auto rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-white hover:text-black ${
-                    alreadySubmitted ? "cursor-not-allowed opacity-50" : ""
-                  }`}
-                  disabled={loading || alreadySubmitted}
-                >
-                  {loading
-                    ? "Submitting..."
-                    : alreadySubmitted
-                    ? "Already Submitted"
-                    : "Subscribe"}
-                </button>
-  </div>
-  {/* Error Message */}
-  {error && <p className="mt-2 text-sm text-maincolor_1">{error}</p>}
-</form>
+              type="submit"
+              className={`w-full sm:w-auto rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase text-white transition ${
+                loading ? "opacity-50 cursor-not-allowed" : "hover:bg-white hover:text-black"
+              }`}
+              disabled={loading}
+            >
+              {buttonState === "submit" ? "Submit" : "Login"}
+            </button>
+          </div>
+          {error && <p className="mt-2 text-sm text-maincolor_1">{error}</p>}
+        </form>
+ 
             </div>
 
             {/* Company, Explore, Support Section */}

@@ -48,64 +48,65 @@ const MentorShip = () => {
 
       {/* Section 1 */}
       <section className="bg-gray-50 py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-            {/* Heading Section */}
-            <div className="text-center md:text-left">
-              <h1 className="text-xl md:text-4xl font-bold mb-4 text-gray-900">
-                <span className="text-xl md:text-2xl mb-5">
-                  Welcome to{" "}
-                  <span className="glitter_text">AchieversIT</span>
+        <div className="container mx-auto px-4 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+  {/* Heading Section */}
+  <div className="text-center md:text-left order-2 lg:order-1 justify-center">
+    <h1 className="text-xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900">
+      <span className="text-xl md:text-2xl mb-5">
+        Welcome to{" "}
+        <span className="glitter_text">AchieversIT</span>
+      </span>
+      <br />
+      Cultivate Future Minds as an Instructor
+      <br />
+    </h1>
+    <p className="text-gray-600 mb-6 text-sm md:text-base">
+      Join AchieversIT to share your wisdom, inspire learners globally,
+      and shape the future of tech education. Be part of a network devoted to
+      excellence and innovation.
+    </p>
+    <div className="flex justify-center md:justify-start mb-6">
+      <button
+        className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10 tracking-widest uppercase"
+        onClick={() => openModal("guideModal")}
+      >
+        <span className="text-sm md:text-md">Mentor and Motivate as a Guide</span>
+      </button>
+      {activeModal === "guideModal" && (
+        <DwnldAdvisorModalForm
+          title={
+            <>
+              <h2 className="uppercase text-center">
+                Ready to Inspire? <br />
+                <span className="glitter_text uppercase text-2xl">
+                  Connect With Us Now!!
                 </span>
-                <br />
-                Cultivate Future Minds as an Instructor
-                <br/>
-              </h1>
-              <p className="text-gray-600 mb-6 text-sm md:text-base">
-                Join AchieversIT to share your wisdom, inspire learners globally,
-                and shape the future of tech education. Be part of a network devoted to
-                excellence and innovation.
-              </p>
-              <div className="flex justify-center md:justify-start mb-6">
-                <button
-                  className="btn-solid-bg-transition btn-solid-bg-transition-orange px-10 tracking-widest uppercase"
-                  onClick={() => openModal("guideModal")}
-                >
-                  <span className="text-sm md:text-md">Mentor and Motivate as a Guide</span>
-                </button>
-                {activeModal === "guideModal" && (
-                  <DwnldAdvisorModalForm
-                    title={
-                      <>
-                        <h2 className="uppercase text-center">
-                          Ready to Inspire? <br />
-                          <span className="glitter_text uppercase text-2xl">
-                            Connect With Us Now!!
-                          </span>
-                        </h2>
-                      </>
-                    }
-                    text="Provide your information below to get your course syllabus delivered through WhatsApp and Email"
-                    closeModal={closeModal}
-                    formName="Advisor Form"
-                    imageSrc="/assets/images/dwnldbrchrimg.png"
-                    downloadPdf={false}
-                  />
-                )}
-              </div>
-            </div>
+              </h2>
+            </>
+          }
+          text="Provide your information below to get your course syllabus delivered through WhatsApp and Email"
+          closeModal={closeModal}
+          formName="Advisor Form"
+          imageSrc="/assets/images/dwnldbrchrimg.png"
+          downloadPdf={false}
+        />
+      )}
+    </div>
+  </div>
 
-            {/* Image Section */}
-            <div className="flex justify-center">
-              <Image
-                src="/assets/images/careereprtpartners.png"
-                alt="Tech Professionals"
-                className="w-full max-w-md"
-                width={600}
-                height={400}
-              />
-            </div>
-          </div>
+  {/* Image Section */}
+  <div className="flex  order-1 lg:order-2  md:justify-center ">
+    <Image
+      src="/assets/images/careereprtpartners.png"
+      alt="Tech Professionals"
+      className="w-full max-w-md"
+      width={600}
+      height={400}
+    />
+  </div>
+</div>
+
         </div>
       </section>
 
@@ -114,7 +115,7 @@ const MentorShip = () => {
 
       {/* Form Section */}
       <div className="flex items-center justify-center h-full py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-7xl p-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-7xl p-8">
           <div className="bg-white p-8 rounded shadow-lg w-full max-w-lg mx-auto">
             <h2 className=" font-semibold mb-6 text-center relative elementl pb-2 glitter_text uppercase">
               <span className="text-lg md:text-2xl">Join the Mentoring Community</span>
