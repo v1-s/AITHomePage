@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { footerData } from "../utils/mockfooterdata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
@@ -22,83 +23,123 @@ interface FooterLink {
 }
 
 const Footer = () => {
-  const [phone, setPhone] = useState<string>(""); // Holds the phone number input
-  const [captcha, setCaptcha] = useState<string>(""); // Holds the generated CAPTCHA
-  const [captchaInput, setCaptchaInput] = useState<string>(""); // Holds the user-entered CAPTCHA
+  const [phone, setPhone] = useState<string>(""); // Phone input
+  const [captcha, setCaptcha] = useState<string>(""); // CAPTCHA value
+  const [captchaInput, setCaptchaInput] = useState<string>(""); // CAPTCHA input
   const [error, setError] = useState<string>(""); // Error message
   const [loading, setLoading] = useState<boolean>(false); // Loading state
-  const [buttonState, setButtonState] = useState<"submit" | "login">("submit"); // Dynamic button state
+  const [buttonState, setButtonState] = useState<"submit" | "login">("submit"); // Button state
+  const [hasSubmitted, setHasSubmitted] = useState<boolean>(false); // Submission status
 
   useEffect(() => {
-    generateCaptcha(); // Generate CAPTCHA when the component mounts
+    generateCaptcha();
   }, []);
 
+  // Generate a new CAPTCHA
   const generateCaptcha = () => {
     const newCaptcha = Math.random().toString(36).substring(2, 8).toUpperCase();
     setCaptcha(newCaptcha);
   };
 
+  // Validate the phone number
   const validatePhone = (phone: string): boolean => {
     const phoneRegex = /^\d{10}$/;
     return phoneRegex.test(phone);
   };
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPhone(e.target.value);
-  //   setButtonState("submit");
-  // };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  // Validate the form
+  const validateForm = (): boolean => {
     if (!validatePhone(phone)) {
       setError("Please enter a valid 10-digit phone number.");
-      return;
+      return false;
     }
 
     if (captcha !== captchaInput) {
       setError("Invalid CAPTCHA. Please try again.");
       generateCaptcha();
-      return;
+      return false;
     }
 
     setError("");
-    setLoading(true);
+    return true;
+  };
 
-    try {
-      const response = await fetch("/api/submit-form", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone,
-          payloadRequestCallBack: { phone, source: "Request CallBack Form" },
-          payloadCaptureLeadRequest: { phone, source: "Lead Capture Form" },
-        }),
-      });
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      const data = await response.json();
+    if (validateForm()) {
+      const submittedPhones = JSON.parse(sessionStorage.getItem("submittedPhones") || "[]");
 
-      if (response.ok) {
-        if (data.exists) {
-          setButtonState("login");
-          alert("User already exists. Redirecting to login page...");
-        } else {
-          alert("Form submitted successfully!");
-          setPhone("");
-          setCaptchaInput("");
-          generateCaptcha();
-        }
-      } else {
-        setError(data.message || "Submission failed. Please try again.");
+      // Frontend pre-check for duplicates
+      if (submittedPhones.includes(phone)) {
+        setError("This phone number has already been submitted.");
+        setButtonState("login");
+        setHasSubmitted(true);
+        return;
       }
-    } catch (error) {
-      console.error("Error during submission:", error);
-      setError("An error occurred while processing your request.");
-    } finally {
-      setLoading(false);
+
+      setLoading(true);
+
+      const payloadRequestCallBack = {
+        myData: [{ phone }, { userMessage: "Testing Please Ignore" }, { page: "Request Demo" }],
+      };
+
+      const payloadCaptureLeadRequest = {
+        myData: [{ phone }, { source: "right_sticky_contact_us" }, { page: "Request Demo" }],
+      };
+
+      try {
+        const response = await fetch("/api/submitForm", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ payloadRequestCallBack, payloadCaptureLeadRequest }),
+        });
+
+        const result = await response.json();
+
+        console.log("API Response:", result);
+
+        if (response.ok) {
+          if (result.exists) {
+            setButtonState("login");
+            setHasSubmitted(true);
+            alert(result.message || "This phone number already exists.");
+          } else {
+            // Add phone to session storage
+            submittedPhones.push(phone);
+            sessionStorage.setItem("submittedPhones", JSON.stringify(submittedPhones));
+
+            setHasSubmitted(false);
+            alert(result.message || "Form submitted successfully!");
+            resetFormAndClose();
+          }
+        } else {
+          alert(result.message || "Form submission failed.");
+        }
+      } catch (error) {
+        console.error("Error during form submission:", error);
+        alert("An error occurred. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
+  // Reset the form and CAPTCHA
+  const resetFormAndClose = () => {
+    setPhone("");
+    setCaptchaInput("");
+    generateCaptcha();
+    setButtonState("submit");
+    setHasSubmitted(false);
+  };
+
+  // Refresh the CAPTCHA
+  const handleCaptchaRefresh = () => {
+    generateCaptcha();
+    setCaptchaInput("");
+  };
   return (
     <>
       <footer className="mt-3 text-center text-lg-start text-dark shadow-lg bg-black px-45">
@@ -237,34 +278,47 @@ const Footer = () => {
         onChange={(e) => setCaptchaInput(e.target.value)}
         className="w-32 sm:w-40 text-sm rounded-md border border-gray-500 px-4 py-2 bg-transparent focus:border-blue-600 focus:ring-blue-600"
       />
-    <button
-        type="button"
-        onClick={generateCaptcha}
-        className="text-sm font-bold text-maincolor_1 hover:underline"
-      >
-       <FontAwesomeIcon icon={faSync} className="text-lg" />
-      </button>
-      <div className="text-md font-semibold bg-gray-200 px-4 py-2 rounded">
-        {captcha}
+     <button type="button" onClick={handleCaptchaRefresh} className="text-sm font-bold text-maincolor_1 hover:underline">
+            <FontAwesomeIcon icon={faSync} className="text-lg" />
+          </button>
+          <div className="text-md font-semibold bg-gray-200 px-4 py-2 rounded">{captcha}</div>
         </div>
-      
-    
       </div>
-    </div>
-    {/* Subscribe Button */}
-    <div className="mt-4">
+      <div className="mt-4">
+  {hasSubmitted ? (
     <button
-              type="submit"
-              className={`w-full sm:w-auto rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase text-white transition ${
-                loading ? "opacity-50 cursor-not-allowed" : "hover:bg-white hover:text-black"
-              }`}
-              disabled={loading}
-            >
-              {buttonState === "submit" ? "Submit" : "Login"}
-            </button>
-          </div>
-          {error && <p className="mt-2 text-sm text-maincolor_1">{error}</p>}
-        </form>
+      type="button"
+      className={`w-full sm:w-auto rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase text-white transition ${
+        loading ? "opacity-50 cursor-not-allowed" : "hover:bg-white hover:text-black"
+      }`}
+      disabled={loading}
+      onClick={() => {
+        alert("Redirecting to login...");
+        window.location.href = "/loginpage"; // Replace with router.push for Next.js
+      }}
+    >
+      Login
+    </button>
+  ) : (
+    <button
+      type="submit"
+      className={`w-full sm:w-auto rounded bg-maincolor_1 px-6 py-3 text-sm font-bold uppercase text-white transition ${
+        loading ? "opacity-50 cursor-not-allowed" : "hover:bg-white hover:text-black"
+      }`}
+      disabled={loading}
+    >
+      Submit
+    </button>
+  )}
+</div>
+
+
+
+
+
+  {/* Error Message */}
+  {error && <p className="mt-2 text-sm text-maincolor_1">{error}</p>}
+</form>
  
             </div>
 
