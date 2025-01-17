@@ -50,7 +50,7 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
     const fetchCourseTools = async () => {
       try {
         const response = await fetch(
-          `http://13.232.95.229:3000/course/courseToolsTechnologies?courseUrl=${courseUrl}`
+          `http://13.235.70.111:3000/course/courseToolsTechnologies?courseUrl=${courseUrl}`
         );
 
         if (!response.ok) {

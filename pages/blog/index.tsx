@@ -55,7 +55,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
-        const response = await fetch('http://13.232.95.229:3000/common/getHomePageBlogsLists');
+        const response = await fetch('http://13.235.70.111:3000/common/getHomePageBlogsLists');
         const data = await response.json();
         console.log(data, "data");
         if (data && data.length > 0) {

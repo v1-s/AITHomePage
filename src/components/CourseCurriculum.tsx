@@ -29,7 +29,7 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
     const fetchCurriculumData = async () => {
       try {
         const response = await fetch(
-          `http://13.232.95.229:3000/course/courseCurricullam?courseUrl=angular-course`
+          `http://13.235.70.111:3000/course/courseCurricullam?courseUrl=angular-course`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch curriculum data");

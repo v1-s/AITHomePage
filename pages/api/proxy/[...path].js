@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const { path } = req.query; // Get the API endpoint from the path
-  const url = `http://13.232.95.229:3000/${path.join("/")}`; // External API URL
+  const url = `http://13.235.70.111:3000/${path.join("/")}`; // External API URL
 
   try {
     const response = await fetch(url, {

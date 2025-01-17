@@ -29,7 +29,7 @@ const HiringPartners: React.FC<HiringPartnersProps> = ({ title }) => {
     const fetchLogos = async () => {
       try {
         const response = await fetch(
-          "http://13.232.95.229:3000/common/getCollaboratingPartners"
+          "http://13.235.70.111:3000/common/getCollaboratingPartners"
         );
 
         if (!response.ok) {

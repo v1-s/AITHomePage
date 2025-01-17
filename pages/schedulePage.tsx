@@ -67,7 +67,7 @@
 //     const fetchCourses = async () => {
 //       try {
 //         const response = await fetch(
-//           "http://13.232.95.229:3000/common/getCoursesPerCategory?region=global"
+//           "http://13.235.70.111:3000/common/getCoursesPerCategory?region=global"
 //         );
 //         if (!response.ok) {
 //           throw new Error("Failed to fetch courses");
@@ -184,7 +184,7 @@
 //     try {
 //       setLoading(true); // Show a loading state
 //       const response = await fetch(
-//         `http://13.232.95.229:3000/course/basicInfo?courseUrl=${courseUrl}`
+//         `http://13.235.70.111:3000/course/basicInfo?courseUrl=${courseUrl}`
 //       );
 //       if (!response.ok) {
 //         throw new Error("Failed to fetch course details");
@@ -572,7 +572,7 @@ const SchedulePage: React.FC<{ course_url: string }> = ({ course_url }) => {
     const fetchCourses = async () => {
       try {
         const response = await fetch(
-          "http://13.232.95.229:3000/common/getCoursesPerCategory?region=global"
+          "http://13.235.70.111:3000/common/getCoursesPerCategory?region=global"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
