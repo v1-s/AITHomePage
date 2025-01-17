@@ -15,7 +15,7 @@ export const fetchCategories = createAsyncThunk('api/fetchCategories', async (_,
   }
 
   // Now, pass the correct region value to the API request
-  const response = await fetch(`http://13.232.95.229:3000/common/getCoursesPerCategory?region=${regionValue}`);
+  const response = await fetch(`http://13.235.70.111:3000/common/getCoursesPerCategory?region=${regionValue}`);
   
   console.log('Raw Response:', response);
   
@@ -45,7 +45,7 @@ export const fetchCourses = createAsyncThunk('api/fetchCourses', async (_, { get
     console.error('Region is not a string:', regionValue);
     return []; // Return an empty array or handle the error as needed
   }
-  const response = await fetch(`http://13.232.95.229:3000/common/getCoursesPerCategory?region=${regionValue}`);
+  const response = await fetch(`http://13.235.70.111:3000/common/getCoursesPerCategory?region=${regionValue}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch courses');
@@ -58,7 +58,7 @@ export const fetchCourses = createAsyncThunk('api/fetchCourses', async (_, { get
 
 // Fetch blogs
 export const fetchBlogs = createAsyncThunk('api/fetchBlogs', async () => {
-  const response = await fetch('http://13.232.95.229:3000/common/getHomePageBlogsLists');
+  const response = await fetch('http://13.235.70.111:3000/common/getHomePageBlogsLists');
   if (!response.ok) {
     throw new Error('Failed to fetch blogs');
   }

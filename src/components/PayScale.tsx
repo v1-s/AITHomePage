@@ -28,7 +28,7 @@ const PayScale = ({ courseUrl }: { courseUrl: string }) => {
   // Fetch the course data from the API
   useEffect(() => {
     fetch(
-      `http://13.232.95.229:3000/course/courseProjects?courseUrl=${courseUrl}`
+      `http://13.235.70.111:3000/course/courseProjects?courseUrl=${courseUrl}`
     )
       .then((response) => response.json())
       .then((responseArray: ApiResponse[]) => {

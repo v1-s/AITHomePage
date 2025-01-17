@@ -44,7 +44,7 @@ function WorriedSection() {
     const fetchCoursesData = async () => {
       try {
         const response = await fetch(
-          "http://13.232.95.229:3000/common/getCoursesPerCategory?region=global"
+          "http://13.235.70.111:3000/common/getCoursesPerCategory?region=global"
         );
         const data = await response.json();
         setTrendCourses(data || []);

@@ -4,20 +4,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { imageBasePath } from "@/utils/img.config";
 import Image from "next/image";
+interface ImageComponentProps {
+  imagePath: string;
+  altText?: string; // Optional alt text for better accessibility
+  className?: string; // Optional class for additional styling
+}
+
 // ImageComponent receives the imagePath prop and renders an image
-const ImageComponent = ({ imagePath }: { imagePath: string }) => {
-  const fullImagePath = imageBasePath + (imagePath.startsWith('/') ? imagePath : '/' + imagePath);
+const ImageComponent = ({ 
+  imagePath, 
+  altText = 'Image', 
+  className = '' 
+}: ImageComponentProps) => {
+  // Ensure base path ends correctly and imagePath is handled
+  const fullImagePath = `${imageBasePath.replace(/\/$/, '')}/${imagePath.replace(/^\//, '')}`;
 
   return (
     <Image
       src={fullImagePath}
-      alt="Student"
-      className="w-full h-full object-cover transition-opacity duration-300 ease-in-out"
+      alt={altText}
+      className={`w-full h-full object-cover transition-opacity duration-300 ease-in-out ${className}`}
       width={300}
       height={300}
       loading="lazy"
       onLoad={() => {
-        // You can add any actions that should happen when the image is loaded here
+        console.log(`Image loaded: ${fullImagePath}`);
+      }}
+      onError={(error) => {
+        console.error(`Failed to load image: ${fullImagePath}`, error);
       }}
     />
   );
@@ -43,7 +57,7 @@ const HeroSection = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch("http://13.232.95.229:3000/common/getStudentReview");
+        const response = await fetch("http://13.235.70.111:3000/common/getStudentReview");
         const data = await response.json();
 
         console.log("API Response:", data);

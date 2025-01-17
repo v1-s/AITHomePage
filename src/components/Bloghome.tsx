@@ -50,7 +50,7 @@ const BlogPage = () => {
 
   const fetchBlogs = useCallback(async () => {
     try {
-      const response = await fetch("http://13.232.95.229:3000/common/getHomePageBlogsLists");
+      const response = await fetch("http://13.235.70.111:3000/common/getHomePageBlogsLists");
       if (!response.ok) {
         throw new Error(`Error fetching blogs: ${response.statusText}`);
       }

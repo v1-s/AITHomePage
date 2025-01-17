@@ -75,7 +75,7 @@ const CourseDetails: React.FC = () => {
 
   const ImageComponent: React.FC<{ imagePath: string }> = ({ imagePath }) => {
     const  fullImagePath = imagePath ? `${imageBasePath}${imagePath}` : "/assets/images/default-course.png";
-
+console.log(fullImagePath);
     return (
       <Image
         src={fullImagePath}
@@ -100,7 +100,7 @@ const CourseDetails: React.FC = () => {
     // Fetch course details
     try {
       const response = await fetch(
-        `http://13.232.95.229:3000/course/basicInfo?courseUrl=${course_url}`
+        `http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`
       );
   
       if (response.ok) {
@@ -118,7 +118,7 @@ const CourseDetails: React.FC = () => {
     // Fetch course skills
     try {
       const skillsResponse = await fetch(
-        `http://13.232.95.229:3000/course/courseSkills?courseUrl=${course_url}`
+        `http://13.235.70.111:3000/course/courseSkills?courseUrl=${course_url}`
       );
   
       if (skillsResponse.ok) {
@@ -136,7 +136,7 @@ const CourseDetails: React.FC = () => {
     // Fetch FAQ data
     try {
       const faqResponse = await fetch(
-        `http://13.232.95.229:3000/course/courseFaq?courseUrl=${course_url}`
+        `http://13.235.70.111:3000/course/courseFaq?courseUrl=${course_url}`
       );
   
       if (faqResponse.ok) {
@@ -320,6 +320,7 @@ const CourseDetails: React.FC = () => {
           <div className="order-1 md:order-2 md:w-1/2 p-4 flex justify-center items-center z-1">
             <div className="relative w-full max-w-sm">
             <ImageComponent imagePath={course.image ? `management/uploads/course_image/${course.image}`:""} />
+            
             </div>
           </div>
         </div>

@@ -66,7 +66,7 @@ const DynamicMegaMenu: React.FC<DynamicMegaMenuProps> = ({
     const [hoveredCourse, setHoveredCourse] = useState<Course | null>(null);
     const [hoveredCourseImage, setHoveredCourseImage] = useState<string | null>(null);
     const menuRef = useRef<HTMLDivElement>(null);
-    const baseUrl = 'http://13.232.95.229:3000/';
+    const baseUrl = 'http://13.235.70.111:3000/';
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {

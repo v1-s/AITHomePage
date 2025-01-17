@@ -21,7 +21,7 @@ export default function Document() {
         {/* Preconnect to optimize resource loading */}
         <link
           rel="preconnect"
-          href="http://13.232.95.229"
+          href="http://13.235.70.111"
           crossOrigin="anonymous"
         />
       </Head>

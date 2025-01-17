@@ -33,7 +33,7 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
   useEffect(() => {
     const fetchBatchDetails = async () => {
       try {
-        const response = await fetch(`http://13.232.95.229:3000/course/basicInfo?courseUrl=${course_url}`);
+        const response = await fetch(`http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`);
         const data = await response.json();
         console.log("Fetched data:", data); // Log the response to see its structure
   

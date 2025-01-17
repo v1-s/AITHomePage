@@ -34,7 +34,7 @@ const CourseSchedule: React.FC<{ course_url: string }> = ({ course_url }) => {
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const response = await fetch(`http://13.232.95.229:3000/course/basicInfo?courseUrl=${course_url}`);
+        const response = await fetch(`http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`);
         const data = await response.json();
         const batchScheduleDetails = data[0]?.batchScheduleDetails || [];
 

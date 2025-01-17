@@ -120,7 +120,7 @@ const BlogDetailsPage = () => {
       const fetchBlogDetails = async () => {
         try {
           const response = await fetch(
-            "http://13.232.95.229:3000/common/getHomePageBlogsLists"
+            "http://13.235.70.111:3000/common/getHomePageBlogsLists"
           );
           const data = await response.json();
           const blog = data.find((b: Blog) => b.baseurl === baseurl);
