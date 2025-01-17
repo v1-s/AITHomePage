@@ -110,7 +110,7 @@ const Chatbot: React.FC = () => {
 
       {/* Chatbox */}
       {isVisible && (
-        <div className="fixed bottom-0 md:right-0 w-full max-w-xs  bg-white rounded-lg shadow-lg overflow-hidden z-50">
+        <div className="fixed bottom-0 right-0 w-full max-w-xs  bg-white rounded-lg shadow-lg overflow-hidden z-50">
           {/* Chatbox Header */}
           <div className="bg-blue-500 text-white p-4 flex justify-between items-center">
             <span className="text-sm md:text-base">Chat with us</span>
