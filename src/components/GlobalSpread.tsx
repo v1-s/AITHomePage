@@ -41,7 +41,7 @@ const GlobalReach = () => {
                 height={400}
                 className="rounded-full w-8 h-8 sm:w-10 sm:h-10"
               />
-              <div className="flex items-center gap-2 bg-white py-2 px-4 rounded shadow-md">
+              <div className="flex items-center gap-0 bg-white py-0 px-4 rounded shadow-md flex-col">
                 <h6 className="text-sm font-bold sm:text-base">{country.learners}</h6>
                 <p className="text-xs text-gray-500 sm:text-sm">Learners</p>
               </div>

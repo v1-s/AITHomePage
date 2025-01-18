@@ -98,7 +98,7 @@ const LocationComponent = ({ locationData }: { locationData: LocationData }) => 
                       className="text-blue-500"
                       aria-label={`${detail.label}: ${detail.value}`}
                     >
-                      <p className="font-bold text-blue-500 text-md lg:text-xl">{detail.label}:</p>
+                      <p className="font-bold text-blue-500 text-md lg:text-md">{detail.label}:</p>
                       <p className="text-gray-600 text-xs md:text-sm">{detail.value}</p>
                     </a>
                   </div>
