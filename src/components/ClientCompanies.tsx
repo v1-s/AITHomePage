@@ -81,47 +81,74 @@ const CarouselContainer: React.FC = () => {
 
   useEffect(() => {
     const fetchLogos = async () => {
+      const sessionKey = "companyLogos"; // Key for session storage
+      const cachedData = sessionStorage.getItem(sessionKey); // Check for cached data
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loading logos from session storage:", parsedData);
+          setLogosData(parsedData); // Update state with cached data
+          return;
+        } catch (error) {
+          console.error("Error parsing cached data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
+        }
+      }
+  
+      // If no cached data, fetch from API
+      console.log("Fetching logos from API...");
       try {
         const response = await fetch("http://13.235.70.111:3000/common/getCompanyPartners");
-
+  
         if (!response.ok) {
           throw new Error("Failed to fetch logos");
         }
-
+  
         const data = await response.json();
-        console.log("Fetched logos data:", data); // Log for debugging
-
+        console.log("Fetched logos data from API:", data);
+  
         // Transform the data into the expected structure
         const groupedLogos: GroupedLogos = {
-          group_1: data[0].group_1.map((logo: { name: string }) => ({
-            name: logo.name.replace(/^\//, '') // Remove leading slash
+          group_1: data[0]?.group_1?.map((logo: { name: string }) => ({
+            name: logo.name.replace(/^\//, ''), // Remove leading slash
           })) || [],
-          group_2: data[1].group_2.map((logo: { name: string }) => ({
-            name: logo.name.replace(/^\//, '') // Remove leading slash
+          group_2: data[1]?.group_2?.map((logo: { name: string }) => ({
+            name: logo.name.replace(/^\//, ''), // Remove leading slash
           })) || [],
-          group_3: data[2].group_3.map((logo: { name: string }) => ({
-            name: logo.name.replace(/^\//, '') // Remove leading slash
+          group_3: data[2]?.group_3?.map((logo: { name: string }) => ({
+            name: logo.name.replace(/^\//, ''), // Remove leading slash
           })) || [],
-          group_4: data[3].group_4.map((logo: { name: string }) => ({
-            name: logo.name.replace(/^\//, '') // Remove leading slash
+          group_4: data[3]?.group_4?.map((logo: { name: string }) => ({
+            name: logo.name.replace(/^\//, ''), // Remove leading slash
           })) || [],
         };
-
-        // Validate data structure
-        if (groupedLogos.group_1 && groupedLogos.group_2 && groupedLogos.group_3 && groupedLogos.group_4) {
-          setLogosData(groupedLogos); // Update state with transformed data
-        } else {
-          console.error("Invalid data structure:", groupedLogos);
-          setLogosData(null); // Clear state on invalid structure
-        }
+  
+        // Store the transformed data in session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(groupedLogos));
+        console.log("Logos data saved to session storage:", groupedLogos);
+  
+        // Update state with transformed data
+        setLogosData(groupedLogos);
       } catch (error) {
-        console.error("Error fetching logos:", error);
-        setLogosData(null); // Clear state on fetch error
+        console.error("Error fetching logos from API:", error);
+  
+        // Use cached data as fallback if available
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback logos data from session storage:", parsedData);
+          setLogosData(parsedData);
+        } else {
+          console.log("No cached logos data available. Unable to render logos.");
+          setLogosData(null); // Clear state if no data is available
+        }
       }
     };
-
+  
     fetchLogos();
   }, []);
+  
 
   return (
     <div className="carousel-container pt-5 rounded pb-3 text-center">

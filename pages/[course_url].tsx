@@ -22,6 +22,12 @@ import CourseTools from "@/components/CourseTools";
 import Image from "next/image";
 import BatchDetails from "@/components/CourseCardSchedule";
 import ProjectCards from "@/components/CourseProjects";
+import {
+  logBasicInfo,
+  logCourseSkills,
+  logFAQs,
+  logError,
+} from "./api/apidata";
 type BatchDetail = {
   batchStartDate: string;
   batchTimings: string;
@@ -58,7 +64,7 @@ const CourseDetails: React.FC = () => {
   const [faqData, setFaqData] = useState<FAQ[]>([]);
   const [activeForm, setActiveForm] = useState<string | null>(null); // Track active form
   const [modalKey, setModalKey] = useState<number>(0); // Unique key to force re-render
-
+  const [error, setError] = useState<boolean>(false);
   const [isCurriculumEmpty, setIsCurriculumEmpty] = useState(false);
 
   const handleCurriculumDataCheck = (isEmpty: boolean) => {
@@ -75,7 +81,7 @@ const CourseDetails: React.FC = () => {
 
   const ImageComponent: React.FC<{ imagePath: string }> = ({ imagePath }) => {
     const  fullImagePath = imagePath ? `${imageBasePath}${imagePath}` : "/assets/images/default-course.png";
-console.log(fullImagePath);
+
     return (
       <Image
         src={fullImagePath}
@@ -90,80 +96,86 @@ console.log(fullImagePath);
   };
 
   const fetchCourseData = useCallback(async () => {
-    if (!course_url) return;
-  
-    setLoading(true); // Set loading state at the start
-    let courseData = null;
-    let skills: React.SetStateAction<string[]> = [];
-    let faqs = [];
-  
-    // Fetch course details
-    try {
-      const response = await fetch(
-        `http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`
-      );
-  
-      if (response.ok) {
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          courseData = data[0];
-        }
-      } else {
-        console.error("Failed to fetch course details");
-      }
-    } catch (error) {
-      console.error("Error fetching course details:", error);
+    const sessionKey = `course_${course_url}`;
+    const cachedData = sessionStorage.getItem(sessionKey);
+
+    // If data exists in sessionStorage, use it
+    if (cachedData) {
+      const { course, skills, faqs } = JSON.parse(cachedData);
+      setCourse(course);
+      setCourseSkills(skills);
+      setFaqData(faqs);
+      setLoading(false);
+      return;
     }
-  
-    // Fetch course skills
+
+    // Fetch data from the API and store in sessionStorage
     try {
-      const skillsResponse = await fetch(
-        `http://13.235.70.111:3000/course/courseSkills?courseUrl=${course_url}`
-      );
-  
-      if (skillsResponse.ok) {
-        const skillsData = await skillsResponse.json();
-        skills = Array.isArray(skillsData)
-          ? skillsData.map((skill: { skills: string }) => skill.skills)
-          : [];
-      } else {
-        console.error("Failed to fetch course skills");
+      let courseData = null;
+      let skills: string[] = [];
+      let faqs: FAQ[] = [];
+
+      const [basicInfoResponse, courseSkillsResponse, courseFaqResponse] = await Promise.all([
+        fetch(`http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`),
+        fetch(`http://13.235.70.111:3000/course/courseSkills?courseUrl=${course_url}`),
+        fetch(`http://13.235.70.111:3000/course/courseFaq?courseUrl=${course_url}`),
+      ]);
+
+      if (basicInfoResponse.ok) {
+        courseData = await basicInfoResponse.json();
+        logBasicInfo(courseData);
+        courseData = Array.isArray(courseData) ? courseData[0] : courseData;
       }
-    } catch (error) {
-      console.error("Error fetching course skills:", error);
-    }
-  
-    // Fetch FAQ data
-    try {
-      const faqResponse = await fetch(
-        `http://13.235.70.111:3000/course/courseFaq?courseUrl=${course_url}`
-      );
-  
-      if (faqResponse.ok) {
-        const faqData = await faqResponse.json();
-        // Filter out FAQs with empty `faq_content`
-        faqs = faqData.filter(
-          (faq: { faq_content: string }) => faq.faq_content?.trim() !== ""
-        );
-      } else {
-        console.error("Failed to fetch FAQ data");
+
+      if (courseSkillsResponse.ok) {
+        const courseSkillsData = await courseSkillsResponse.json();
+        skills = courseSkillsData.map((skill: { skills: string }) => skill.skills);
+        logCourseSkills(courseSkillsData);
       }
-    } catch (error) {
-      console.error("Error fetching FAQ data:", error);
+
+      if (courseFaqResponse.ok) {
+        const courseFaqData = await courseFaqResponse.json();
+        faqs = courseFaqData;
+        logFAQs(courseFaqData);
+      }
+
+      // Save fetched data to sessionStorage
+      const dataToCache = { course: courseData, skills, faqs };
+      sessionStorage.setItem(sessionKey, JSON.stringify(dataToCache));
+
+      // Update state with fetched data
+      setCourse(courseData);
+      setCourseSkills(skills);
+      setFaqData(faqs);
+    } catch (err) {
+      logError(err, "API Fetch Failed");
+
+      // Check if sessionStorage has fallback data
+      if (cachedData) {
+        const { course, skills, faqs } = JSON.parse(cachedData);
+        setCourse(course);
+        setCourseSkills(skills);
+        setFaqData(faqs);
+      } else {
+        // Use default data if nothing is available
+   
+        setFaqData([]);
+        setCourseSkills([]);
+        setError(true);
+      }
+    } finally {
+      setLoading(false);
     }
-  
-  
-    // Update states
-    setCourse(courseData);
-    setCourseSkills(skills);
-    setFaqData(faqs);
-    setLoading(false); // Ensure loading is set to false
   }, [course_url]);
-  
+
+
   useEffect(() => {
-    fetchCourseData();
-  }, [fetchCourseData]);
+    if (course_url) {
+      fetchCourseData();
+    }
+  }, [course_url, fetchCourseData]);
   
+
   
 
   useEffect(() => {
@@ -213,6 +225,7 @@ console.log(fullImagePath);
             <h1 className="text-3xl font-semibold text-gray-800 mb-4 text-wrap  glitter_text">
               {course.title}
             </h1>
+           
             <div className="flex items-center mb-4">
               <div className="flex text-yellow-400">
               {Array(5) // Assuming ratings are out of 5
@@ -324,6 +337,11 @@ console.log(fullImagePath);
             </div>
           </div>
         </div>
+        {error && (
+          <div className="bg-red-100 text-red-500 p-4 rounded">
+            Unable to fetch data. Displaying cached/default values.
+          </div>
+        )}
       </div>
       <BatchDetails course_url={course_url as string} />
       <TypesOfTraining />

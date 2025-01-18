@@ -27,31 +27,72 @@ const HiringPartners: React.FC<HiringPartnersProps> = ({ title }) => {
 
   useEffect(() => {
     const fetchLogos = async () => {
+      const sessionKey = "collaboratingPartners"; // Key for session storage
+      const cachedData = sessionStorage.getItem(sessionKey); // Check if data is already cached
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loaded data from session storage:", parsedData);
+  
+          setLogos(parsedData); // Set state with cached data
+          setLoading(false); // Set loading to false as data is available
+          return;
+        } catch (error) {
+          console.error("Error parsing cached data:", error);
+          sessionStorage.removeItem(sessionKey); // Clear corrupted cache
+        }
+      }
+  
+      // Fetch data from API
+      console.log("Fetching data from API...");
       try {
         const response = await fetch(
           "http://13.235.70.111:3000/common/getCollaboratingPartners"
         );
-
+  
         if (!response.ok) {
           throw new Error("Failed to fetch logos");
         }
-
+  
         const data = await response.json();
-        setLogos(data); // Assuming data is an array of logos
+        console.log("Fetched data from API:", data);
+  
+        // Save data to session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(data));
+        console.log("Data saved to session storage:", data);
+  
+        setLogos(data); // Update state with API data
       } catch (error: unknown) {
-        // Type error as Error instead of any
+        // Handle API errors
+        console.error("Error fetching logos:", error);
+  
+        if (cachedData) {
+          // Fallback to cached data if available
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback data from session storage:", parsedData);
+  
+          setLogos(parsedData);
+        } else {
+          console.log("No cached data available. Unable to render logos.");
+          setLogos([]); // Set an empty state if no cached data is available
+        }
+  
+        // Set error message
         if (error instanceof Error) {
           setError(error.message || "An error occurred while fetching logos.");
         } else {
           setError("An unexpected error occurred.");
         }
       } finally {
-        setLoading(false);
+        setLoading(false); // Ensure loading state is updated
       }
     };
-
+  
     fetchLogos();
   }, []);
+  
 
   // If loading
   if (loading) {

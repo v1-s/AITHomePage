@@ -17,6 +17,7 @@ import { RegionProvider } from '@/utils/RegionContext';
 import BookLoader from "@/components/BookLoader";
 import { usePathname } from "next/navigation";
 import {CandidateProvider} from "@/utils/CandidateStoryContext";
+import ContactUsButton from "./components/ContactUsButton";
 import LimitedSeatsCTA from "./components/LimitedSeatsCTA";
 export default function Layout({ children }: { children: React.ReactNode }) {
   console.log("Children received in Layout:", children); // Debugging line
@@ -77,8 +78,10 @@ function LoaderConsumer({ children }: { children: React.ReactNode }) {
           <main className="min-h-screen">{children}</main>
           <LocationComponent locationData={locationData} />
           <LimitedSeatsCTA/>
+          <ContactUsButton/>
           <Footer />
           <ScrollToTopButton />
+        
         </>
       )}
     </>

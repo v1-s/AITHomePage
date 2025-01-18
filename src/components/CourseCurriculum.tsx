@@ -27,46 +27,89 @@ const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
   // Fetch the curriculum data from the API
   useEffect(() => {
     const fetchCurriculumData = async () => {
+      const sessionKey = `curriculumData_${courseUrl}`; // Unique key for session storage
+      const cachedData = sessionStorage.getItem(sessionKey); // Check for cached data
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loading curriculum data from session storage:", parsedData);
+  
+          // Update state with cached data
+          setCurriculumData(parsedData);
+  
+          // Notify the parent component if the data is empty
+          onCurriculumDataCheck(Array.isArray(parsedData) && parsedData.length === 0);
+          setIsDataLoaded(true); // Mark data as loaded
+          return;
+        } catch (error) {
+          console.error("Error parsing cached curriculum data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
+        }
+      }
+  
+      // Fetch data from API if no valid cached data is available
+      console.log("Fetching curriculum data from API...");
       try {
         const response = await fetch(
-          `http://13.235.70.111:3000/course/courseCurricullam?courseUrl=angular-course`
+          `http://13.235.70.111:3000/course/courseCurricullam?courseUrl=${courseUrl}`
         );
+  
         if (!response.ok) {
           throw new Error("Failed to fetch curriculum data");
         }
-        const data = await response.json();
-        setCurriculumData(data);
-
+  
+        const apiData = await response.json();
+        console.log("Fetched curriculum data from API:", apiData);
+  
         // Notify the parent component if the data is empty
-        onCurriculumDataCheck(Array.isArray(data) && data.length === 0);
-        if (Array.isArray(data) && data.length === 0) {
+        onCurriculumDataCheck(Array.isArray(apiData) && apiData.length === 0);
+        if (Array.isArray(apiData) && apiData.length === 0) {
           console.log("Curriculum data is empty.");
           setIsDataLoaded(true); // Mark data as loaded but empty
           return; // Exit early if data is empty
         }
-
+  
         // Define the type for the API response item
         type ApiResponseItem = {
           topicName: string;
           subTopicName: string;
         };
-
+  
         // Map the API response to the expected format
-        const mappedData = data.map((item: ApiResponseItem) => ({
+        const mappedData = apiData.map((item: ApiResponseItem) => ({
           question: item.topicName || "Unknown Topic",
           answer: item.subTopicName || "No details available",
         }));
-
+  
+        // Store mapped data in session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(mappedData));
+        console.log("Mapped curriculum data saved to session storage:", mappedData);
+  
+        // Update state with the mapped data
         setCurriculumData(mappedData);
       } catch (error) {
         console.error("Error fetching curriculum data:", error);
+  
+        // Use fallback data from session storage if available
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback curriculum data from session storage.");
+          setCurriculumData(parsedData);
+          onCurriculumDataCheck(Array.isArray(parsedData) && parsedData.length === 0);
+        } else {
+          console.log("No cached curriculum data available. Unable to render curriculum.");
+          setCurriculumData([]);
+        }
       } finally {
         setIsDataLoaded(true); // Mark data as loaded
       }
     };
-
+  
     fetchCurriculumData();
   }, [courseUrl, onCurriculumDataCheck]);
+  
 
   const toggleAccordion = (index: number) => {
     setExpanded(expanded === index ? null : index);

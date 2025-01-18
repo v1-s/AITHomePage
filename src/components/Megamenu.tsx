@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronDown, faChevronUp,faTimes} from "@fortawesome/free-solid-svg-icons";
 import { imageBasePath } from "@/utils/img.config";
 import Image from "next/image";
-
+import coursesData from "pages/api/coursespercategory";
 interface Course {
     course_name: string;
     course_short_name: string;
@@ -80,36 +80,108 @@ const DynamicMegaMenu: React.FC<DynamicMegaMenuProps> = ({
         };
     }, [closeMenu]);
 
+ 
+
     const fetchCoursesAndCategories = useCallback(async (region: string) => {
-        try {
-            const response = await fetch(`${baseUrl}common/getCoursesPerCategory?region=${region}`);
-            const data = await response.json();
-            const categoriesAsStrings: string[] = [...new Set((data as { category: string }[]).map((course) => course.category))];
-            setCategories(categoriesAsStrings);
-
-            const coursesByCategory: { [key: string]: Course[] } = {};
-            data.forEach((course: Course) => {
-                if (!coursesByCategory[course.category]) {
-                    coursesByCategory[course.category] = [];
-                }
-                coursesByCategory[course.category].push({
-                    course_name: course.course_name,
-                    course_short_name: course.course_short_name,
-                    category: course.category,
-                    course_url: course.course_url,
-                    course_img: course.course_img,
+        // Check if data exists in sessionStorage
+        const cachedData = sessionStorage.getItem(`coursesAndCategories-${region}`);
+        
+        if (cachedData) {
+            // If data is found in sessionStorage, use it directly
+            const parsedData = JSON.parse(cachedData);
+            setCategories(parsedData.categories);
+            setCourseData(parsedData.coursesByCategory);
+            setActiveCategory(parsedData.categories[0]);
+            setVisibleCategory(parsedData.categories[0]);
+        } else {
+            try {
+                const response = await fetch(`${baseUrl}common/getCoursesPerCategory?region=${region}`);
+                const data = await response.json();
+                
+                const categoriesAsStrings: string[] = [...new Set((data as { category: string }[]).map((course) => course.category))];
+                setCategories(categoriesAsStrings);
+    
+                const coursesByCategory: { [key: string]: Course[] } = {};
+                data.forEach((course: Course) => {
+                    if (!coursesByCategory[course.category]) {
+                        coursesByCategory[course.category] = [];
+                    }
+                    coursesByCategory[course.category].push({
+                        course_name: course.course_name,
+                        course_short_name: course.course_short_name,
+                        category: course.category,
+                        course_url: course.course_url,
+                        course_img: course.course_img,
+                    });
                 });
-            });
-            setCourseData(coursesByCategory);
-
-            if (categoriesAsStrings.length > 0) {
-                setActiveCategory(categoriesAsStrings[0]);
-                setVisibleCategory(categoriesAsStrings[0]);
+                setCourseData(coursesByCategory);
+    
+                if (categoriesAsStrings.length > 0) {
+                    setActiveCategory(categoriesAsStrings[0]);
+                    setVisibleCategory(categoriesAsStrings[0]);
+                }
+    
+                // Store the fetched data in sessionStorage for future use
+                sessionStorage.setItem(
+                    `coursesAndCategories-${region}`,
+                    JSON.stringify({
+                        categories: categoriesAsStrings,
+                        coursesByCategory: coursesByCategory,
+                        activeCategory: categoriesAsStrings[0],
+                        visibleCategory: categoriesAsStrings[0],
+                    })
+                );
+            } catch (err) {
+                console.error("Error fetching courses and categories:", err);
+                // Optionally, you can use sessionStorage here as a fallback too
+                if (cachedData) {
+                    const parsedData = JSON.parse(cachedData);
+                    setCategories(parsedData.categories);
+                    setCourseData(parsedData.coursesByCategory);
+                    setActiveCategory(parsedData.activeCategory);
+                    setVisibleCategory(parsedData.visibleCategory);
+                }
             }
-        } catch (err) {
-            console.error("Error fetching courses and categories:", err);
         }
     }, []);
+    
+    // const fetchCoursesAndCategories = useCallback((region: string) => {
+    //     try {
+          
+    //         const data = coursesData;
+    
+    //         // Extract unique categories from the data
+    //         const categoriesAsStrings: string[] = [
+    //             ...new Set(data.map((course) => course.category)),
+    //         ];
+    //         setCategories(categoriesAsStrings);
+    
+    //         // Group courses by category
+    //         const coursesByCategory: { [key: string]: Course[] } = {};
+    //         data.forEach((course: Course) => {
+    //             if (!coursesByCategory[course.category]) {
+    //                 coursesByCategory[course.category] = [];
+    //             }
+    //             coursesByCategory[course.category].push({
+    //                 course_name: course.course_name,
+    //                 course_short_name: course.course_short_name,
+    //                 category: course.category,
+    //                 course_url: course.course_url,
+    //                 course_img: course.course_img,
+    //             });
+    //         });
+    //         setCourseData(coursesByCategory);
+    
+    //         // Set the first category as active
+    //         if (categoriesAsStrings.length > 0) {
+    //             setActiveCategory(categoriesAsStrings[0]);
+    //             setVisibleCategory(categoriesAsStrings[0]);
+    //         }
+    //     } catch (err) {
+    //         console.error("Error fetching courses and categories:", err);
+    //     }
+    // }, []);
+
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (menuRef.current && !menuRef.current.contains(e.target as Node)) {

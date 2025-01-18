@@ -27,25 +27,50 @@ const PayScale = ({ courseUrl }: { courseUrl: string }) => {
 
   // Fetch the course data from the API
   useEffect(() => {
-    fetch(
-      `http://13.235.70.111:3000/course/courseProjects?courseUrl=${courseUrl}`
-    )
-      .then((response) => response.json())
-      .then((responseArray: ApiResponse[]) => {
-        const data = responseArray[0]; // Access the first object in the response array
-        if (data.status === 200 && data.data?.popular) {
-          setPopularCourses(data.data.popular);
-          if (data.data.popular.length > 0) {
-            setSelectedDesignation(data.data.popular[0].course); // Set first course as default if available
+    // Check if data exists in sessionStorage
+    const cachedData = sessionStorage.getItem(`courses-${courseUrl}`);
+
+    if (cachedData) {
+      const parsedData = JSON.parse(cachedData);
+      // Use data from sessionStorage if available
+      setPopularCourses(parsedData.popularCourses);
+      setSelectedDesignation(parsedData.selectedDesignation);
+    } else {
+      // If no cached data, fetch data from API
+      fetch(`http://13.235.70.111:3000/course/courseProjects?courseUrl=${courseUrl}`)
+        .then((response) => response.json())
+        .then((responseArray) => {
+          const data = responseArray[0]; // Access the first object in the response array
+          if (data.status === 200 && data.data?.popular) {
+            setPopularCourses(data.data.popular);
+            if (data.data.popular.length > 0) {
+              setSelectedDesignation(data.data.popular[0].course); // Set first course as default if available
+            }
+
+            // Store fetched data in sessionStorage
+            sessionStorage.setItem(
+              `courses-${courseUrl}`,
+              JSON.stringify({
+                popularCourses: data.data.popular,
+                selectedDesignation: data.data.popular[0]?.course || null,
+              })
+            );
+          } else {
+            setError("Failed to fetch valid data.");
           }
-        } else {
-          setError("Failed to fetch valid data.");
-        }
-      })
-      .catch((error) => {
-        console.error("Fetch Error:", error);
-        setError("Error fetching course projects.");
-      });
+        })
+        .catch((error) => {
+          console.error("Fetch Error:", error);
+          setError("Error fetching course projects.");
+
+          // Optionally, you can use sessionStorage here as a fallback too
+          if (cachedData) {
+            const parsedData = JSON.parse(cachedData);
+            setPopularCourses(parsedData.popularCourses);
+            setSelectedDesignation(parsedData.selectedDesignation);
+          }
+        });
+    }
   }, [courseUrl]);
 
   // Initialize the chart with salary data
