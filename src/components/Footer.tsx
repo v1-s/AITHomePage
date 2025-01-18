@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { footerData } from "../utils/mockfooterdata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
@@ -28,7 +28,8 @@ const Footer = () => {
   const [captchaInput, setCaptchaInput] = useState<string>(""); // CAPTCHA input
   const [error, setError] = useState<string>(""); // Error message
   const [loading, setLoading] = useState<boolean>(false); // Loading state
-  const [buttonState, setButtonState] = useState<"submit" | "login">("submit"); // Button state
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const [buttonState, setButtonState] = useState<"submit" | "login">("submit");
   const [hasSubmitted, setHasSubmitted] = useState<boolean>(false); // Submission status
 
   useEffect(() => {
