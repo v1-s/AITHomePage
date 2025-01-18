@@ -78,7 +78,7 @@ function LoaderConsumer({ children }: { children: React.ReactNode }) {
           <main className="min-h-screen">{children}</main>
           <LocationComponent locationData={locationData} />
           <LimitedSeatsCTA/>
-          <ContactUsButton/>
+          {/* <ContactUsButton/> */}
           <Footer />
           <ScrollToTopButton />
         
