@@ -33,34 +33,81 @@ const CourseSchedule: React.FC<{ course_url: string }> = ({ course_url }) => {
 
   useEffect(() => {
     const fetchSchedules = async () => {
+      const sessionKey = `schedules_${course_url}`; // Unique session storage key
+      const cachedData = sessionStorage.getItem(sessionKey); // Check for cached data
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loaded schedule data from session storage:", parsedData);
+          setSchedules(parsedData);
+          return;
+        } catch (error) {
+          console.error("Error parsing cached schedule data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
+        }
+      }
+  
+      console.log("Fetching schedule data from API...");
       try {
-        const response = await fetch(`http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`);
+        const response = await fetch(
+          `http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`
+        );
+  
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+  
         const data = await response.json();
         const batchScheduleDetails = data[0]?.batchScheduleDetails || [];
-
-        const formattedSchedules: Schedule[] = batchScheduleDetails.map((batch: BatchScheduleDetail) => ({
-          id: batch.batchStartDate,
-          timeSlot: batch.batchMode,
-          date: `${new Date(batch.batchStartDate).toLocaleDateString()} - ${new Date(new Date(batch.batchStartDate).setMonth(new Date(batch.batchStartDate).getMonth() + 2)).toLocaleDateString()}`,
-          time: batch.batchTimings,
-          timezone: 'IST',
-          batch: batch.batchDays,
-          instructor: 'TBD',
-          mode: batch.batchMode,
-          price: 24000,
-          discountPrice: 40000,
-          tag: batch.batchStatus,
-          title: batch.batchTitle
-        }));
-
+  
+        // Format schedules
+        const formattedSchedules: Schedule[] = batchScheduleDetails.map(
+          (batch: BatchScheduleDetail) => ({
+            id: batch.batchStartDate,
+            timeSlot: batch.batchMode,
+            date: `${new Date(batch.batchStartDate).toLocaleDateString()} - ${new Date(
+              new Date(batch.batchStartDate).setMonth(
+                new Date(batch.batchStartDate).getMonth() + 2
+              )
+            ).toLocaleDateString()}`,
+            time: batch.batchTimings,
+            timezone: "IST",
+            batch: batch.batchDays,
+            instructor: "TBD",
+            mode: batch.batchMode,
+            price: 24000,
+            discountPrice: 40000,
+            tag: batch.batchStatus,
+            title: batch.batchTitle,
+          })
+        );
+  
+        // Save formatted schedules to session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(formattedSchedules));
+        console.log("Saved schedule data to session storage:", formattedSchedules);
+  
+        // Update state with the formatted schedules
         setSchedules(formattedSchedules);
       } catch (error) {
-        console.error('Error fetching schedule data:', error);
+        console.error("Error fetching schedule data from API:", error);
+  
+        // Fallback to cached data if API fails
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback schedule data from session storage.");
+          setSchedules(parsedData);
+        } else {
+          console.log("No cached schedule data available.");
+          setSchedules([]); // Render with empty state if no data is available
+        }
       }
     };
-
+  
     fetchSchedules();
   }, [course_url]);
+  
 
   const handleQuantityChange = (id: number, change: number) => {
     setQuantities((prevQuantities) => {

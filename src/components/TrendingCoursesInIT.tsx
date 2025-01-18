@@ -31,8 +31,28 @@ const TrendingCoursesInIT: React.FC<TitleProps> = ({ text, className }) => {
   // Fetch courses data from the API
   useEffect(() => {
     const fetchCourses = async () => {
+      const sessionKey = "trendingCourses"; 
+      const cachedData = sessionStorage.getItem(sessionKey);
+
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          setCoursesData(parsedData);
+          console.log("Loaded courses data from session storage:", parsedData);
+          return;
+        } catch (error) {
+          console.error("Error parsing cached data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
+        }
+      }
+
+      // If no valid cache, fetch from the API
       try {
         const response = await fetch("http://13.235.70.111:3000/common/getCoursesPerCategory?region=global");
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+
         const apiCourses = await response.json();
 
         // Merge the API data with static image and color data
@@ -45,9 +65,23 @@ const TrendingCoursesInIT: React.FC<TitleProps> = ({ text, className }) => {
           };
         });
 
+        // Store the fetched and merged courses data in session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(mergedCourses));
         setCoursesData(mergedCourses);
+        console.log("Courses data saved to session storage:", mergedCourses);
+
       } catch (error) {
         console.error("Error fetching courses:", error);
+
+        // Fallback to cached data if available
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          setCoursesData(parsedData);
+          console.log("Using fallback data from session storage:", parsedData);
+        } else {
+          console.log("No cached data available. Unable to render courses.");
+          setCoursesData([]); // Clear courses if no data is available
+        }
       }
     };
 

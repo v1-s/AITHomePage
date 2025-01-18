@@ -7,7 +7,7 @@ import Image from "next/image";
 import { faChevronRight, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 // import EnrollmentForm from "@/components/EnrollForm";
-
+import {blogPage} from "pages/api/blogpagehomedetails";
 import { imageBasePath } from "@/utils/img.config";
 import { useRouter } from 'next/router';
 
@@ -116,29 +116,126 @@ const BlogDetailsPage = () => {
     return () => observer.disconnect();
   }, []);
   useEffect(() => {
-    if (!selectedBlog) {
-      const fetchBlogDetails = async () => {
-        try {
-          const response = await fetch(
-            "http://13.235.70.111:3000/common/getHomePageBlogsLists"
-          );
-          const data = await response.json();
-          const blog = data.find((b: Blog) => b.baseurl === baseurl);
-          setBlogDetails(blog || null);
-        } catch (error) {
-          console.error("Error fetching blog details:", error);
+    const fetchBlogDetails = async () => {
+      const sessionKey = "blogDetails"; // Key for session storage
+      const cachedData = sessionStorage.getItem(sessionKey); // Check if data is already cached
+  
+      // Use cached data if available
+      if (cachedData) {
+        const parsedData = JSON.parse(cachedData);
+        console.log("Loading data from session storage:", parsedData);
+        setBlogDetails(parsedData);
+        return;
+      }
+  
+      let apiData: Blog[] = []; // Variable to store data fetched from API
+      let selectedBlogDetails: Blog | null = null; // Explicitly type as Blog | null
+  
+      console.log("Fetching data from API...");
+      try {
+        const response = await fetch(
+          "http://13.235.70.111:3000/common/getHomePageBlogsLists"
+        );
+  
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
         }
-      };
-
+  
+        apiData = await response.json(); // Store fetched data in the variable
+        console.log("Fetched Data BlogPage:", apiData);
+  
+        // Find the blog matching the baseurl and fallback to `null` if undefined
+        selectedBlogDetails = apiData.find((b: Blog) => b.baseurl === baseurl) || null;
+  
+        if (selectedBlogDetails) {
+          // Store data in session storage
+          sessionStorage.setItem(sessionKey, JSON.stringify(selectedBlogDetails));
+          console.log("Data saved to session storage:", selectedBlogDetails);
+        }
+  
+        // Update state with the selected blog details
+        setBlogDetails(selectedBlogDetails);
+      } catch (error) {
+        console.error("Error fetching blog details:", error);
+  
+        // If API fails, render data from session storage if available
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback data from session storage.");
+          setBlogDetails(parsedData);
+        } else {
+          console.log("No cached data available. Unable to render blog details.");
+          setBlogDetails(null);
+        }
+      }
+    };
+  
+    if (!selectedBlog) {
       fetchBlogDetails();
     } else {
-      setBlogDetails({
-        ...(selectedBlog ?? {}), // If selectedBlog is null, fallback to an empty object
-        image: selectedBlog?.image || "default-image-path.jpg",
-      });
-      // If selectedBlog is available from context
+      setBlogDetails(selectedBlog);
     }
   }, [baseurl, selectedBlog]);
+  
+  // useEffect(() => {
+  //   const fetchBlogDetails = async () => {
+  //     const sessionKey = "blogDetails"; // Key for session storage
+  //     const cachedData = sessionStorage.getItem(sessionKey); // Check if data is already cached
+
+  //     // Use cached data if available
+  //     if (cachedData) {
+  //       const parsedData = JSON.parse(cachedData);
+  //       console.log("Loading data from session storage:", parsedData);
+  //       setBlogDetails(parsedData);
+  //       return;
+  //     }
+
+  //     let apiData = []; // Variable to store data fetched from API
+  //     let selectedBlogDetails = null; // Explicitly type as Blog | null
+
+  //     console.log("Fetching data from API...");
+  //     try {
+  //       const response = await fetch("/api/blogpage");
+
+  //       if (!response.ok) {
+  //         throw new Error(`API Error: ${response.status}`);
+  //       }
+
+  //       apiData = await response.json(); // Store fetched data in the variable
+  //       console.log("Fetched Data BlogPage:", apiData);
+
+  //       // Find the blog matching the baseurl and fallback to `null` if undefined
+  //       selectedBlogDetails = apiData.find((b: { baseurl: string | string[] | undefined; }) => b.baseurl === baseurl) || null;
+
+  //       if (selectedBlogDetails) {
+  //         // Store data in session storage
+  //         sessionStorage.setItem(sessionKey, JSON.stringify(selectedBlogDetails));
+  //         console.log("Data saved to session storage:", selectedBlogDetails);
+  //       }
+
+  //       // Update state with the selected blog details
+  //       setBlogDetails(selectedBlogDetails);
+  //     } catch (error) {
+  //       console.error("Error fetching blog details:", error);
+
+  //       // If API fails, render data from session storage if available
+  //       if (cachedData) {
+  //         const parsedData = JSON.parse(cachedData);
+  //         console.log("Using fallback data from session storage.");
+  //         setBlogDetails(parsedData);
+  //       } else {
+  //         console.log("No cached data available. Unable to render blog details.");
+  //         setBlogDetails(null);
+  //       }
+  //     }
+  //   };
+
+  //   if (!selectedBlog) {
+  //     fetchBlogDetails();
+  //   } else {
+  //     setBlogDetails(selectedBlog);
+  //   }
+  // }, [baseurl, selectedBlog]);
 
   if (!blogDetails) {
     return <div className="text-center py-20">Not Loading blog details...</div>;

@@ -45,28 +45,47 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
       />
     );
   };
-
   useEffect(() => {
     const fetchCourseTools = async () => {
+      const sessionKey = `courseTools_${courseUrl}`; // Unique key for session storage based on courseUrl
+      const cachedData = sessionStorage.getItem(sessionKey); // Check if data is already cached
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loading tools data from session storage:", parsedData);
+  
+          setTools(parsedData);
+          setIsDataAvailable(parsedData.length > 0); // Update availability based on cached data
+          return;
+        } catch (error) {
+          console.error("Error parsing cached tools data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
+        }
+      }
+  
+      // Fetch data from API if no valid cached data is available
+      console.log("Fetching tools data from API...");
       try {
         const response = await fetch(
           `http://13.235.70.111:3000/course/courseToolsTechnologies?courseUrl=${courseUrl}`
         );
-
+  
         if (!response.ok) {
           console.error("Error fetching course tools:", response.statusText);
           setIsDataAvailable(false); // Mark data as unavailable on error
           return;
         }
-
+  
         const data = await response.json();
-
+  
         if (!data || data.length === 0) {
           console.log("No course tools found.");
           setIsDataAvailable(false); // Mark data as unavailable when empty
           return;
         }
-
+  
         let parsedTools = [];
         try {
           const cleanedJson = data[0].course_tools
@@ -78,17 +97,33 @@ const CourseTools: React.FC<CourseToolsProps> = ({ courseUrl }) => {
           setIsDataAvailable(false); // Mark data as unavailable on parsing error
           return;
         }
-
+  
+        // Store parsed tools in session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(parsedTools));
+        console.log("Tools data saved to session storage:", parsedTools);
+  
+        // Update state with parsed tools
         setTools(parsedTools);
         setIsDataAvailable(parsedTools.length > 0); // Update availability based on parsed data
       } catch (error) {
         console.error("Error fetching course tools:", error);
-        setIsDataAvailable(false); // Mark data as unavailable on fetch error
+  
+        // Use cached data if available as a fallback
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback tools data from session storage.");
+          setTools(parsedData);
+          setIsDataAvailable(parsedData.length > 0); // Update availability based on cached data
+        } else {
+          console.log("No cached tools data available. Unable to render tools.");
+          setIsDataAvailable(false); // Mark data as unavailable when no fallback exists
+        }
       }
     };
-
+  
     fetchCourseTools();
   }, [courseUrl]);
+  
 
   // Navigate to the course URL
   // const handleToCourse = () => {

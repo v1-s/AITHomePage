@@ -5,6 +5,7 @@ import { faBook, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useBlogContext } from "@/utils/BlogContext";
 import { useRouter } from "next/navigation";
 import { imageBasePath } from "@/utils/img.config";
+
 import Image from "next/image";
 
 interface Blog {
@@ -49,23 +50,66 @@ const BlogPage = () => {
   }, [isPaused]);
 
   const fetchBlogs = useCallback(async () => {
+    const sessionKey = "blogsData"; // Key for session storage
+  
+    // Check for cached data in session storage
+    const cachedData = sessionStorage.getItem(sessionKey);
+  
+    if (cachedData) {
+      try {
+        const parsedData = JSON.parse(cachedData);
+        console.log("Loaded data from session storage:", parsedData);
+        setBlogs(parsedData); // Update state with cached data
+        setLoading(false); // Data is already loaded
+        return;
+      } catch (error) {
+        console.error("Error parsing cached data. Removing corrupted cache.");
+        sessionStorage.removeItem(sessionKey); // Remove corrupted data
+      }
+    }
+  
+    // Fetch data from the API
     try {
+      console.log("Fetching data from API...");
       const response = await fetch("http://13.235.70.111:3000/common/getHomePageBlogsLists");
       if (!response.ok) {
         throw new Error(`Error fetching blogs: ${response.statusText}`);
       }
-      const data = await response.json();
-      setBlogs([...data, ...data, ...data]); // Duplicate blogs for seamless looping
+      const apiData = await response.json();
+  
+      console.log("Fetched data from API:", apiData);
+  
+      // Duplicate blogs for seamless looping
+      const updatedData = [...apiData, ...apiData, ...apiData];
+  
+      // Store the API data in session storage
+      sessionStorage.setItem(sessionKey, JSON.stringify(updatedData));
+      console.log("Data saved to session storage:", updatedData);
+  
+      setBlogs(updatedData); // Update state with API data
     } catch (err: unknown) {
+      console.error("Error fetching blogs from API:", err);
+  
+      // If the API fails, attempt to use cached data
+      if (cachedData) {
+        const fallbackData = JSON.parse(cachedData);
+        console.log("Using fallback data from session storage:", fallbackData);
+        setBlogs(fallbackData); // Use cached data
+      } else {
+        console.error("No cached data available. Unable to render blogs.");
+        setBlogs([]); // Set to empty state if no data is available
+      }
+  
       if (err instanceof Error) {
-        setError(err.message);
+        setError(err.message); // Set error message for display
       } else {
         setError("An unknown error occurred");
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Ensure loading state is updated
     }
   }, []);
+  
 
   useEffect(() => {
     fetchBlogs();

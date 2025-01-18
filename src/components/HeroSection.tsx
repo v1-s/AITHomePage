@@ -3,12 +3,20 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 import { imageBasePath } from "@/utils/img.config";
+import {homepagereview} from "pages/api/homepagereview";
 import Image from "next/image";
 interface ImageComponentProps {
   imagePath: string;
   altText?: string; // Optional alt text for better accessibility
   className?: string; // Optional class for additional styling
 }
+type Review = {
+  name: string;
+  previous_role: string;
+  promoted_to: string;
+  img: string;
+  msg: string;
+};
 
 // ImageComponent receives the imagePath prop and renders an image
 const ImageComponent = ({ 
@@ -56,29 +64,66 @@ const HeroSection = () => {
   // Fetch reviews and preload images
   useEffect(() => {
     const fetchReviews = async () => {
+      const sessionKey = "studentReviews"; // Key for session storage
+      const cachedData = sessionStorage.getItem(sessionKey); // Check if data is already cached
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loaded data from session storage:", parsedData);
+  
+          // Set state with cached data
+          setReviews(parsedData);
+  
+          // Set the first profile
+          if (parsedData.length > 0) {
+            const firstReview = parsedData[0];
+            setCurrentProfile({
+              name: firstReview.name || "Student Name",
+              previous_role: firstReview.previous_role || "Previous Role",
+              promoted_to: firstReview.promoted_to || "New Role",
+              img: firstReview.img || "",
+              msg: firstReview.msg || "No review available",
+            });
+          }
+          return; // Exit if data is loaded from cache
+        } catch (error) {
+          console.error("Error parsing cached data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
+        }
+      }
+  
+      // Fetch data from API
+      console.log("Fetching data from API...");
       try {
         const response = await fetch("http://13.235.70.111:3000/common/getStudentReview");
+  
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+  
         const data = await response.json();
-
         console.log("API Response:", data);
-
+  
         // Preload images
-        const preloadImages = data.map((review: { img: string }) => {
-          return new Promise((resolve) => {
-            const img = document.createElement('img') as HTMLImageElement; // Explicitly casting to HTMLImageElement
-
-            img.src = `${review.img}`;
-            img.onload = () => resolve(review); // Resolve once the image is loaded
-            img.onerror = () => resolve(review); // Resolve even if loading fails
-          });
-        });
-
-        // Wait until all images are preloaded
-        const preloadedReviews = await Promise.all(preloadImages);
-
-        // Update state with preloaded reviews
+        const preloadedReviews = await Promise.all(
+          data.map((review: { img: string }) => {
+            return new Promise((resolve) => {
+              const img = new window.Image();
+              img.src = `${review.img}`;
+              img.onload = () => resolve(review);
+              img.onerror = () => resolve(review);
+            });
+          })
+        );
+  
+        // Store preloaded reviews in session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(preloadedReviews));
+        console.log("Data saved to session storage:", preloadedReviews);
+  
         setReviews(preloadedReviews);
-
+  
         // Set the first profile
         if (preloadedReviews.length > 0) {
           const firstReview = preloadedReviews[0];
@@ -86,17 +131,43 @@ const HeroSection = () => {
             name: firstReview.name || "Student Name",
             previous_role: firstReview.previous_role || "Previous Role",
             promoted_to: firstReview.promoted_to || "New Role",
-            img: firstReview.img || "", // Ensure img is a valid string
+            img: firstReview.img || "",
             msg: firstReview.msg || "No review available",
           });
         }
       } catch (err) {
         console.error("Error fetching reviews:", err);
+  
+        // Fallback to cached data if available
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback data from session storage:", parsedData);
+  
+          setReviews(parsedData);
+  
+          // Set the first profile
+          if (parsedData.length > 0) {
+            const firstReview = parsedData[0];
+            setCurrentProfile({
+              name: firstReview.name || "Student Name",
+              previous_role: firstReview.previous_role || "Previous Role",
+              promoted_to: firstReview.promoted_to || "New Role",
+              img: firstReview.img || "",
+              msg: firstReview.msg || "No review available",
+            });
+          }
+        } else {
+          console.log("No cached data available. Unable to render reviews.");
+          setReviews([]); // Clear reviews if no data is available
+        }
       }
     };
-
+  
     fetchReviews();
   }, []);
+  
+
+  
 
   // Cycle through profiles every 5 seconds
   useEffect(() => {

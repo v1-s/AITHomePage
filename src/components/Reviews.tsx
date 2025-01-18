@@ -29,8 +29,8 @@ const Reviews = () => {
   const [scrollPositionTop, setScrollPositionTop] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scrollPositionBottom, setScrollPositionBottom] = useState(0);
-
   useEffect(() => {
+    // Function to fetch testimonials from API
     const fetchTestimonials = async () => {
       try {
         const response = await fetch("http://13.235.70.111:3000/common/homePageReview");
@@ -46,14 +46,28 @@ const Reviews = () => {
           colorClass: colorClasses[index % colorClasses.length], // Cycle through colors
         }));
   
+        // Store the fetched data in sessionStorage for future use
+        sessionStorage.setItem("testimonialsKey", JSON.stringify(uniqueColorTestimonials));
         setTestimonials(uniqueColorTestimonials);
       } catch (error) {
         console.error("Error fetching testimonials:", error);
+        
+        // In case of API failure, check sessionStorage
+        const cachedData = sessionStorage.getItem("testimonialsKey");
+        if (cachedData) {
+          setTestimonials(JSON.parse(cachedData)); // Use cached data
+        } else {
+          console.error("No cached data available.");
+        }
       }
     };
-  
+
+    // First, try to fetch the testimonials
     fetchTestimonials();
-  }, []); // This effect will run once when the component is mounted
+
+  }, []); // Empty dependency array ensures this runs only on component mount
+
+
   
 
   const scrollRefTop = useRef<HTMLDivElement>(null);

@@ -32,25 +32,63 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
   // Fetch batch data from the API
   useEffect(() => {
     const fetchBatchDetails = async () => {
+      const sessionKey = `batchDetails_${course_url}`; // Unique key for session storage based on course_url
+      const cachedData = sessionStorage.getItem(sessionKey); // Check for cached data
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loaded data from session storage:", parsedData);
+          setBatches(parsedData);
+          return;
+        } catch (error) {
+          console.error("Error parsing cached data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
+        }
+      }
+  
+      console.log("Fetching batch details from API...");
       try {
-        const response = await fetch(`http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`);
+        const response = await fetch(
+          `http://13.235.70.111:3000/course/basicInfo?courseUrl=${course_url}`
+        );
+  
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+  
         const data = await response.json();
-        console.log("Fetched data:", data); // Log the response to see its structure
+        console.log("Fetched data from API:", data);
   
         // Assuming batchScheduleDetails is an array in the response
-        const batches = data[0]?.batchScheduleDetails || [];  // Safeguard if batchScheduleDetails is undefined
-        setBatches(batches);  // Set the batches state with fetched data
+        const batches = data[0]?.batchScheduleDetails || []; // Safeguard if batchScheduleDetails is undefined
+        setBatches(batches);
+  
+        // Store the fetched data in session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(batches));
+        console.log("Data saved to session storage:", batches);
       } catch (error) {
-        console.error('Error fetching batch details:', error);
+        console.error("Error fetching batch details:", error);
+  
+        // Fallback to cached data if available
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback data from session storage.");
+          setBatches(parsedData);
+        } else {
+          console.log("No cached data available. Unable to render batch details.");
+          setBatches([]); // Render empty state if no data is available
+        }
       }
     };
   
     fetchBatchDetails();
   
     // Randomize countdown target time between 4 to 6 hours
-    const randomOffset = Math.floor(Math.random() * 2) + 4;  // Randomize between 4 and 6 hours
+    const randomOffset = Math.floor(Math.random() * 2) + 4; // Randomize between 4 and 6 hours
     const targetDate = new Date();
-    targetDate.setHours(targetDate.getHours() + randomOffset);  // Add random hours to current time
+    targetDate.setHours(targetDate.getHours() + randomOffset); // Add random hours to current time
   
     const updateCountdown = () => {
       const now = new Date();
@@ -73,7 +111,8 @@ const BatchDetails: React.FC<BatchDetailsProps> = ({ course_url }) => {
     updateCountdown();
   
     return () => clearInterval(timer);
-  }, [course_url]); // Re-run when course_url changes
+  }, [course_url]);
+  
 
   // const handleBatchSelect = (batchLink: string) => {
   //   // Set the selected batch link when a batch is clicked

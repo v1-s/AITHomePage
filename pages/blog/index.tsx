@@ -50,28 +50,74 @@ const BlogPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true); // State for loading status
   const [modalKey, setModalKey] = useState(0); // Key to force re-render
-
+ 
   // Fetch blog details from the API
   useEffect(() => {
     const fetchBlogDetails = async () => {
-      try {
-        const response = await fetch('http://13.235.70.111:3000/common/getHomePageBlogsLists');
-        const data = await response.json();
-        console.log(data, "data");
-        if (data && data.length > 0) {
-          setBlogDetails(data);
-          setSelectedCategory(data[0].blog_category); 
+      const sessionKey = "blogDetails"; // Key for session storage
+      const cachedData = sessionStorage.getItem(sessionKey); // Check for cached data
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loaded data from session storage:", parsedData);
+  
+          // Update state with cached data
+          setBlogDetails(parsedData);
+          setSelectedCategory(parsedData[0]?.blog_category || null);
+          setLoading(false);
+          return;
+        } catch (error) {
+          console.error("Error parsing cached data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
         }
+      }
+  
+      // Fetch data from API if no valid cached data is available
+      console.log("Fetching data from API...");
+      try {
+        const response = await fetch(
+          "http://13.235.70.111:3000/common/getHomePageBlogsLists"
+        );
+  
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+  
+        const apiData = await response.json();
+        console.log("Fetched data from API:", apiData);
+  
+        // Store API data in session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(apiData));
+        console.log("Data saved to session storage:", apiData);
+  
+        // Update state with fetched data
+        setBlogDetails(apiData);
+        setSelectedCategory(apiData[0]?.blog_category || null);
       } catch (error) {
         console.error("Error fetching blog details:", error);
+  
+        // Use fallback data from session storage if available
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback data from session storage.");
+          setBlogDetails(parsedData);
+          setSelectedCategory(parsedData[0]?.blog_category || null);
+        } else {
+          console.log("No cached data available. Unable to render blog details.");
+          setBlogDetails([]); // Render with empty state if no data is available
+        }
       } finally {
-        setLoading(false);
+        setLoading(false); // Ensure loading state is updated
       }
     };
-
+  
     fetchBlogDetails();
   }, []);
-
+  
+  
+  
   // Filter blogs by selected category
   const filteredBlogs = selectedCategory
     ? blogDetails?.filter(blog => blog.blog_category === selectedCategory)

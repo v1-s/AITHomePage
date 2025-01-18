@@ -42,21 +42,66 @@ function WorriedSection() {
   // Fetch trend courses data
   useEffect(() => {
     const fetchCoursesData = async () => {
+      const sessionKey = "coursesPerCategory"; // Key for session storage
+      const cachedData = sessionStorage.getItem(sessionKey); // Check if data is already cached
+  
+      // Use cached data if available
+      if (cachedData) {
+        try {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Loaded data from session storage:", parsedData);
+  
+          setTrendCourses(parsedData); // Set state with cached data
+          setLoading(false); // Set loading to false since data is available
+          return;
+        } catch (error) {
+          console.error("Error parsing cached data:", error);
+          sessionStorage.removeItem(sessionKey); // Remove corrupted cache
+        }
+      }
+  
+      // Fetch data from API
+      console.log("Fetching data from API...");
       try {
         const response = await fetch(
           "http://13.235.70.111:3000/common/getCoursesPerCategory?region=global"
         );
+  
+        if (!response.ok) {
+          throw new Error("Failed to fetch courses.");
+        }
+  
         const data = await response.json();
-        setTrendCourses(data || []);
-        setLoading(false);
-      } catch {
-        setError("Failed to fetch courses.");
-        setLoading(false);
+        console.log("Fetched data from API:", data);
+  
+        // Save data to session storage
+        sessionStorage.setItem(sessionKey, JSON.stringify(data));
+        console.log("Data saved to session storage:", data);
+  
+        setTrendCourses(data || []); // Update state with API data
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+  
+        // Fallback to cached data if available
+        if (cachedData) {
+          const parsedData = JSON.parse(cachedData);
+          console.log("Using fallback data from session storage:", parsedData);
+  
+          setTrendCourses(parsedData);
+        } else {
+          console.log("No cached data available. Unable to render courses.");
+          setTrendCourses([]); // Set an empty state if no cached data is available
+        }
+  
+        setError("Failed to fetch courses."); // Set error message
+      } finally {
+        setLoading(false); // Ensure loading state is updated
       }
     };
-
+  
     fetchCoursesData();
   }, []);
+  
 
   // Update visible options when trendCourses or currentActiveIndex changes
   const updateVisibleOptions = useCallback(() => {
